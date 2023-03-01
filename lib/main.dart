@@ -120,10 +120,23 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
         child: Column(
           children: [
             TextField(
-              decoration:
-                  const InputDecoration(helperText: "Name", hintText: "Name"),
+              decoration: const InputDecoration(hintText: "Name"),
               controller: nameController,
-            )
+            ),
+            const Padding(padding: EdgeInsets.only(top: 20.0)),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: RichText(
+                textAlign: TextAlign.left,
+                text: const TextSpan(
+                    text: 'Process Tasks ',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 20)),
+              ),
+            ),
+            const Divider(),
           ],
         ),
       ),
@@ -132,7 +145,7 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
           Navigator.pop(context);
         },
         tooltip: "New Process",
-        child: const Icon(Icons.add_circle_outline),
+        child: const Icon(Icons.save_rounded),
       ),
     );
   }
