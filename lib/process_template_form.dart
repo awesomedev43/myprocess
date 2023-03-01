@@ -11,11 +11,13 @@ class ProcessTemplateForm extends StatefulHookConsumerWidget {
 
 class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
   final nameController = TextEditingController();
+  final taskController = TextEditingController();
 
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
     nameController.dispose();
+    taskController.dispose();
     super.dispose();
   }
 
@@ -70,7 +72,9 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
                   child: Row(children: [
                     IconButton(
                       icon: const Icon(Icons.add),
-                      onPressed: () {},
+                      onPressed: () {
+                        _dialogBuilder(context);
+                      },
                     )
                   ])),
             ]),
@@ -85,6 +89,57 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
         tooltip: "New Process",
         child: const Icon(Icons.save_rounded),
       ),
+    );
+  }
+
+  Future<void> _dialogBuilder(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: const Text('New Process Task'),
+          children: <Widget>[
+            Row(
+              children: [
+                const Padding(padding: EdgeInsets.only(left: 25.0)),
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: SizedBox(
+                        width: 200,
+                        child: TextField(
+                          maxLength: 100,
+                          decoration:
+                              const InputDecoration(hintText: "Description"),
+                          controller: taskController,
+                        )))
+              ],
+            ),
+            Row(
+              children: [
+                const Padding(padding: EdgeInsets.all(5)),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: Theme.of(context).textTheme.labelLarge,
+                  ),
+                  child: const Text('Add'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: Theme.of(context).textTheme.labelLarge,
+                  ),
+                  child: const Text('Cancel'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+          ],
+        );
+      },
     );
   }
 }
