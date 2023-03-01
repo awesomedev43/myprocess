@@ -8,8 +8,7 @@ void main() {
       initialRoute: '/',
       routes: {
         '/': (context) => const MainScreen(),
-        '/second': (context) =>
-            const MainScreen(), // TODO: Add route for adding new process
+        '/addprocess': (context) => const AddProcessScreen(),
       },
     ),
   );
@@ -35,6 +34,26 @@ class MainScreen extends HookConsumerWidget {
             Text("TODO: Process Tab"),
             Text("TODO: Completed Process")
           ]),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/addprocess');
+            },
+            tooltip: "New Process",
+            child: const Icon(Icons.add),
+          ),
         ));
+  }
+}
+
+class AddProcessScreen extends HookConsumerWidget {
+  const AddProcessScreen({super.key});
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Add New Process"),
+      ),
+      body: const Text("TODO: New Process"),
+    );
   }
 }
