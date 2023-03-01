@@ -28,7 +28,7 @@ class Process with _$Process {
 @freezed
 class ProcessInstance with _$ProcessInstance {
   factory ProcessInstance(
-      {required String ProcessId,
+      {required String processId,
       DateTime? start,
       DateTime? end}) = _ProcessInstance;
 

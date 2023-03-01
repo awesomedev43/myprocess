@@ -360,7 +360,7 @@ ProcessInstance _$ProcessInstanceFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProcessInstance {
-  String get ProcessId => throw _privateConstructorUsedError;
+  String get processId => throw _privateConstructorUsedError;
   DateTime? get start => throw _privateConstructorUsedError;
   DateTime? get end => throw _privateConstructorUsedError;
 
@@ -376,7 +376,7 @@ abstract class $ProcessInstanceCopyWith<$Res> {
           ProcessInstance value, $Res Function(ProcessInstance) then) =
       _$ProcessInstanceCopyWithImpl<$Res, ProcessInstance>;
   @useResult
-  $Res call({String ProcessId, DateTime? start, DateTime? end});
+  $Res call({String processId, DateTime? start, DateTime? end});
 }
 
 /// @nodoc
@@ -392,14 +392,14 @@ class _$ProcessInstanceCopyWithImpl<$Res, $Val extends ProcessInstance>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? ProcessId = null,
+    Object? processId = null,
     Object? start = freezed,
     Object? end = freezed,
   }) {
     return _then(_value.copyWith(
-      ProcessId: null == ProcessId
-          ? _value.ProcessId
-          : ProcessId // ignore: cast_nullable_to_non_nullable
+      processId: null == processId
+          ? _value.processId
+          : processId // ignore: cast_nullable_to_non_nullable
               as String,
       start: freezed == start
           ? _value.start
@@ -421,7 +421,7 @@ abstract class _$$_ProcessInstanceCopyWith<$Res>
       __$$_ProcessInstanceCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String ProcessId, DateTime? start, DateTime? end});
+  $Res call({String processId, DateTime? start, DateTime? end});
 }
 
 /// @nodoc
@@ -435,14 +435,14 @@ class __$$_ProcessInstanceCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? ProcessId = null,
+    Object? processId = null,
     Object? start = freezed,
     Object? end = freezed,
   }) {
     return _then(_$_ProcessInstance(
-      ProcessId: null == ProcessId
-          ? _value.ProcessId
-          : ProcessId // ignore: cast_nullable_to_non_nullable
+      processId: null == processId
+          ? _value.processId
+          : processId // ignore: cast_nullable_to_non_nullable
               as String,
       start: freezed == start
           ? _value.start
@@ -461,13 +461,13 @@ class __$$_ProcessInstanceCopyWithImpl<$Res>
 class _$_ProcessInstance
     with DiagnosticableTreeMixin
     implements _ProcessInstance {
-  _$_ProcessInstance({required this.ProcessId, this.start, this.end});
+  _$_ProcessInstance({required this.processId, this.start, this.end});
 
   factory _$_ProcessInstance.fromJson(Map<String, dynamic> json) =>
       _$$_ProcessInstanceFromJson(json);
 
   @override
-  final String ProcessId;
+  final String processId;
   @override
   final DateTime? start;
   @override
@@ -475,7 +475,7 @@ class _$_ProcessInstance
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ProcessInstance(ProcessId: $ProcessId, start: $start, end: $end)';
+    return 'ProcessInstance(processId: $processId, start: $start, end: $end)';
   }
 
   @override
@@ -483,7 +483,7 @@ class _$_ProcessInstance
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'ProcessInstance'))
-      ..add(DiagnosticsProperty('ProcessId', ProcessId))
+      ..add(DiagnosticsProperty('processId', processId))
       ..add(DiagnosticsProperty('start', start))
       ..add(DiagnosticsProperty('end', end));
   }
@@ -493,15 +493,15 @@ class _$_ProcessInstance
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ProcessInstance &&
-            (identical(other.ProcessId, ProcessId) ||
-                other.ProcessId == ProcessId) &&
+            (identical(other.processId, processId) ||
+                other.processId == processId) &&
             (identical(other.start, start) || other.start == start) &&
             (identical(other.end, end) || other.end == end));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, ProcessId, start, end);
+  int get hashCode => Object.hash(runtimeType, processId, start, end);
 
   @JsonKey(ignore: true)
   @override
@@ -519,7 +519,7 @@ class _$_ProcessInstance
 
 abstract class _ProcessInstance implements ProcessInstance {
   factory _ProcessInstance(
-      {required final String ProcessId,
+      {required final String processId,
       final DateTime? start,
       final DateTime? end}) = _$_ProcessInstance;
 
@@ -527,7 +527,7 @@ abstract class _ProcessInstance implements ProcessInstance {
       _$_ProcessInstance.fromJson;
 
   @override
-  String get ProcessId;
+  String get processId;
   @override
   DateTime? get start;
   @override
