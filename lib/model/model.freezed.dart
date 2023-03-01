@@ -170,34 +170,33 @@ abstract class _Task implements Task {
   _$$_TaskCopyWith<_$_Task> get copyWith => throw _privateConstructorUsedError;
 }
 
-Checklist _$ChecklistFromJson(Map<String, dynamic> json) {
-  return _Checklist.fromJson(json);
+Process _$ProcessFromJson(Map<String, dynamic> json) {
+  return _Process.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Checklist {
+mixin _$Process {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   List<Task> get tasks => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ChecklistCopyWith<Checklist> get copyWith =>
-      throw _privateConstructorUsedError;
+  $ProcessCopyWith<Process> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ChecklistCopyWith<$Res> {
-  factory $ChecklistCopyWith(Checklist value, $Res Function(Checklist) then) =
-      _$ChecklistCopyWithImpl<$Res, Checklist>;
+abstract class $ProcessCopyWith<$Res> {
+  factory $ProcessCopyWith(Process value, $Res Function(Process) then) =
+      _$ProcessCopyWithImpl<$Res, Process>;
   @useResult
   $Res call({String id, String name, List<Task> tasks});
 }
 
 /// @nodoc
-class _$ChecklistCopyWithImpl<$Res, $Val extends Checklist>
-    implements $ChecklistCopyWith<$Res> {
-  _$ChecklistCopyWithImpl(this._value, this._then);
+class _$ProcessCopyWithImpl<$Res, $Val extends Process>
+    implements $ProcessCopyWith<$Res> {
+  _$ProcessCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -229,21 +228,20 @@ class _$ChecklistCopyWithImpl<$Res, $Val extends Checklist>
 }
 
 /// @nodoc
-abstract class _$$_ChecklistCopyWith<$Res> implements $ChecklistCopyWith<$Res> {
-  factory _$$_ChecklistCopyWith(
-          _$_Checklist value, $Res Function(_$_Checklist) then) =
-      __$$_ChecklistCopyWithImpl<$Res>;
+abstract class _$$_ProcessCopyWith<$Res> implements $ProcessCopyWith<$Res> {
+  factory _$$_ProcessCopyWith(
+          _$_Process value, $Res Function(_$_Process) then) =
+      __$$_ProcessCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String id, String name, List<Task> tasks});
 }
 
 /// @nodoc
-class __$$_ChecklistCopyWithImpl<$Res>
-    extends _$ChecklistCopyWithImpl<$Res, _$_Checklist>
-    implements _$$_ChecklistCopyWith<$Res> {
-  __$$_ChecklistCopyWithImpl(
-      _$_Checklist _value, $Res Function(_$_Checklist) _then)
+class __$$_ProcessCopyWithImpl<$Res>
+    extends _$ProcessCopyWithImpl<$Res, _$_Process>
+    implements _$$_ProcessCopyWith<$Res> {
+  __$$_ProcessCopyWithImpl(_$_Process _value, $Res Function(_$_Process) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -253,7 +251,7 @@ class __$$_ChecklistCopyWithImpl<$Res>
     Object? name = null,
     Object? tasks = null,
   }) {
-    return _then(_$_Checklist(
+    return _then(_$_Process(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -272,13 +270,13 @@ class __$$_ChecklistCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Checklist with DiagnosticableTreeMixin implements _Checklist {
-  const _$_Checklist(
+class _$_Process with DiagnosticableTreeMixin implements _Process {
+  const _$_Process(
       {required this.id, required this.name, required final List<Task> tasks})
       : _tasks = tasks;
 
-  factory _$_Checklist.fromJson(Map<String, dynamic> json) =>
-      _$$_ChecklistFromJson(json);
+  factory _$_Process.fromJson(Map<String, dynamic> json) =>
+      _$$_ProcessFromJson(json);
 
   @override
   final String id;
@@ -294,14 +292,14 @@ class _$_Checklist with DiagnosticableTreeMixin implements _Checklist {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Checklist(id: $id, name: $name, tasks: $tasks)';
+    return 'Process(id: $id, name: $name, tasks: $tasks)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'Checklist'))
+      ..add(DiagnosticsProperty('type', 'Process'))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('tasks', tasks));
@@ -311,7 +309,7 @@ class _$_Checklist with DiagnosticableTreeMixin implements _Checklist {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Checklist &&
+            other is _$_Process &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality().equals(other._tasks, _tasks));
@@ -325,25 +323,24 @@ class _$_Checklist with DiagnosticableTreeMixin implements _Checklist {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChecklistCopyWith<_$_Checklist> get copyWith =>
-      __$$_ChecklistCopyWithImpl<_$_Checklist>(this, _$identity);
+  _$$_ProcessCopyWith<_$_Process> get copyWith =>
+      __$$_ProcessCopyWithImpl<_$_Process>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ChecklistToJson(
+    return _$$_ProcessToJson(
       this,
     );
   }
 }
 
-abstract class _Checklist implements Checklist {
-  const factory _Checklist(
+abstract class _Process implements Process {
+  const factory _Process(
       {required final String id,
       required final String name,
-      required final List<Task> tasks}) = _$_Checklist;
+      required final List<Task> tasks}) = _$_Process;
 
-  factory _Checklist.fromJson(Map<String, dynamic> json) =
-      _$_Checklist.fromJson;
+  factory _Process.fromJson(Map<String, dynamic> json) = _$_Process.fromJson;
 
   @override
   String get id;
@@ -353,39 +350,39 @@ abstract class _Checklist implements Checklist {
   List<Task> get tasks;
   @override
   @JsonKey(ignore: true)
-  _$$_ChecklistCopyWith<_$_Checklist> get copyWith =>
+  _$$_ProcessCopyWith<_$_Process> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-ChecklistInstance _$ChecklistInstanceFromJson(Map<String, dynamic> json) {
-  return _ChecklistInstance.fromJson(json);
+ProcessInstance _$ProcessInstanceFromJson(Map<String, dynamic> json) {
+  return _ProcessInstance.fromJson(json);
 }
 
 /// @nodoc
-mixin _$ChecklistInstance {
-  String get checklistId => throw _privateConstructorUsedError;
+mixin _$ProcessInstance {
+  String get ProcessId => throw _privateConstructorUsedError;
   DateTime? get start => throw _privateConstructorUsedError;
   DateTime? get end => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ChecklistInstanceCopyWith<ChecklistInstance> get copyWith =>
+  $ProcessInstanceCopyWith<ProcessInstance> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ChecklistInstanceCopyWith<$Res> {
-  factory $ChecklistInstanceCopyWith(
-          ChecklistInstance value, $Res Function(ChecklistInstance) then) =
-      _$ChecklistInstanceCopyWithImpl<$Res, ChecklistInstance>;
+abstract class $ProcessInstanceCopyWith<$Res> {
+  factory $ProcessInstanceCopyWith(
+          ProcessInstance value, $Res Function(ProcessInstance) then) =
+      _$ProcessInstanceCopyWithImpl<$Res, ProcessInstance>;
   @useResult
-  $Res call({String checklistId, DateTime? start, DateTime? end});
+  $Res call({String ProcessId, DateTime? start, DateTime? end});
 }
 
 /// @nodoc
-class _$ChecklistInstanceCopyWithImpl<$Res, $Val extends ChecklistInstance>
-    implements $ChecklistInstanceCopyWith<$Res> {
-  _$ChecklistInstanceCopyWithImpl(this._value, this._then);
+class _$ProcessInstanceCopyWithImpl<$Res, $Val extends ProcessInstance>
+    implements $ProcessInstanceCopyWith<$Res> {
+  _$ProcessInstanceCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -395,14 +392,14 @@ class _$ChecklistInstanceCopyWithImpl<$Res, $Val extends ChecklistInstance>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? checklistId = null,
+    Object? ProcessId = null,
     Object? start = freezed,
     Object? end = freezed,
   }) {
     return _then(_value.copyWith(
-      checklistId: null == checklistId
-          ? _value.checklistId
-          : checklistId // ignore: cast_nullable_to_non_nullable
+      ProcessId: null == ProcessId
+          ? _value.ProcessId
+          : ProcessId // ignore: cast_nullable_to_non_nullable
               as String,
       start: freezed == start
           ? _value.start
@@ -417,35 +414,35 @@ class _$ChecklistInstanceCopyWithImpl<$Res, $Val extends ChecklistInstance>
 }
 
 /// @nodoc
-abstract class _$$_ChecklistInstanceCopyWith<$Res>
-    implements $ChecklistInstanceCopyWith<$Res> {
-  factory _$$_ChecklistInstanceCopyWith(_$_ChecklistInstance value,
-          $Res Function(_$_ChecklistInstance) then) =
-      __$$_ChecklistInstanceCopyWithImpl<$Res>;
+abstract class _$$_ProcessInstanceCopyWith<$Res>
+    implements $ProcessInstanceCopyWith<$Res> {
+  factory _$$_ProcessInstanceCopyWith(
+          _$_ProcessInstance value, $Res Function(_$_ProcessInstance) then) =
+      __$$_ProcessInstanceCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String checklistId, DateTime? start, DateTime? end});
+  $Res call({String ProcessId, DateTime? start, DateTime? end});
 }
 
 /// @nodoc
-class __$$_ChecklistInstanceCopyWithImpl<$Res>
-    extends _$ChecklistInstanceCopyWithImpl<$Res, _$_ChecklistInstance>
-    implements _$$_ChecklistInstanceCopyWith<$Res> {
-  __$$_ChecklistInstanceCopyWithImpl(
-      _$_ChecklistInstance _value, $Res Function(_$_ChecklistInstance) _then)
+class __$$_ProcessInstanceCopyWithImpl<$Res>
+    extends _$ProcessInstanceCopyWithImpl<$Res, _$_ProcessInstance>
+    implements _$$_ProcessInstanceCopyWith<$Res> {
+  __$$_ProcessInstanceCopyWithImpl(
+      _$_ProcessInstance _value, $Res Function(_$_ProcessInstance) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? checklistId = null,
+    Object? ProcessId = null,
     Object? start = freezed,
     Object? end = freezed,
   }) {
-    return _then(_$_ChecklistInstance(
-      checklistId: null == checklistId
-          ? _value.checklistId
-          : checklistId // ignore: cast_nullable_to_non_nullable
+    return _then(_$_ProcessInstance(
+      ProcessId: null == ProcessId
+          ? _value.ProcessId
+          : ProcessId // ignore: cast_nullable_to_non_nullable
               as String,
       start: freezed == start
           ? _value.start
@@ -461,16 +458,16 @@ class __$$_ChecklistInstanceCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ChecklistInstance
+class _$_ProcessInstance
     with DiagnosticableTreeMixin
-    implements _ChecklistInstance {
-  _$_ChecklistInstance({required this.checklistId, this.start, this.end});
+    implements _ProcessInstance {
+  _$_ProcessInstance({required this.ProcessId, this.start, this.end});
 
-  factory _$_ChecklistInstance.fromJson(Map<String, dynamic> json) =>
-      _$$_ChecklistInstanceFromJson(json);
+  factory _$_ProcessInstance.fromJson(Map<String, dynamic> json) =>
+      _$$_ProcessInstanceFromJson(json);
 
   @override
-  final String checklistId;
+  final String ProcessId;
   @override
   final DateTime? start;
   @override
@@ -478,15 +475,15 @@ class _$_ChecklistInstance
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChecklistInstance(checklistId: $checklistId, start: $start, end: $end)';
+    return 'ProcessInstance(ProcessId: $ProcessId, start: $start, end: $end)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ChecklistInstance'))
-      ..add(DiagnosticsProperty('checklistId', checklistId))
+      ..add(DiagnosticsProperty('type', 'ProcessInstance'))
+      ..add(DiagnosticsProperty('ProcessId', ProcessId))
       ..add(DiagnosticsProperty('start', start))
       ..add(DiagnosticsProperty('end', end));
   }
@@ -495,49 +492,48 @@ class _$_ChecklistInstance
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChecklistInstance &&
-            (identical(other.checklistId, checklistId) ||
-                other.checklistId == checklistId) &&
+            other is _$_ProcessInstance &&
+            (identical(other.ProcessId, ProcessId) ||
+                other.ProcessId == ProcessId) &&
             (identical(other.start, start) || other.start == start) &&
             (identical(other.end, end) || other.end == end));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, checklistId, start, end);
+  int get hashCode => Object.hash(runtimeType, ProcessId, start, end);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChecklistInstanceCopyWith<_$_ChecklistInstance> get copyWith =>
-      __$$_ChecklistInstanceCopyWithImpl<_$_ChecklistInstance>(
-          this, _$identity);
+  _$$_ProcessInstanceCopyWith<_$_ProcessInstance> get copyWith =>
+      __$$_ProcessInstanceCopyWithImpl<_$_ProcessInstance>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ChecklistInstanceToJson(
+    return _$$_ProcessInstanceToJson(
       this,
     );
   }
 }
 
-abstract class _ChecklistInstance implements ChecklistInstance {
-  factory _ChecklistInstance(
-      {required final String checklistId,
+abstract class _ProcessInstance implements ProcessInstance {
+  factory _ProcessInstance(
+      {required final String ProcessId,
       final DateTime? start,
-      final DateTime? end}) = _$_ChecklistInstance;
+      final DateTime? end}) = _$_ProcessInstance;
 
-  factory _ChecklistInstance.fromJson(Map<String, dynamic> json) =
-      _$_ChecklistInstance.fromJson;
+  factory _ProcessInstance.fromJson(Map<String, dynamic> json) =
+      _$_ProcessInstance.fromJson;
 
   @override
-  String get checklistId;
+  String get ProcessId;
   @override
   DateTime? get start;
   @override
   DateTime? get end;
   @override
   @JsonKey(ignore: true)
-  _$$_ChecklistInstanceCopyWith<_$_ChecklistInstance> get copyWith =>
+  _$$_ProcessInstanceCopyWith<_$_ProcessInstance> get copyWith =>
       throw _privateConstructorUsedError;
 }

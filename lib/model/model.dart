@@ -15,23 +15,23 @@ class Task with _$Task {
 }
 
 @freezed
-class Checklist with _$Checklist {
-  const factory Checklist(
+class Process with _$Process {
+  const factory Process(
       {required String id,
       required String name,
-      required List<Task> tasks}) = _Checklist;
+      required List<Task> tasks}) = _Process;
 
-  factory Checklist.fromJson(Map<String, dynamic> json) =>
-      _$ChecklistFromJson(json);
+  factory Process.fromJson(Map<String, dynamic> json) =>
+      _$ProcessFromJson(json);
 }
 
 @freezed
-class ChecklistInstance with _$ChecklistInstance {
-  factory ChecklistInstance(
-      {required String checklistId,
+class ProcessInstance with _$ProcessInstance {
+  factory ProcessInstance(
+      {required String ProcessId,
       DateTime? start,
-      DateTime? end}) = _ChecklistInstance;
+      DateTime? end}) = _ProcessInstance;
 
-  factory ChecklistInstance.fromJson(Map<String, dynamic> json) =>
-      _$ChecklistInstanceFromJson(json);
+  factory ProcessInstance.fromJson(Map<String, dynamic> json) =>
+      _$ProcessInstanceFromJson(json);
 }

@@ -16,7 +16,7 @@ Map<String, dynamic> _$$_TaskToJson(_$_Task instance) => <String, dynamic>{
       'completed': instance.completed,
     };
 
-_$_Checklist _$$_ChecklistFromJson(Map<String, dynamic> json) => _$_Checklist(
+_$_Process _$$_ProcessFromJson(Map<String, dynamic> json) => _$_Process(
       id: json['id'] as String,
       name: json['name'] as String,
       tasks: (json['tasks'] as List<dynamic>)
@@ -24,26 +24,25 @@ _$_Checklist _$$_ChecklistFromJson(Map<String, dynamic> json) => _$_Checklist(
           .toList(),
     );
 
-Map<String, dynamic> _$$_ChecklistToJson(_$_Checklist instance) =>
+Map<String, dynamic> _$$_ProcessToJson(_$_Process instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'tasks': instance.tasks,
     };
 
-_$_ChecklistInstance _$$_ChecklistInstanceFromJson(Map<String, dynamic> json) =>
-    _$_ChecklistInstance(
-      checklistId: json['checklistId'] as String,
+_$_ProcessInstance _$$_ProcessInstanceFromJson(Map<String, dynamic> json) =>
+    _$_ProcessInstance(
+      ProcessId: json['ProcessId'] as String,
       start: json['start'] == null
           ? null
           : DateTime.parse(json['start'] as String),
       end: json['end'] == null ? null : DateTime.parse(json['end'] as String),
     );
 
-Map<String, dynamic> _$$_ChecklistInstanceToJson(
-        _$_ChecklistInstance instance) =>
+Map<String, dynamic> _$$_ProcessInstanceToJson(_$_ProcessInstance instance) =>
     <String, dynamic>{
-      'checklistId': instance.checklistId,
+      'ProcessId': instance.ProcessId,
       'start': instance.start?.toIso8601String(),
       'end': instance.end?.toIso8601String(),
     };
