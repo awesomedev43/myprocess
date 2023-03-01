@@ -14,10 +14,10 @@ void main() {
   );
 }
 
-class MainScreen extends HookConsumerWidget {
+class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -31,8 +31,8 @@ class MainScreen extends HookConsumerWidget {
             title: const Text("MyProcess"),
           ),
           body: const TabBarView(children: [
-            Text("TODO: Process Tab"),
-            Text("TODO: Completed Process")
+            ProcessTemplateList(),
+            CompletedProcessList(),
           ]),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
@@ -45,15 +45,61 @@ class MainScreen extends HookConsumerWidget {
   }
 }
 
-class AddProcessScreen extends HookConsumerWidget {
+class AddProcessScreen extends StatelessWidget {
   const AddProcessScreen({super.key});
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add New Process"),
       ),
       body: const Text("TODO: New Process"),
+    );
+  }
+}
+
+class ProcessTemplateList extends StatefulHookConsumerWidget {
+  const ProcessTemplateList({super.key});
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ProcessTemplateListState();
+}
+
+class _ProcessTemplateListState extends ConsumerState<ProcessTemplateList> {
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: [
+        ListTile(
+          leading: const Icon(Icons.map),
+          title: const Text("TODO Add Generation of List"),
+          onTap: () {},
+        )
+      ],
+    );
+  }
+}
+
+class CompletedProcessList extends StatefulHookConsumerWidget {
+  const CompletedProcessList({super.key});
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _CompletedProcessListState();
+}
+
+class _CompletedProcessListState extends ConsumerState<CompletedProcessList> {
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: [
+        ListTile(
+          leading: const Icon(Icons.map),
+          title: const Text("TODO Add Generation of this List"),
+          onTap: () {},
+        )
+      ],
     );
   }
 }
