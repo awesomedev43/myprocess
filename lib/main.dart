@@ -8,7 +8,7 @@ void main() {
       initialRoute: '/',
       routes: {
         '/': (context) => const MainScreen(),
-        '/addprocess': (context) => const AddProcessScreen(),
+        '/addprocess': (context) => const ProcessTemplateForm(),
       },
     ),
   );
@@ -42,19 +42,6 @@ class MainScreen extends StatelessWidget {
             child: const Icon(Icons.add),
           ),
         ));
-  }
-}
-
-class AddProcessScreen extends StatelessWidget {
-  const AddProcessScreen({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Add New Process"),
-      ),
-      body: const Text("TODO: New Process"),
-    );
   }
 }
 
@@ -100,6 +87,46 @@ class _CompletedProcessListState extends ConsumerState<CompletedProcessList> {
           onTap: () {},
         )
       ],
+    );
+  }
+}
+
+class ProcessTemplateForm extends StatefulHookConsumerWidget {
+  const ProcessTemplateForm({super.key});
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ProcessTemplateFormState();
+}
+
+class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
+  final nameController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    nameController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Add New Process"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              decoration:
+                  const InputDecoration(helperText: "Name", hintText: "Name"),
+              controller: nameController,
+            )
+          ],
+        ),
+      ),
     );
   }
 }
