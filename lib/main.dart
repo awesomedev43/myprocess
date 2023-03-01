@@ -127,6 +127,13 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        tooltip: "New Process",
+        child: const Icon(Icons.add_circle_outline),
+      ),
     );
   }
 }
