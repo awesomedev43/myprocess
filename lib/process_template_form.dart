@@ -102,7 +102,7 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
               tasks: tasks.value));
           Navigator.pop(context);
         },
-        tooltip: "New Process",
+        tooltip: "Save",
         child: const Icon(Icons.save_rounded),
       ),
     );

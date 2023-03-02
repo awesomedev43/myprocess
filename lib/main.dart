@@ -41,7 +41,7 @@ class MainScreen extends StatelessWidget {
             onPressed: () {
               Navigator.pushNamed(context, '/addprocess');
             },
-            tooltip: "New Process",
+            tooltip: "Add New Process Template",
             child: const Icon(Icons.add),
           ),
         ));
