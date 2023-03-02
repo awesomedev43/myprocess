@@ -4,13 +4,15 @@ import 'package:myprocess/process_template_form.dart';
 
 void main() {
   runApp(
-    MaterialApp(
-      title: 'MyProcess',
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const MainScreen(),
-        '/addprocess': (context) => const ProcessTemplateForm(),
-      },
+    ProviderScope(
+      child: MaterialApp(
+        title: 'MyProcess',
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const MainScreen(),
+          '/addprocess': (context) => const ProcessTemplateForm(),
+        },
+      ),
     ),
   );
 }

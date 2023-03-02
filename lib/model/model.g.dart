@@ -8,12 +8,10 @@ part of 'model.dart';
 
 _$_Task _$$_TaskFromJson(Map<String, dynamic> json) => _$_Task(
       description: json['description'] as String,
-      completed: json['completed'] as bool,
     );
 
 Map<String, dynamic> _$$_TaskToJson(_$_Task instance) => <String, dynamic>{
       'description': instance.description,
-      'completed': instance.completed,
     };
 
 _$_Process _$$_ProcessFromJson(Map<String, dynamic> json) => _$_Process(

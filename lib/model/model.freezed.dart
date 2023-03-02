@@ -21,7 +21,6 @@ Task _$TaskFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Task {
   String get description => throw _privateConstructorUsedError;
-  bool get completed => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +32,7 @@ abstract class $TaskCopyWith<$Res> {
   factory $TaskCopyWith(Task value, $Res Function(Task) then) =
       _$TaskCopyWithImpl<$Res, Task>;
   @useResult
-  $Res call({String description, bool completed});
+  $Res call({String description});
 }
 
 /// @nodoc
@@ -50,17 +49,12 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
   @override
   $Res call({
     Object? description = null,
-    Object? completed = null,
   }) {
     return _then(_value.copyWith(
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      completed: null == completed
-          ? _value.completed
-          : completed // ignore: cast_nullable_to_non_nullable
-              as bool,
     ) as $Val);
   }
 }
@@ -71,7 +65,7 @@ abstract class _$$_TaskCopyWith<$Res> implements $TaskCopyWith<$Res> {
       __$$_TaskCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String description, bool completed});
+  $Res call({String description});
 }
 
 /// @nodoc
@@ -84,17 +78,12 @@ class __$$_TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res, _$_Task>
   @override
   $Res call({
     Object? description = null,
-    Object? completed = null,
   }) {
     return _then(_$_Task(
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      completed: null == completed
-          ? _value.completed
-          : completed // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -102,18 +91,16 @@ class __$$_TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res, _$_Task>
 /// @nodoc
 @JsonSerializable()
 class _$_Task with DiagnosticableTreeMixin implements _Task {
-  const _$_Task({required this.description, required this.completed});
+  const _$_Task({required this.description});
 
   factory _$_Task.fromJson(Map<String, dynamic> json) => _$$_TaskFromJson(json);
 
   @override
   final String description;
-  @override
-  final bool completed;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Task(description: $description, completed: $completed)';
+    return 'Task(description: $description)';
   }
 
   @override
@@ -121,8 +108,7 @@ class _$_Task with DiagnosticableTreeMixin implements _Task {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Task'))
-      ..add(DiagnosticsProperty('description', description))
-      ..add(DiagnosticsProperty('completed', completed));
+      ..add(DiagnosticsProperty('description', description));
   }
 
   @override
@@ -131,14 +117,12 @@ class _$_Task with DiagnosticableTreeMixin implements _Task {
         (other.runtimeType == runtimeType &&
             other is _$_Task &&
             (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.completed, completed) ||
-                other.completed == completed));
+                other.description == description));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, description, completed);
+  int get hashCode => Object.hash(runtimeType, description);
 
   @JsonKey(ignore: true)
   @override
@@ -155,16 +139,12 @@ class _$_Task with DiagnosticableTreeMixin implements _Task {
 }
 
 abstract class _Task implements Task {
-  const factory _Task(
-      {required final String description,
-      required final bool completed}) = _$_Task;
+  const factory _Task({required final String description}) = _$_Task;
 
   factory _Task.fromJson(Map<String, dynamic> json) = _$_Task.fromJson;
 
   @override
   String get description;
-  @override
-  bool get completed;
   @override
   @JsonKey(ignore: true)
   _$$_TaskCopyWith<_$_Task> get copyWith => throw _privateConstructorUsedError;
