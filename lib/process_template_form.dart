@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:myprocess/model/model.dart';
+import 'package:uuid/uuid.dart';
 
 class ProcessTemplateForm extends StatefulHookConsumerWidget {
   const ProcessTemplateForm({super.key});
@@ -23,6 +26,8 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
 
   @override
   Widget build(BuildContext context) {
+    final tasks = useState<List<Task>>([]);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add New Process"),
@@ -73,7 +78,7 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
                     IconButton(
                       icon: const Icon(Icons.add),
                       onPressed: () {
-                        _dialogBuilder(context);
+                        _dialogBuilder(context, tasks);
                       },
                     )
                   ])),
@@ -84,6 +89,10 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          ref.read(processTemplateListProvider).add(Process(
+              id: const Uuid().v1(),
+              name: nameController.text,
+              tasks: tasks.value));
           Navigator.pop(context);
         },
         tooltip: "New Process",
@@ -92,7 +101,8 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
     );
   }
 
-  Future<void> _dialogBuilder(BuildContext context) {
+  Future<void> _dialogBuilder(
+      BuildContext context, ValueNotifier<List<Task>> tasks) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -123,6 +133,8 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
                   ),
                   child: const Text('Add'),
                   onPressed: () {
+                    tasks.value.add(Task(description: taskController.text));
+                    taskController.clear();
                     Navigator.of(context).pop();
                   },
                 ),
@@ -132,6 +144,7 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
                   ),
                   child: const Text('Cancel'),
                   onPressed: () {
+                    taskController.clear();
                     Navigator.of(context).pop();
                   },
                 ),
