@@ -96,7 +96,7 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          ref.read(processTemplateListProvider).add(Process(
+          ref.read(processTemplateListProvider.notifier).add(Process(
               id: const Uuid().v1(),
               name: nameController.text,
               tasks: tasks.value));

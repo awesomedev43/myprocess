@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/process_template_form.dart';
 
+import 'model/model.dart';
+
 void main() {
   runApp(
     ProviderScope(
@@ -59,14 +61,18 @@ class ProcessTemplateList extends StatefulHookConsumerWidget {
 class _ProcessTemplateListState extends ConsumerState<ProcessTemplateList> {
   @override
   Widget build(BuildContext context) {
+    final templateList = ref.watch(processTemplateListProvider);
+    final cards = templateList
+        .map((process) => Card(
+              child: ListTile(
+                leading: const Icon(Icons.card_travel),
+                title: Text(process.name),
+              ),
+            ))
+        .toList();
+
     return ListView(
-      children: [
-        ListTile(
-          leading: const Icon(Icons.map),
-          title: const Text("TODO Add Generation of List"),
-          onTap: () {},
-        )
-      ],
+      children: cards,
     );
   }
 }
