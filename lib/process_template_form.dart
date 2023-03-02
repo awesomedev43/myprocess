@@ -4,6 +4,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:myprocess/model/model.dart';
 import 'package:uuid/uuid.dart';
 
+import 'add_task_dialog.dart';
+
 class ProcessTemplateForm extends StatefulHookConsumerWidget {
   const ProcessTemplateForm({super.key});
 
@@ -111,58 +113,7 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return SimpleDialog(
-          title: const Text('New Process Task'),
-          children: <Widget>[
-            Row(
-              children: [
-                const Padding(padding: EdgeInsets.only(left: 25.0)),
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: SizedBox(
-                        width: 200,
-                        child: TextField(
-                          maxLength: 100,
-                          decoration:
-                              const InputDecoration(hintText: "Description"),
-                          controller: taskController,
-                        )))
-              ],
-            ),
-            Row(
-              children: [
-                const Padding(padding: EdgeInsets.all(5)),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                  ),
-                  child: const Text('Add'),
-                  onPressed: () {
-                    if (taskController.text.trim().isEmpty) {
-                      return;
-                    }
-                    tasks.value = [
-                      ...tasks.value,
-                      Task(description: taskController.text.trim())
-                    ];
-                    taskController.clear();
-                    Navigator.of(context).pop();
-                  },
-                ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                  ),
-                  child: const Text('Cancel'),
-                  onPressed: () {
-                    taskController.clear();
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            ),
-          ],
-        );
+        return AddTaskDialog(tasks: tasks);
       },
     );
   }
