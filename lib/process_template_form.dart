@@ -84,6 +84,11 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
                   ])),
             ]),
             const Divider(),
+            Expanded(
+              child: TaskListWidget(
+                tasks: tasks.value,
+              ),
+            ),
           ],
         ),
       ),
@@ -133,7 +138,13 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
                   ),
                   child: const Text('Add'),
                   onPressed: () {
-                    tasks.value.add(Task(description: taskController.text));
+                    if (taskController.text.trim().isEmpty) {
+                      return;
+                    }
+                    tasks.value = [
+                      ...tasks.value,
+                      Task(description: taskController.text.trim())
+                    ];
                     taskController.clear();
                     Navigator.of(context).pop();
                   },
@@ -153,6 +164,26 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
           ],
         );
       },
+    );
+  }
+}
+
+class TaskListWidget extends StatelessWidget {
+  const TaskListWidget({super.key, required this.tasks});
+
+  final List<Task> tasks;
+
+  @override
+  Widget build(BuildContext context) {
+    List<Card> cards = tasks
+        .map((e) => Card(
+            child: ListTile(
+                leading: const Icon(Icons.add_task),
+                title: Text(e.description))))
+        .toList();
+
+    return ListView(
+      children: cards,
     );
   }
 }
