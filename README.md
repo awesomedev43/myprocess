@@ -1,6 +1,6 @@
 # MyProcess (New Name TBD)
 
-Alternative to traditional todo application, this app allows you to create a `process`. The `processes` in this context is a list of steps needed to implement 
+Alternative to traditional todo application, this app allows you to create a `process`. A `process` in this context is a list of steps needed to reach a specific goal.
 
 ## Specs
 
