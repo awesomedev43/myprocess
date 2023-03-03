@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/process_template_form.dart';
+import 'package:myprocess/process_template_list_widget.dart';
 
 import 'model/model.dart';
 
@@ -36,7 +37,7 @@ class MainScreen extends StatelessWidget {
             title: const Text("MyProcess"),
           ),
           body: const TabBarView(children: [
-            ProcessTemplateList(),
+            ProcessTemplateListWidget(),
             CompletedProcessList(),
           ]),
           floatingActionButton: FloatingActionButton(
