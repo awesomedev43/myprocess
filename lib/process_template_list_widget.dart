@@ -73,9 +73,28 @@ class ProcessTemplateInfoDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final taskWidget = process.tasks.map((e) {
+      return ListTile(
+        title: Text(e.description),
+        leading: const Icon(Icons.check),
+      );
+    }).toList();
+
     return SimpleDialog(
       title: Text(process.name),
-      // TODO: Add children
+      children: [
+        ...taskWidget,
+        Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("Done")),
+          ),
+        ])
+      ],
     );
   }
 }
