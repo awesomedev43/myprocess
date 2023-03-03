@@ -1,16 +1,45 @@
-# myprocess
+# MyProcess (New Name TBD)
 
-A new Flutter project.
+Alternative to traditional todo application, this app allows you to create a `process`. The `processes` in this context is a list of steps needed to implement 
 
-## Getting Started
+## Specs
 
-This project is a starting point for a Flutter application.
+### Definitions (V1)
 
-A few resources to get you started if this is your first Flutter project:
+- `checklist` 
+	- List of `task`
+	- A goal that is needed to be accomplished by the user
+-  `task`
+	- something to do
+- `checklist instance`
+		- Instance of checklist
+		- Start Time
+		- End Time
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Functionality (V1)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Allows user to create a `checklist`
+	1. User defines the goal
+	2. User defines the task
+	3. User can used CRUD operations on any of the fields
+3. Allow user to create a `checklist instance`
+	1. Timer is started
+	2. User is given list of steps to follow
+	3. User can cycle through the steps
+		- Each step is marked as done
+	4. When all steps is marked the `checklist instance` is finished
+	5. User is displayed a prompt showing the result
+		- User can share the data with friend
+	6. User can view past `checklist instances`
+
+
+
+## Milestone 1
+
+The first milestone will be just a cross platform application that works off a local database
+
+## Milestone 2
+
+In this milestone the project will integrate with a backend service
+- Provide authentication using some signin provider
+- User `checklist` and `checklist instances` are backed up in the cloud
