@@ -40,6 +40,11 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
   @override
   void initState() {
     super.initState();
+    setState(() {
+      timeElapsed = DateTime.now()
+          .difference(widget.processInstance.start ?? DateTime.now())
+          .inSeconds;
+    });
     Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         timeElapsed++;
@@ -101,30 +106,6 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      if (index - 1 >= 0) {
-                        index--;
-                      }
-                    });
-                  },
-                  icon: const Icon(Icons.skip_previous),
-                  color: Colors.blue,
-                ),
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      if (index + 1 <
-                          widget.processInstance.process.tasks.length) {
-                        index++;
-                      }
-                    });
-                  },
-                  icon: const Icon(Icons.skip_next),
-                  color: Colors.blue,
-                ),
-                const SizedBox(width: 8),
                 IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.stop),
