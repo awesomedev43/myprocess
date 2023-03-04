@@ -61,7 +61,7 @@ class _MainAppState extends State<MainApp> with SingleTickerProviderStateMixin {
       ),
       body: TabBarView(controller: _tabController, children: [
         ProcessTemplateListWidget(controller: _tabController),
-        InProgressProcessListWidget(controller: _tabController),
+        InProgressProcessListWidget(tabController: _tabController),
         const CompletedProcessListWidget(),
       ]),
       floatingActionButton: FloatingActionButton(
