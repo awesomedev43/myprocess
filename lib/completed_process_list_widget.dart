@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/model.dart';
+import 'package:intl/intl.dart';
 
 class CompletedProcessListWidget extends ConsumerStatefulWidget {
   const CompletedProcessListWidget({super.key});
@@ -31,18 +33,40 @@ class CompletedProcessCard extends StatefulWidget {
 }
 
 class _CompletedProcessCardState extends State<CompletedProcessCard> {
+  final DateFormat formatter = DateFormat('yyyy-MM-dd h:mm:ss a');
+
   @override
   Widget build(BuildContext context) {
+    final duration = widget.processInstance.end
+        ?.difference(widget.processInstance.start ?? DateTime.now())
+        .inSeconds;
     return Center(
       child: Card(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             ListTile(
-              leading: const Icon(Icons.album),
+              leading: const Icon(
+                Icons.check_circle,
+                color: Colors.green,
+              ),
               title: Text(widget.processInstance.process.name),
-              subtitle: Text(
-                  "Start Time: ${widget.processInstance.start?.toIso8601String() ?? ""}"),
+              subtitle: Column(children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Html(
+                      data:
+                          "<b>Start Time</b>: ${formatter.format(widget.processInstance.start ?? DateTime.now())}"),
+                ),
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: Html(
+                        data:
+                            "<b>End Time</b>: ${formatter.format(widget.processInstance.end ?? DateTime.now())}")),
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: Html(data: "<b>Duration</b>: $duration s"))
+              ]),
             ),
           ],
         ),

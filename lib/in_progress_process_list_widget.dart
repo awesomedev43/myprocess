@@ -120,10 +120,10 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
                 IconButton(
                   onPressed: () {
                     widget.ref
-                        .watch(inProgressProcessListProvider.notifier)
+                        .read(inProgressProcessListProvider.notifier)
                         .remove(widget.processInstance);
                     widget.ref
-                        .watch(completedProcessListProvider)
+                        .read(completedProcessListProvider.notifier)
                         .add(widget.processInstance);
                   },
                   icon: const Icon(Icons.stop),
