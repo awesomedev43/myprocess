@@ -4,7 +4,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'model/model.dart';
 
 class ProcessTemplateListWidget extends ConsumerStatefulWidget {
-  const ProcessTemplateListWidget({super.key});
+  const ProcessTemplateListWidget({super.key, required this.controller});
+
+  final TabController controller;
+
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
       _ProcessTemplateListWidgetState();
@@ -27,6 +30,7 @@ class _ProcessTemplateListWidgetState
     return IconButton(
         onPressed: () {
           ref.read(inProgressProcessListProvider.notifier).add(process);
+          widget.controller.index = 1;
         },
         icon: const Icon(
           Icons.play_arrow,

@@ -14,7 +14,7 @@ void main() {
         title: 'MyProcess',
         initialRoute: '/',
         routes: {
-          '/': (context) => const MainScreen(),
+          '/': (context) => const MainApp(),
           '/addprocess': (context) => const ProcessTemplateForm(),
         },
       ),
@@ -22,38 +22,56 @@ void main() {
   );
 }
 
-class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
+class MainApp extends StatefulWidget {
+  const MainApp({super.key});
+
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(vsync: this, length: 3);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            bottom: const TabBar(tabs: [
-              Tab(
-                text: "Process Template",
-              ),
-              Tab(
-                text: "In Progress",
-              ),
-              Tab(text: "Completed")
-            ]),
-            title: const Text("MyProcess"),
+    return Scaffold(
+      appBar: AppBar(
+        bottom: TabBar(controller: _tabController, tabs: const [
+          Tab(
+            text: "Process Template",
           ),
-          body: const TabBarView(children: [
-            ProcessTemplateListWidget(),
-            InProgressProcessList(),
-            CompletedProcessList(),
-          ]),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/addprocess');
-            },
-            tooltip: "Add New Process Template",
-            child: const Icon(Icons.add),
+          Tab(
+            text: "In Progress",
           ),
-        ));
+          Tab(text: "Completed")
+        ]),
+        title: const Text("MyProcess"),
+      ),
+      body: TabBarView(controller: _tabController, children: [
+        ProcessTemplateListWidget(controller: _tabController),
+        InProgressProcessListWidget(controller: _tabController),
+        const CompletedProcessListWidget(),
+      ]),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/addprocess');
+        },
+        tooltip: "Add New Process Template",
+        child: const Icon(Icons.add),
+      ),
+    );
   }
 }
 
@@ -81,34 +99,5 @@ class _ProcessTemplateListState extends ConsumerState<ProcessTemplateList> {
     return ListView(
       children: cards,
     );
-  }
-}
-
-class InProgressProcessList extends ConsumerStatefulWidget {
-  const InProgressProcessList({super.key});
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _InProgressProcessListState();
-}
-
-class _InProgressProcessListState extends ConsumerState<InProgressProcessList> {
-  @override
-  Widget build(BuildContext context) {
-    return const InProgressProcessListWidget();
-  }
-}
-
-class CompletedProcessList extends StatefulHookConsumerWidget {
-  const CompletedProcessList({super.key});
-
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _CompletedProcessListState();
-}
-
-class _CompletedProcessListState extends ConsumerState<CompletedProcessList> {
-  @override
-  Widget build(BuildContext context) {
-    return const CompletedProcessListWidget();
   }
 }

@@ -81,7 +81,7 @@ class _CompletedProcessCardState extends State<CompletedProcessCard> {
                     Icons.timer_sharp,
                     color: Colors.black,
                   ),
-                  title: Text("$duration"),
+                  title: Text("$duration s"),
                 ),
               ]),
             )

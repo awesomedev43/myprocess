@@ -5,7 +5,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/model.dart';
 
 class InProgressProcessListWidget extends ConsumerStatefulWidget {
-  const InProgressProcessListWidget({super.key});
+  const InProgressProcessListWidget({super.key, required this.controller});
+
+  final TabController controller;
+
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
       _InProgressProcessListWidgetState();
@@ -18,18 +21,25 @@ class _InProgressProcessListWidgetState
     final inProgressProcesses = ref.watch(inProgressProcessListProvider);
     return ListView(
         children: inProgressProcesses
-            .map((instance) =>
-                InProgressProcessCard(processInstance: instance, ref: ref))
+            .map((instance) => InProgressProcessCard(
+                  processInstance: instance,
+                  ref: ref,
+                  controller: widget.controller,
+                ))
             .toList());
   }
 }
 
 class InProgressProcessCard extends StatefulWidget {
   const InProgressProcessCard(
-      {super.key, required this.processInstance, required this.ref});
+      {super.key,
+      required this.processInstance,
+      required this.ref,
+      required this.controller});
 
   final ProcessInstance processInstance;
   final WidgetRef ref;
+  final TabController controller;
 
   @override
   State<InProgressProcessCard> createState() => _InProgressProcessCardState();
@@ -125,6 +135,7 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
                     widget.ref
                         .read(completedProcessListProvider.notifier)
                         .add(widget.processInstance);
+                    widget.controller.index = 2;
                   },
                   icon: const Icon(Icons.stop),
                   color: Colors.red,
