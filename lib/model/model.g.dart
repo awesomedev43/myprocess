@@ -31,7 +31,7 @@ Map<String, dynamic> _$$_ProcessToJson(_$_Process instance) =>
 
 _$_ProcessInstance _$$_ProcessInstanceFromJson(Map<String, dynamic> json) =>
     _$_ProcessInstance(
-      processId: json['processId'] as String,
+      process: Process.fromJson(json['process'] as Map<String, dynamic>),
       start: json['start'] == null
           ? null
           : DateTime.parse(json['start'] as String),
@@ -40,7 +40,7 @@ _$_ProcessInstance _$$_ProcessInstanceFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$_ProcessInstanceToJson(_$_ProcessInstance instance) =>
     <String, dynamic>{
-      'processId': instance.processId,
+      'process': instance.process,
       'start': instance.start?.toIso8601String(),
       'end': instance.end?.toIso8601String(),
     };

@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myprocess/main.dart';
 
 part 'model.freezed.dart';
 part 'model.g.dart';
@@ -26,7 +27,7 @@ class Process with _$Process {
 @freezed
 class ProcessInstance with _$ProcessInstance {
   factory ProcessInstance(
-      {required String processId,
+      {required Process process,
       DateTime? start,
       DateTime? end}) = _ProcessInstance;
 
@@ -49,3 +50,36 @@ final processTemplateListProvider =
     StateNotifierProvider<ProcessTemplateList, List<Process>>((ref) {
   return ProcessTemplateList();
 });
+
+class InProgressProcessNotifier extends StateNotifier<List<ProcessInstance>> {
+  InProgressProcessNotifier([List<ProcessInstance>? initialList])
+      : super(initialList ?? []);
+
+  void add(Process process) {
+    state = [
+      ...state,
+      ProcessInstance(process: process, start: DateTime.now())
+    ];
+  }
+}
+
+final inProgressProcessListProvider =
+    StateNotifierProvider((ref) => InProgressProcessNotifier());
+
+class CompletedProcessNotifier extends StateNotifier<List<ProcessInstance>> {
+  CompletedProcessNotifier([List<ProcessInstance>? initialList])
+      : super(initialList ?? []);
+
+  void add(ProcessInstance processInstance) {
+    state = [
+      ...state,
+      ProcessInstance(
+          process: processInstance.process,
+          start: processInstance.start,
+          end: DateTime.now())
+    ];
+  }
+}
+
+final completedProcessListProvider =
+    StateNotifierProvider((ref) => CompletedProcessNotifier());
