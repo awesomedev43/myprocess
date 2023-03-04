@@ -56,6 +56,13 @@ class InProgressProcessNotifier extends StateNotifier<List<ProcessInstance>> {
       : super(initialList ?? []);
 
   void add(Process process) {
+    final alreadyInstantiated =
+        state.any((element) => element.process.id == process.id);
+
+    if (alreadyInstantiated) {
+      return;
+    }
+
     state = [
       ...state,
       ProcessInstance(process: process, start: DateTime.now())

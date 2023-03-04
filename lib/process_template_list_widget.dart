@@ -25,7 +25,9 @@ class _ProcessTemplateListWidgetState
 
   IconButton createPlayButton(Process process) {
     return IconButton(
-        onPressed: () {},
+        onPressed: () {
+          ref.read(inProgressProcessListProvider.notifier).add(process);
+        },
         icon: const Icon(
           Icons.play_arrow,
           color: Colors.green,
