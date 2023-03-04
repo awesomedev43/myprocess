@@ -82,6 +82,7 @@ class ProcessTemplateInfoDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final taskWidget = process.tasks.map((e) {
       return ListTile(
+        dense: true,
         title: Text(e.description),
         leading: const Icon(Icons.check),
       );
