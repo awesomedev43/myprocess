@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/model.dart';
@@ -32,6 +34,17 @@ class InProgressProcessCard extends StatefulWidget {
 
 class _InProgressProcessCardState extends State<InProgressProcessCard> {
   int index = 0;
+  int timeElapsed = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        timeElapsed++;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +62,13 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
               children: [
                 const Padding(padding: EdgeInsets.only(left: 20)),
                 Text(widget.processInstance.process.tasks[index].description),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const Padding(padding: EdgeInsets.only(left: 20)),
+                Text("Time Elapsed: $timeElapsed"),
               ],
             ),
             Row(
