@@ -35,6 +35,7 @@ class InProgressProcessCard extends StatefulWidget {
 class _InProgressProcessCardState extends State<InProgressProcessCard> {
   int index = 0;
   int timeElapsed = 0;
+  int _index = 0;
 
   @override
   void initState() {
@@ -44,6 +45,38 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
         timeElapsed++;
       });
     });
+  }
+
+  List<Step> buildSteps(List<Task> tasks) {
+    return tasks.map((task) {
+      return Step(title: Text(task.description), content: Container());
+    }).toList();
+  }
+
+  Stepper buildStepper(ProcessInstance instance) {
+    return Stepper(
+      currentStep: _index,
+      onStepCancel: () {
+        if (_index > 0) {
+          setState(() {
+            _index -= 1;
+          });
+        }
+      },
+      onStepContinue: () {
+        if (_index + 1 < instance.process.tasks.length) {
+          setState(() {
+            _index += 1;
+          });
+        }
+      },
+      onStepTapped: (int index) {
+        setState(() {
+          _index = index;
+        });
+      },
+      steps: buildSteps(instance.process.tasks),
+    );
   }
 
   @override
@@ -57,13 +90,7 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
               leading: const Icon(Icons.checklist),
               title: Text(widget.processInstance.process.name),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const Padding(padding: EdgeInsets.only(left: 20)),
-                Text(widget.processInstance.process.tasks[index].description),
-              ],
-            ),
+            buildStepper(widget.processInstance),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
