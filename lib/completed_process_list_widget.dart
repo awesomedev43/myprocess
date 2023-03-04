@@ -33,7 +33,7 @@ class CompletedProcessCard extends StatefulWidget {
 }
 
 class _CompletedProcessCardState extends State<CompletedProcessCard> {
-  final DateFormat formatter = DateFormat('yyyy-MM-dd h:mm:ss a');
+  final DateFormat formatter = DateFormat('h:mm:ss a, MMMM 4 yyyy');
 
   @override
   Widget build(BuildContext context) {
@@ -51,23 +51,40 @@ class _CompletedProcessCardState extends State<CompletedProcessCard> {
                 color: Colors.green,
               ),
               title: Text(widget.processInstance.process.name),
-              subtitle: Column(children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Html(
-                      data:
-                          "<b>Start Time</b>: ${formatter.format(widget.processInstance.start ?? DateTime.now())}"),
-                ),
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: Html(
-                        data:
-                            "<b>End Time</b>: ${formatter.format(widget.processInstance.end ?? DateTime.now())}")),
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: Html(data: "<b>Duration</b>: $duration s"))
-              ]),
             ),
+            Padding(
+              padding: const EdgeInsets.only(left: 47),
+              child: ListView(shrinkWrap: true, children: [
+                ListTile(
+                  dense: true,
+                  leading: const Icon(
+                    Icons.play_arrow,
+                    color: Colors.green,
+                  ),
+                  title: Html(
+                      data: formatter.format(
+                          widget.processInstance.start ?? DateTime.now())),
+                ),
+                ListTile(
+                  dense: true,
+                  leading: const Icon(
+                    Icons.stop,
+                    color: Colors.red,
+                  ),
+                  title: Html(
+                      data: formatter.format(
+                          widget.processInstance.end ?? DateTime.now())),
+                ),
+                ListTile(
+                  dense: true,
+                  leading: const Icon(
+                    Icons.timer_sharp,
+                    color: Colors.black,
+                  ),
+                  title: Text("$duration"),
+                ),
+              ]),
+            )
           ],
         ),
       ),
