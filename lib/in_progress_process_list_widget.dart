@@ -100,7 +100,7 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const Padding(padding: EdgeInsets.only(left: 20)),
-                Text("Time Elapsed: $timeElapsed"),
+                Text("Time Elapsed: $timeElapsed s"),
               ],
             ),
             Row(
