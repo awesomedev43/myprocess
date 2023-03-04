@@ -71,7 +71,8 @@ class InProgressProcessNotifier extends StateNotifier<List<ProcessInstance>> {
 }
 
 final inProgressProcessListProvider =
-    StateNotifierProvider((ref) => InProgressProcessNotifier());
+    StateNotifierProvider<InProgressProcessNotifier, List<ProcessInstance>>(
+        (ref) => InProgressProcessNotifier());
 
 class CompletedProcessNotifier extends StateNotifier<List<ProcessInstance>> {
   CompletedProcessNotifier([List<ProcessInstance>? initialList])
@@ -89,4 +90,5 @@ class CompletedProcessNotifier extends StateNotifier<List<ProcessInstance>> {
 }
 
 final completedProcessListProvider =
-    StateNotifierProvider((ref) => CompletedProcessNotifier());
+    StateNotifierProvider<CompletedProcessNotifier, List<ProcessInstance>>(
+        (ref) => CompletedProcessNotifier());
