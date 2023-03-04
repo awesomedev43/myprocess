@@ -71,7 +71,7 @@ class InProgressProcessNotifier extends StateNotifier<List<ProcessInstance>> {
   void remove(ProcessInstance processInstance) {
     state = [
       for (final instance in state)
-        if (instance.process.id != instance.process.id) instance
+        if (instance.process.id != processInstance.process.id) instance
     ];
   }
 }

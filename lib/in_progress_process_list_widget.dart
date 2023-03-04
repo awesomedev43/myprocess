@@ -105,7 +105,8 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
               leading: const Icon(Icons.checklist),
               title: Text(widget.processInstance.process.name),
             ),
-            buildStepper(widget.processInstance),
+            if (widget.processInstance.process.tasks.isNotEmpty)
+              buildStepper(widget.processInstance),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
