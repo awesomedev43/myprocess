@@ -18,15 +18,18 @@ class _InProgressProcessListWidgetState
     final inProgressProcesses = ref.watch(inProgressProcessListProvider);
     return ListView(
         children: inProgressProcesses
-            .map((instance) => InProgressProcessCard(processInstance: instance))
+            .map((instance) =>
+                InProgressProcessCard(processInstance: instance, ref: ref))
             .toList());
   }
 }
 
 class InProgressProcessCard extends StatefulWidget {
-  const InProgressProcessCard({super.key, required this.processInstance});
+  const InProgressProcessCard(
+      {super.key, required this.processInstance, required this.ref});
 
   final ProcessInstance processInstance;
+  final WidgetRef ref;
 
   @override
   State<InProgressProcessCard> createState() => _InProgressProcessCardState();
@@ -107,7 +110,14 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    widget.ref
+                        .watch(inProgressProcessListProvider.notifier)
+                        .remove(widget.processInstance);
+                    widget.ref
+                        .watch(completedProcessListProvider)
+                        .add(widget.processInstance);
+                  },
                   icon: const Icon(Icons.stop),
                   color: Colors.red,
                 ),
