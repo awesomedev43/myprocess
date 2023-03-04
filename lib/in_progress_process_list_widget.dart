@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/model.dart';
 
+import 'tabs.dart';
+
 class InProgressProcessListWidget extends ConsumerStatefulWidget {
   const InProgressProcessListWidget({super.key, required this.tabController});
 
@@ -134,7 +136,7 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
                     widget.ref
                         .read(completedProcessListProvider.notifier)
                         .add(widget.processInstance);
-                    widget.tabController.index = 2;
+                    widget.tabController.index = ProcessTab.completed.index;
                   },
                   icon: const Icon(Icons.stop),
                   color: Colors.red,

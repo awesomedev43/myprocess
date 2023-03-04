@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/process_template_form.dart';
 import 'package:myprocess/process_template_list_widget.dart';
+import 'package:myprocess/tabs.dart';
 
 import 'completed_process_list_widget.dart';
 import 'in_progress_process_list_widget.dart';
@@ -48,15 +49,7 @@ class _MainAppState extends State<MainApp> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        bottom: TabBar(controller: _tabController, tabs: const [
-          Tab(
-            text: "Process Template",
-          ),
-          Tab(
-            text: "In Progress",
-          ),
-          Tab(text: "Completed")
-        ]),
+        bottom: TabBar(controller: _tabController, tabs: sProcessTabs),
         title: const Text("MyProcess"),
       ),
       body: TabBarView(controller: _tabController, children: [

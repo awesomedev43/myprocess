@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myprocess/tabs.dart';
 
 import 'model/model.dart';
 
@@ -30,7 +31,7 @@ class _ProcessTemplateListWidgetState
     return IconButton(
         onPressed: () {
           ref.read(inProgressProcessListProvider.notifier).add(process);
-          widget.controller.index = 1;
+          widget.controller.index = ProcessTab.inprogress.index;
         },
         icon: const Icon(
           Icons.play_arrow,
