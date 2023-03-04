@@ -25,19 +25,23 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 2,
+        length: 3,
         child: Scaffold(
           appBar: AppBar(
             bottom: const TabBar(tabs: [
               Tab(
                 text: "Process Template",
               ),
-              Tab(text: "Completed Processes")
+              Tab(
+                text: "In Progress",
+              ),
+              Tab(text: "Completed")
             ]),
             title: const Text("MyProcess"),
           ),
           body: const TabBarView(children: [
             ProcessTemplateListWidget(),
+            InProgressProcessList(),
             CompletedProcessList(),
           ]),
           floatingActionButton: FloatingActionButton(
@@ -74,6 +78,28 @@ class _ProcessTemplateListState extends ConsumerState<ProcessTemplateList> {
 
     return ListView(
       children: cards,
+    );
+  }
+}
+
+class InProgressProcessList extends ConsumerStatefulWidget {
+  const InProgressProcessList({super.key});
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _InProgressProcessListState();
+}
+
+class _InProgressProcessListState extends ConsumerState<InProgressProcessList> {
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: [
+        ListTile(
+          leading: const Icon(Icons.map),
+          title: const Text("TODO Add Generation of this List"),
+          onTap: () {},
+        )
+      ],
     );
   }
 }
