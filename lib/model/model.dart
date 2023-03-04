@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myprocess/main.dart';
 
 part 'model.freezed.dart';
 part 'model.g.dart';
@@ -87,11 +86,11 @@ class CompletedProcessNotifier extends StateNotifier<List<ProcessInstance>> {
 
   void add(ProcessInstance processInstance) {
     state = [
-      ...state,
       ProcessInstance(
           process: processInstance.process,
           start: processInstance.start,
-          end: DateTime.now())
+          end: DateTime.now()),
+      ...state,
     ];
   }
 }

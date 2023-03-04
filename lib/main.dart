@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/process_template_form.dart';
 import 'package:myprocess/process_template_list_widget.dart';
 
+import 'completed_process_list_widget.dart';
 import 'in_progress_process_list_widget.dart';
 import 'model/model.dart';
 
@@ -108,14 +109,6 @@ class CompletedProcessList extends StatefulHookConsumerWidget {
 class _CompletedProcessListState extends ConsumerState<CompletedProcessList> {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        ListTile(
-          leading: const Icon(Icons.map),
-          title: const Text("TODO Add Generation of this List"),
-          onTap: () {},
-        )
-      ],
-    );
+    return const CompletedProcessListWidget();
   }
 }

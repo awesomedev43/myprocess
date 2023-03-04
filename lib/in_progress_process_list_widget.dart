@@ -39,6 +39,7 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
   int index = 0;
   int timeElapsed = 0;
   int _index = 0;
+  late Timer timer;
 
   @override
   void initState() {
@@ -48,11 +49,17 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
           .difference(widget.processInstance.start ?? DateTime.now())
           .inSeconds;
     });
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         timeElapsed++;
       });
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    timer.cancel();
   }
 
   List<Step> buildSteps(List<Task> tasks) {
