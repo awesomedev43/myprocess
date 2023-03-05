@@ -32,3 +32,22 @@ class ProcessInstance with _$ProcessInstance {
   factory ProcessInstance.fromJson(Map<String, dynamic> json) =>
       _$ProcessInstanceFromJson(json);
 }
+
+@freezed
+class ProcessList with _$ProcessList {
+  // Used for JSON serialization of `Process` class
+  const factory ProcessList({required List<Process> processes}) = _ProcessList;
+
+  factory ProcessList.fromJson(Map<String, dynamic> json) =>
+      _$ProcessListFromJson(json);
+}
+
+@freezed
+class ProcessInstanceList with _$ProcessInstanceList {
+  // Used for JSON serialization of `ProcessInstance` class
+  const factory ProcessInstanceList(
+      {required List<ProcessInstance> processes}) = _ProcessInstanceList;
+
+  factory ProcessInstanceList.fromJson(Map<String, dynamic> json) =>
+      _$ProcessInstanceListFromJson(json);
+}

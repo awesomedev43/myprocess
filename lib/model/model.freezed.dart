@@ -529,3 +529,313 @@ abstract class _ProcessInstance implements ProcessInstance {
   _$$_ProcessInstanceCopyWith<_$_ProcessInstance> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+ProcessList _$ProcessListFromJson(Map<String, dynamic> json) {
+  return _ProcessList.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ProcessList {
+  List<Process> get processes => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ProcessListCopyWith<ProcessList> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ProcessListCopyWith<$Res> {
+  factory $ProcessListCopyWith(
+          ProcessList value, $Res Function(ProcessList) then) =
+      _$ProcessListCopyWithImpl<$Res, ProcessList>;
+  @useResult
+  $Res call({List<Process> processes});
+}
+
+/// @nodoc
+class _$ProcessListCopyWithImpl<$Res, $Val extends ProcessList>
+    implements $ProcessListCopyWith<$Res> {
+  _$ProcessListCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? processes = null,
+  }) {
+    return _then(_value.copyWith(
+      processes: null == processes
+          ? _value.processes
+          : processes // ignore: cast_nullable_to_non_nullable
+              as List<Process>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_ProcessListCopyWith<$Res>
+    implements $ProcessListCopyWith<$Res> {
+  factory _$$_ProcessListCopyWith(
+          _$_ProcessList value, $Res Function(_$_ProcessList) then) =
+      __$$_ProcessListCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({List<Process> processes});
+}
+
+/// @nodoc
+class __$$_ProcessListCopyWithImpl<$Res>
+    extends _$ProcessListCopyWithImpl<$Res, _$_ProcessList>
+    implements _$$_ProcessListCopyWith<$Res> {
+  __$$_ProcessListCopyWithImpl(
+      _$_ProcessList _value, $Res Function(_$_ProcessList) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? processes = null,
+  }) {
+    return _then(_$_ProcessList(
+      processes: null == processes
+          ? _value._processes
+          : processes // ignore: cast_nullable_to_non_nullable
+              as List<Process>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_ProcessList with DiagnosticableTreeMixin implements _ProcessList {
+  const _$_ProcessList({required final List<Process> processes})
+      : _processes = processes;
+
+  factory _$_ProcessList.fromJson(Map<String, dynamic> json) =>
+      _$$_ProcessListFromJson(json);
+
+  final List<Process> _processes;
+  @override
+  List<Process> get processes {
+    if (_processes is EqualUnmodifiableListView) return _processes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_processes);
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ProcessList(processes: $processes)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ProcessList'))
+      ..add(DiagnosticsProperty('processes', processes));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ProcessList &&
+            const DeepCollectionEquality()
+                .equals(other._processes, _processes));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_processes));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ProcessListCopyWith<_$_ProcessList> get copyWith =>
+      __$$_ProcessListCopyWithImpl<_$_ProcessList>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_ProcessListToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ProcessList implements ProcessList {
+  const factory _ProcessList({required final List<Process> processes}) =
+      _$_ProcessList;
+
+  factory _ProcessList.fromJson(Map<String, dynamic> json) =
+      _$_ProcessList.fromJson;
+
+  @override
+  List<Process> get processes;
+  @override
+  @JsonKey(ignore: true)
+  _$$_ProcessListCopyWith<_$_ProcessList> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+ProcessInstanceList _$ProcessInstanceListFromJson(Map<String, dynamic> json) {
+  return _ProcessInstanceList.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ProcessInstanceList {
+  List<ProcessInstance> get processes => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ProcessInstanceListCopyWith<ProcessInstanceList> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ProcessInstanceListCopyWith<$Res> {
+  factory $ProcessInstanceListCopyWith(
+          ProcessInstanceList value, $Res Function(ProcessInstanceList) then) =
+      _$ProcessInstanceListCopyWithImpl<$Res, ProcessInstanceList>;
+  @useResult
+  $Res call({List<ProcessInstance> processes});
+}
+
+/// @nodoc
+class _$ProcessInstanceListCopyWithImpl<$Res, $Val extends ProcessInstanceList>
+    implements $ProcessInstanceListCopyWith<$Res> {
+  _$ProcessInstanceListCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? processes = null,
+  }) {
+    return _then(_value.copyWith(
+      processes: null == processes
+          ? _value.processes
+          : processes // ignore: cast_nullable_to_non_nullable
+              as List<ProcessInstance>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_ProcessInstanceListCopyWith<$Res>
+    implements $ProcessInstanceListCopyWith<$Res> {
+  factory _$$_ProcessInstanceListCopyWith(_$_ProcessInstanceList value,
+          $Res Function(_$_ProcessInstanceList) then) =
+      __$$_ProcessInstanceListCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({List<ProcessInstance> processes});
+}
+
+/// @nodoc
+class __$$_ProcessInstanceListCopyWithImpl<$Res>
+    extends _$ProcessInstanceListCopyWithImpl<$Res, _$_ProcessInstanceList>
+    implements _$$_ProcessInstanceListCopyWith<$Res> {
+  __$$_ProcessInstanceListCopyWithImpl(_$_ProcessInstanceList _value,
+      $Res Function(_$_ProcessInstanceList) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? processes = null,
+  }) {
+    return _then(_$_ProcessInstanceList(
+      processes: null == processes
+          ? _value._processes
+          : processes // ignore: cast_nullable_to_non_nullable
+              as List<ProcessInstance>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_ProcessInstanceList
+    with DiagnosticableTreeMixin
+    implements _ProcessInstanceList {
+  const _$_ProcessInstanceList({required final List<ProcessInstance> processes})
+      : _processes = processes;
+
+  factory _$_ProcessInstanceList.fromJson(Map<String, dynamic> json) =>
+      _$$_ProcessInstanceListFromJson(json);
+
+  final List<ProcessInstance> _processes;
+  @override
+  List<ProcessInstance> get processes {
+    if (_processes is EqualUnmodifiableListView) return _processes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_processes);
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ProcessInstanceList(processes: $processes)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ProcessInstanceList'))
+      ..add(DiagnosticsProperty('processes', processes));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ProcessInstanceList &&
+            const DeepCollectionEquality()
+                .equals(other._processes, _processes));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_processes));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ProcessInstanceListCopyWith<_$_ProcessInstanceList> get copyWith =>
+      __$$_ProcessInstanceListCopyWithImpl<_$_ProcessInstanceList>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_ProcessInstanceListToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ProcessInstanceList implements ProcessInstanceList {
+  const factory _ProcessInstanceList(
+          {required final List<ProcessInstance> processes}) =
+      _$_ProcessInstanceList;
+
+  factory _ProcessInstanceList.fromJson(Map<String, dynamic> json) =
+      _$_ProcessInstanceList.fromJson;
+
+  @override
+  List<ProcessInstance> get processes;
+  @override
+  @JsonKey(ignore: true)
+  _$$_ProcessInstanceListCopyWith<_$_ProcessInstanceList> get copyWith =>
+      throw _privateConstructorUsedError;
+}

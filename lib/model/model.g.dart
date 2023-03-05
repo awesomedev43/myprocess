@@ -44,3 +44,29 @@ Map<String, dynamic> _$$_ProcessInstanceToJson(_$_ProcessInstance instance) =>
       'start': instance.start?.toIso8601String(),
       'end': instance.end?.toIso8601String(),
     };
+
+_$_ProcessList _$$_ProcessListFromJson(Map<String, dynamic> json) =>
+    _$_ProcessList(
+      processes: (json['processes'] as List<dynamic>)
+          .map((e) => Process.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$_ProcessListToJson(_$_ProcessList instance) =>
+    <String, dynamic>{
+      'processes': instance.processes,
+    };
+
+_$_ProcessInstanceList _$$_ProcessInstanceListFromJson(
+        Map<String, dynamic> json) =>
+    _$_ProcessInstanceList(
+      processes: (json['processes'] as List<dynamic>)
+          .map((e) => ProcessInstance.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$_ProcessInstanceListToJson(
+        _$_ProcessInstanceList instance) =>
+    <String, dynamic>{
+      'processes': instance.processes,
+    };

@@ -1,6 +1,45 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'model.dart';
+
+Future<String> getLocalPath() async {
+  final directory = await getApplicationDocumentsDirectory();
+  return directory.path;
+}
+
+Future<File> getLocalFile(String fileName) async {
+  final path = await getLocalPath();
+  return File('$path/.$fileName');
+}
+
+Future<File> writeContent(String content, String fileName) async {
+  final file = await getLocalFile(fileName);
+
+  // Write the file
+  return file.writeAsString(content);
+}
+
+Future<String> readContent(String fileName) async {
+  try {
+    final file = await getLocalFile(fileName);
+
+    if (!(await file.exists())) {
+      return "";
+    }
+
+    // Read the file
+    final contents = await file.readAsString();
+
+    return contents;
+  } catch (e) {
+    // If encountering an error, return 0
+    return "";
+  }
+}
 
 class ProcessTemplateList extends StateNotifier<List<Process>> {
   ProcessTemplateList([List<Process>? initialList]) : super(initialList ?? []);
@@ -10,12 +49,24 @@ class ProcessTemplateList extends StateNotifier<List<Process>> {
       ...state,
       process,
     ];
+    final processList = ProcessList(processes: state);
+    writeContent(jsonEncode(processList.toJson()), "templates.txt");
   }
 }
 
+final futureProcessListProvider = FutureProvider<List<Process>>((ref) async {
+  String contents = await readContent("templates.txt");
+  if (contents.isEmpty) {
+    return [];
+  }
+  final processList = ProcessList.fromJson(jsonDecode(contents));
+  return processList.processes;
+});
+
 final processTemplateListProvider =
     StateNotifierProvider<ProcessTemplateList, List<Process>>((ref) {
-  return ProcessTemplateList();
+  final processes = ref.watch(futureProcessListProvider).value;
+  return ProcessTemplateList(processes);
 });
 
 class InProgressProcessNotifier extends StateNotifier<List<ProcessInstance>> {
