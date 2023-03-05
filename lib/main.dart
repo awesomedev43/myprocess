@@ -6,7 +6,7 @@ import 'package:myprocess/tabs.dart';
 
 import 'completed_process_list_widget.dart';
 import 'in_progress_process_list_widget.dart';
-import 'model/model.dart';
+import 'model/providers.dart';
 
 void main() {
   runApp(

@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/tabs.dart';
 
 import 'model/model.dart';
+import 'model/providers.dart';
 
 class ProcessTemplateListWidget extends ConsumerStatefulWidget {
   const ProcessTemplateListWidget({super.key, required this.controller});

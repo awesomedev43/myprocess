@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/model.dart';
 
+import 'model/providers.dart';
 import 'tabs.dart';
 
 class InProgressProcessListWidget extends ConsumerStatefulWidget {
