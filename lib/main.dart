@@ -8,9 +8,13 @@ import 'completed_process_list_widget.dart';
 import 'in_progress_process_list_widget.dart';
 import 'model/providers.dart';
 
-void main() {
+void main() async {
+  // Only initilize state at the start
+  final container = await initializeState();
+
   runApp(
-    ProviderScope(
+    UncontrolledProviderScope(
+      container: container,
       child: MaterialApp(
         title: 'MyProcess',
         initialRoute: '/',
@@ -21,6 +25,23 @@ void main() {
       ),
     ),
   );
+}
+
+Future<ProviderContainer> initializeState() async {
+  final container = ProviderContainer();
+  container.read(processTemplateListProvider).addAll(
+      await PersistantLocalStorage.readProcessList(
+          FileStorageObjectType.processlist));
+
+  container.read(inProgressProcessListProvider).addAll(
+      await PersistantLocalStorage.readProcessInstanceList(
+          FileStorageObjectType.inprogresslist));
+
+  container.read(completedProcessListProvider).addAll(
+      await PersistantLocalStorage.readProcessInstanceList(
+          FileStorageObjectType.completedlist));
+
+  return container;
 }
 
 class MainApp extends StatefulWidget {

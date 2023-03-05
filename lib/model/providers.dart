@@ -54,6 +54,38 @@ class PersistantLocalStorage {
       return "";
     }
   }
+
+  static Future<List<Process>> readProcessList(
+      FileStorageObjectType type) async {
+    switch (type) {
+      case FileStorageObjectType.processlist:
+        String contents = await PersistantLocalStorage.readContent(type);
+        if (contents.isEmpty) {
+          return [];
+        }
+        final processList = ProcessList.fromJson(jsonDecode(contents));
+        return processList.processes;
+      case FileStorageObjectType.inprogresslist:
+      case FileStorageObjectType.completedlist:
+        return [];
+    }
+  }
+
+  static Future<List<ProcessInstance>> readProcessInstanceList(
+      FileStorageObjectType type) async {
+    switch (type) {
+      case FileStorageObjectType.processlist:
+        return [];
+      case FileStorageObjectType.inprogresslist:
+      case FileStorageObjectType.completedlist:
+        String contents = await PersistantLocalStorage.readContent(type);
+        if (contents.isEmpty) {
+          return [];
+        }
+        final processList = ProcessInstanceList.fromJson(jsonDecode(contents));
+        return processList.processes;
+    }
+  }
 }
 
 class ProcessTemplateList extends StateNotifier<List<Process>> {
@@ -70,34 +102,9 @@ class ProcessTemplateList extends StateNotifier<List<Process>> {
   }
 }
 
-final futureProcessListProvider =
-    FutureProvider.family<List<Process>, FileStorageObjectType>(
-        (ref, type) async {
-  String contents = await PersistantLocalStorage.readContent(type);
-  if (contents.isEmpty) {
-    return [];
-  }
-  final processList = ProcessList.fromJson(jsonDecode(contents));
-  return processList.processes;
-});
-
-final futureProcessInstanceListProvider =
-    FutureProvider.family<List<ProcessInstance>, FileStorageObjectType>(
-        (ref, type) async {
-  String contents = await PersistantLocalStorage.readContent(type);
-  if (contents.isEmpty) {
-    return [];
-  }
-  final processList = ProcessInstanceList.fromJson(jsonDecode(contents));
-  return processList.processes;
-});
-
 final processTemplateListProvider =
     StateNotifierProvider<ProcessTemplateList, List<Process>>((ref) {
-  final processes = ref
-      .watch(futureProcessListProvider(FileStorageObjectType.processlist))
-      .value;
-  return ProcessTemplateList(processes);
+  return ProcessTemplateList();
 });
 
 class InProgressProcessNotifier extends StateNotifier<List<ProcessInstance>> {
@@ -137,11 +144,7 @@ class InProgressProcessNotifier extends StateNotifier<List<ProcessInstance>> {
 final inProgressProcessListProvider =
     StateNotifierProvider<InProgressProcessNotifier, List<ProcessInstance>>(
         (ref) {
-  final processes = ref
-      .watch(futureProcessInstanceListProvider(
-          FileStorageObjectType.inprogresslist))
-      .value;
-  return InProgressProcessNotifier(processes);
+  return InProgressProcessNotifier();
 });
 
 class CompletedProcessNotifier extends StateNotifier<List<ProcessInstance>> {
@@ -165,9 +168,5 @@ class CompletedProcessNotifier extends StateNotifier<List<ProcessInstance>> {
 final completedProcessListProvider =
     StateNotifierProvider<CompletedProcessNotifier, List<ProcessInstance>>(
         (ref) {
-  final processes = ref
-      .watch(futureProcessInstanceListProvider(
-          FileStorageObjectType.completedlist))
-      .value;
-  return CompletedProcessNotifier(processes);
+  return CompletedProcessNotifier();
 });
