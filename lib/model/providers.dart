@@ -92,9 +92,11 @@ class ProcessTemplateList extends StateNotifier<List<Process>> {
   ProcessTemplateList([List<Process>? initialList]) : super(initialList ?? []);
 
   void add(Process process) {
+    final editing = state.any((p) => p.id == process.id);
     state = [
       for (final p in state)
-        if (p.id == process.id) process else p
+        if (p.id != process.id) p else process,
+      if (!editing) process,
     ];
     final processList = ProcessList(processes: state);
     PersistantLocalStorage.writeContent(
