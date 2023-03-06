@@ -23,14 +23,19 @@ class _InProgressProcessListWidgetState
   @override
   Widget build(BuildContext context) {
     final inProgressProcesses = ref.watch(inProgressProcessListProvider);
-    return ListView(
-        children: inProgressProcesses
-            .map((instance) => InProgressProcessCard(
-                  processInstance: instance,
-                  ref: ref,
-                  tabController: widget.tabController,
-                ))
-            .toList());
+    final children = inProgressProcesses
+        .map((instance) => InProgressProcessCard(
+              processInstance: instance,
+              ref: ref,
+              tabController: widget.tabController,
+            ))
+        .toList();
+    return ListView(children: [
+      ...children,
+      const SizedBox(
+        height: 100,
+      )
+    ]);
   }
 }
 
@@ -83,6 +88,7 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
 
   Stepper buildStepper(ProcessInstance instance) {
     return Stepper(
+      physics: const NeverScrollableScrollPhysics(),
       key: Key(Random.secure().nextDouble().toString()),
       currentStep: _index,
       onStepCancel: () {

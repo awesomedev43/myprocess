@@ -56,7 +56,7 @@ class _CompletedProcessCardState extends State<CompletedProcessCard> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 47),
-              child: ListView(shrinkWrap: true, children: [
+              child: ListView(primary: false, shrinkWrap: true, children: [
                 ListTile(
                   dense: true,
                   leading: const Icon(
