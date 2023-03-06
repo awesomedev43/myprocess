@@ -38,21 +38,16 @@ class PersistantLocalStorage {
   }
 
   static Future<String> readContent(FileStorageObjectType type) async {
-    try {
-      final file = await getLocalFile(type);
+    final file = await getLocalFile(type);
 
-      if (!(await file.exists())) {
-        return "";
-      }
-
-      // Read the file
-      final contents = await file.readAsString();
-
-      return contents;
-    } catch (e) {
-      // If encountering an error, return 0
+    if (!(await file.exists())) {
       return "";
     }
+
+    // Read the file
+    final contents = await file.readAsString();
+
+    return contents;
   }
 
   static Future<List<Process>> readProcessList(

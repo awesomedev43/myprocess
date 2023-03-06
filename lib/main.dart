@@ -10,6 +10,7 @@ import 'model/providers.dart';
 
 void main() async {
   // Only initilize state at the start
+  WidgetsFlutterBinding.ensureInitialized();
   final container = await initializeState();
 
   runApp(
