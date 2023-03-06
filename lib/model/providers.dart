@@ -93,8 +93,8 @@ class ProcessTemplateList extends StateNotifier<List<Process>> {
 
   void add(Process process) {
     state = [
-      ...state,
-      process,
+      for (final p in state)
+        if (p.id == process.id) process else p
     ];
     final processList = ProcessList(processes: state);
     PersistantLocalStorage.writeContent(

@@ -40,6 +40,17 @@ class _ProcessTemplateListWidgetState
         ));
   }
 
+  IconButton createEditButton(BuildContext context, Process process) {
+    return IconButton(
+        onPressed: () {
+          Navigator.pushNamed(context, "/addprocess", arguments: process);
+        },
+        icon: const Icon(
+          Icons.edit,
+          color: Colors.black,
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     final templateList = ref.watch(processTemplateListProvider);
@@ -52,6 +63,7 @@ class _ProcessTemplateListWidgetState
             mainAxisSize: MainAxisSize.min,
             children: [
               createInfoButton(context, process),
+              createEditButton(context, process),
               createPlayButton(process)
             ],
           ),

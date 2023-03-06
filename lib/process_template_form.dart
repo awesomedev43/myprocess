@@ -18,6 +18,7 @@ class ProcessTemplateForm extends StatefulHookConsumerWidget {
 class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
   final nameController = TextEditingController();
   final taskController = TextEditingController();
+  late Process? editingProcess;
 
   @override
   void dispose() {
@@ -29,7 +30,10 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
 
   @override
   Widget build(BuildContext context) {
-    final tasks = useState<List<Task>>([]);
+    editingProcess = ModalRoute.of(context)!.settings.arguments as Process?;
+    final tasks = useState<List<Task>>(editingProcess?.tasks ?? []);
+
+    nameController.text = editingProcess?.name ?? "";
 
     return Scaffold(
       appBar: AppBar(
@@ -97,10 +101,12 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          ref.read(processTemplateListProvider.notifier).add(Process(
-              id: const Uuid().v1(),
+          final process = Process(
+              id: editingProcess?.id ?? const Uuid().v1(),
               name: nameController.text,
-              tasks: tasks.value));
+              tasks: tasks.value);
+
+          ref.read(processTemplateListProvider.notifier).add(process);
           Navigator.pop(context);
         },
         tooltip: "Save",
