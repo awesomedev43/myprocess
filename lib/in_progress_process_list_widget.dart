@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -82,6 +83,7 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
 
   Stepper buildStepper(ProcessInstance instance) {
     return Stepper(
+      key: Key(Random.secure().nextDouble().toString()),
       currentStep: _index,
       onStepCancel: () {
         if (_index > 0) {
