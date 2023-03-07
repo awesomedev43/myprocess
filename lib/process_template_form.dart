@@ -19,6 +19,7 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
   final nameController = TextEditingController();
   final taskController = TextEditingController();
   late Process? editingProcess;
+  bool initialized = false;
 
   @override
   void dispose() {
@@ -33,7 +34,10 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
     editingProcess = ModalRoute.of(context)!.settings.arguments as Process?;
     final tasks = useState<List<Task>>(editingProcess?.tasks ?? []);
 
-    nameController.text = editingProcess?.name ?? "";
+    if (!initialized) {
+      nameController.text = editingProcess?.name ?? nameController.text;
+      initialized = true;
+    }
 
     return Scaffold(
       appBar: AppBar(
