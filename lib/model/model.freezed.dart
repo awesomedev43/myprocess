@@ -20,6 +20,7 @@ Task _$TaskFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Task {
+  String get id => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -32,7 +33,7 @@ abstract class $TaskCopyWith<$Res> {
   factory $TaskCopyWith(Task value, $Res Function(Task) then) =
       _$TaskCopyWithImpl<$Res, Task>;
   @useResult
-  $Res call({String description});
+  $Res call({String id, String description});
 }
 
 /// @nodoc
@@ -48,9 +49,14 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? description = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -65,7 +71,7 @@ abstract class _$$_TaskCopyWith<$Res> implements $TaskCopyWith<$Res> {
       __$$_TaskCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String description});
+  $Res call({String id, String description});
 }
 
 /// @nodoc
@@ -77,9 +83,14 @@ class __$$_TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res, _$_Task>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? description = null,
   }) {
     return _then(_$_Task(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -91,16 +102,18 @@ class __$$_TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res, _$_Task>
 /// @nodoc
 @JsonSerializable()
 class _$_Task with DiagnosticableTreeMixin implements _Task {
-  const _$_Task({required this.description});
+  const _$_Task({required this.id, required this.description});
 
   factory _$_Task.fromJson(Map<String, dynamic> json) => _$$_TaskFromJson(json);
 
+  @override
+  final String id;
   @override
   final String description;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Task(description: $description)';
+    return 'Task(id: $id, description: $description)';
   }
 
   @override
@@ -108,6 +121,7 @@ class _$_Task with DiagnosticableTreeMixin implements _Task {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Task'))
+      ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('description', description));
   }
 
@@ -116,13 +130,14 @@ class _$_Task with DiagnosticableTreeMixin implements _Task {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Task &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.description, description) ||
                 other.description == description));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, description);
+  int get hashCode => Object.hash(runtimeType, id, description);
 
   @JsonKey(ignore: true)
   @override
@@ -139,10 +154,13 @@ class _$_Task with DiagnosticableTreeMixin implements _Task {
 }
 
 abstract class _Task implements Task {
-  const factory _Task({required final String description}) = _$_Task;
+  const factory _Task(
+      {required final String id, required final String description}) = _$_Task;
 
   factory _Task.fromJson(Map<String, dynamic> json) = _$_Task.fromJson;
 
+  @override
+  String get id;
   @override
   String get description;
   @override

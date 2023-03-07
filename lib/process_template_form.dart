@@ -102,7 +102,7 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
                   setState(() {
                     tasks.value = [
                       for (final t in tasks.value)
-                        if (t.description != taskToDelete.description) t
+                        if (t.id != taskToDelete.id) t
                     ];
                   });
                 },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 import 'model/model.dart';
 
@@ -61,7 +62,9 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                         }
                         widget.tasks.value = [
                           ...widget.tasks.value,
-                          Task(description: descriptionController.text.trim())
+                          Task(
+                              id: const Uuid().v1(),
+                              description: descriptionController.text.trim())
                         ];
                         descriptionController.clear();
                         Navigator.of(context).pop();

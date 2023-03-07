@@ -7,10 +7,12 @@ part of 'model.dart';
 // **************************************************************************
 
 _$_Task _$$_TaskFromJson(Map<String, dynamic> json) => _$_Task(
+      id: json['id'] as String,
       description: json['description'] as String,
     );
 
 Map<String, dynamic> _$$_TaskToJson(_$_Task instance) => <String, dynamic>{
+      'id': instance.id,
       'description': instance.description,
     };
 
