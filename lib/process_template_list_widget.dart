@@ -54,7 +54,29 @@ class _ProcessTemplateListWidgetState
   IconButton createRemoveButton(Process process) {
     return IconButton(
         onPressed: () {
-          ref.read(processTemplateListProvider.notifier).remove(process);
+          showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              title: const Text('Delete'),
+              content: const Text(
+                  'Are you sure you want to delete the process and its associated data?'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    ref
+                        .read(processTemplateListProvider.notifier)
+                        .remove(process);
+                    Navigator.pop(context, 'Cancel');
+                  },
+                  child: const Text('OK'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'OK'),
+                  child: const Text('Cancel'),
+                ),
+              ],
+            ),
+          );
         },
         icon: const Icon(
           Icons.delete,
