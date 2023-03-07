@@ -51,6 +51,17 @@ class _ProcessTemplateListWidgetState
         ));
   }
 
+  IconButton createRemoveButton(Process process) {
+    return IconButton(
+        onPressed: () {
+          ref.read(processTemplateListProvider.notifier).remove(process);
+        },
+        icon: const Icon(
+          Icons.delete,
+          color: Colors.red,
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     final templateList = ref.watch(processTemplateListProvider);
@@ -63,8 +74,9 @@ class _ProcessTemplateListWidgetState
             mainAxisSize: MainAxisSize.min,
             children: [
               createInfoButton(context, process),
+              createRemoveButton(process),
               createEditButton(context, process),
-              createPlayButton(process)
+              createPlayButton(process),
             ],
           ),
         ),

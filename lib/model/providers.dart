@@ -97,6 +97,16 @@ class ProcessTemplateList extends StateNotifier<List<Process>> {
     PersistantLocalStorage.writeContent(
         jsonEncode(processList.toJson()), FileStorageObjectType.processlist);
   }
+
+  void remove(Process process) {
+    state = [
+      for (final p in state)
+        if (p.id != process.id) p
+    ];
+    final processList = ProcessList(processes: state);
+    PersistantLocalStorage.writeContent(
+        jsonEncode(processList.toJson()), FileStorageObjectType.processlist);
+  }
 }
 
 final processTemplateListProvider =
