@@ -98,6 +98,14 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
             Expanded(
               child: TaskListWidget(
                 tasks: tasks.value,
+                deleteTask: (taskToDelete) {
+                  setState(() {
+                    tasks.value = [
+                      for (final t in tasks.value)
+                        if (t.description != taskToDelete.description) t
+                    ];
+                  });
+                },
               ),
             ),
           ],
@@ -131,17 +139,25 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
 }
 
 class TaskListWidget extends StatelessWidget {
-  const TaskListWidget({super.key, required this.tasks});
+  const TaskListWidget(
+      {super.key, required this.tasks, required this.deleteTask});
 
   final List<Task> tasks;
+  final Function deleteTask;
 
   @override
   Widget build(BuildContext context) {
     List<Card> cards = tasks
         .map((e) => Card(
-            child: ListTile(
-                leading: const Icon(Icons.add_task),
-                title: Text(e.description))))
+                child: ListTile(
+              leading: const Icon(Icons.add_task),
+              title: Text(e.description),
+              trailing: IconButton(
+                color: Colors.red,
+                icon: const Icon(Icons.delete),
+                onPressed: () => deleteTask(e),
+              ),
+            )))
         .toList();
 
     return ListView(

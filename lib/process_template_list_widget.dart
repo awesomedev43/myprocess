@@ -57,7 +57,7 @@ class _ProcessTemplateListWidgetState
           showDialog<String>(
             context: context,
             builder: (BuildContext context) => AlertDialog(
-              title: const Text('Delete'),
+              title: const Text('Delete Process'),
               content: const Text(
                   'Are you sure you want to delete the process and its associated data?'),
               actions: <Widget>[
