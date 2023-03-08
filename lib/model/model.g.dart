@@ -8,12 +8,32 @@ part of 'model.dart';
 
 _$_Task _$$_TaskFromJson(Map<String, dynamic> json) => _$_Task(
       id: json['id'] as String,
+      title: json['title'] as String,
       description: json['description'] as String,
     );
 
 Map<String, dynamic> _$$_TaskToJson(_$_Task instance) => <String, dynamic>{
       'id': instance.id,
+      'title': instance.title,
       'description': instance.description,
+    };
+
+_$_TaskInstance _$$_TaskInstanceFromJson(Map<String, dynamic> json) =>
+    _$_TaskInstance(
+      task: Task.fromJson(json['task'] as Map<String, dynamic>),
+      id: json['id'] as String,
+      title: json['title'] as String,
+      description: json['description'] as String,
+      completed: json['completed'] as bool? ?? false,
+    );
+
+Map<String, dynamic> _$$_TaskInstanceToJson(_$_TaskInstance instance) =>
+    <String, dynamic>{
+      'task': instance.task,
+      'id': instance.id,
+      'title': instance.title,
+      'description': instance.description,
+      'completed': instance.completed,
     };
 
 _$_Process _$$_ProcessFromJson(Map<String, dynamic> json) => _$_Process(

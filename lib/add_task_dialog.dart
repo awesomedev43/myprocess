@@ -64,6 +64,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                           ...widget.tasks.value,
                           Task(
                               id: const Uuid().v1(),
+                              title: descriptionController.text.trim(),
                               description: descriptionController.text.trim())
                         ];
                         descriptionController.clear();

@@ -6,9 +6,25 @@ part 'model.g.dart';
 
 @freezed
 class Task with _$Task {
-  const factory Task({required String id, required String description}) = _Task;
+  const factory Task(
+      {required String id,
+      required String title,
+      required String description}) = _Task;
 
   factory Task.fromJson(Map<String, Object?> json) => _$TaskFromJson(json);
+}
+
+@freezed
+class TaskInstance with _$TaskInstance {
+  factory TaskInstance(
+      {required Task task,
+      required String id,
+      required String title,
+      required String description,
+      @Default(false) bool completed}) = _TaskInstance;
+
+  factory TaskInstance.fromJson(Map<String, dynamic> json) =>
+      _$TaskInstanceFromJson(json);
 }
 
 @freezed
