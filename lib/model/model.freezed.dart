@@ -620,6 +620,7 @@ ProcessInstance _$ProcessInstanceFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ProcessInstance {
   Process get process => throw _privateConstructorUsedError;
+  List<TaskInstance> get taskInstances => throw _privateConstructorUsedError;
   DateTime? get start => throw _privateConstructorUsedError;
   DateTime? get end => throw _privateConstructorUsedError;
 
@@ -635,7 +636,11 @@ abstract class $ProcessInstanceCopyWith<$Res> {
           ProcessInstance value, $Res Function(ProcessInstance) then) =
       _$ProcessInstanceCopyWithImpl<$Res, ProcessInstance>;
   @useResult
-  $Res call({Process process, DateTime? start, DateTime? end});
+  $Res call(
+      {Process process,
+      List<TaskInstance> taskInstances,
+      DateTime? start,
+      DateTime? end});
 
   $ProcessCopyWith<$Res> get process;
 }
@@ -654,6 +659,7 @@ class _$ProcessInstanceCopyWithImpl<$Res, $Val extends ProcessInstance>
   @override
   $Res call({
     Object? process = null,
+    Object? taskInstances = null,
     Object? start = freezed,
     Object? end = freezed,
   }) {
@@ -662,6 +668,10 @@ class _$ProcessInstanceCopyWithImpl<$Res, $Val extends ProcessInstance>
           ? _value.process
           : process // ignore: cast_nullable_to_non_nullable
               as Process,
+      taskInstances: null == taskInstances
+          ? _value.taskInstances
+          : taskInstances // ignore: cast_nullable_to_non_nullable
+              as List<TaskInstance>,
       start: freezed == start
           ? _value.start
           : start // ignore: cast_nullable_to_non_nullable
@@ -690,7 +700,11 @@ abstract class _$$_ProcessInstanceCopyWith<$Res>
       __$$_ProcessInstanceCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Process process, DateTime? start, DateTime? end});
+  $Res call(
+      {Process process,
+      List<TaskInstance> taskInstances,
+      DateTime? start,
+      DateTime? end});
 
   @override
   $ProcessCopyWith<$Res> get process;
@@ -708,6 +722,7 @@ class __$$_ProcessInstanceCopyWithImpl<$Res>
   @override
   $Res call({
     Object? process = null,
+    Object? taskInstances = null,
     Object? start = freezed,
     Object? end = freezed,
   }) {
@@ -716,6 +731,10 @@ class __$$_ProcessInstanceCopyWithImpl<$Res>
           ? _value.process
           : process // ignore: cast_nullable_to_non_nullable
               as Process,
+      taskInstances: null == taskInstances
+          ? _value._taskInstances
+          : taskInstances // ignore: cast_nullable_to_non_nullable
+              as List<TaskInstance>,
       start: freezed == start
           ? _value.start
           : start // ignore: cast_nullable_to_non_nullable
@@ -733,13 +752,27 @@ class __$$_ProcessInstanceCopyWithImpl<$Res>
 class _$_ProcessInstance
     with DiagnosticableTreeMixin
     implements _ProcessInstance {
-  _$_ProcessInstance({required this.process, this.start, this.end});
+  _$_ProcessInstance(
+      {required this.process,
+      final List<TaskInstance> taskInstances = const [],
+      this.start,
+      this.end})
+      : _taskInstances = taskInstances;
 
   factory _$_ProcessInstance.fromJson(Map<String, dynamic> json) =>
       _$$_ProcessInstanceFromJson(json);
 
   @override
   final Process process;
+  final List<TaskInstance> _taskInstances;
+  @override
+  @JsonKey()
+  List<TaskInstance> get taskInstances {
+    if (_taskInstances is EqualUnmodifiableListView) return _taskInstances;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_taskInstances);
+  }
+
   @override
   final DateTime? start;
   @override
@@ -747,7 +780,7 @@ class _$_ProcessInstance
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ProcessInstance(process: $process, start: $start, end: $end)';
+    return 'ProcessInstance(process: $process, taskInstances: $taskInstances, start: $start, end: $end)';
   }
 
   @override
@@ -756,6 +789,7 @@ class _$_ProcessInstance
     properties
       ..add(DiagnosticsProperty('type', 'ProcessInstance'))
       ..add(DiagnosticsProperty('process', process))
+      ..add(DiagnosticsProperty('taskInstances', taskInstances))
       ..add(DiagnosticsProperty('start', start))
       ..add(DiagnosticsProperty('end', end));
   }
@@ -766,13 +800,16 @@ class _$_ProcessInstance
         (other.runtimeType == runtimeType &&
             other is _$_ProcessInstance &&
             (identical(other.process, process) || other.process == process) &&
+            const DeepCollectionEquality()
+                .equals(other._taskInstances, _taskInstances) &&
             (identical(other.start, start) || other.start == start) &&
             (identical(other.end, end) || other.end == end));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, process, start, end);
+  int get hashCode => Object.hash(runtimeType, process,
+      const DeepCollectionEquality().hash(_taskInstances), start, end);
 
   @JsonKey(ignore: true)
   @override
@@ -791,6 +828,7 @@ class _$_ProcessInstance
 abstract class _ProcessInstance implements ProcessInstance {
   factory _ProcessInstance(
       {required final Process process,
+      final List<TaskInstance> taskInstances,
       final DateTime? start,
       final DateTime? end}) = _$_ProcessInstance;
 
@@ -799,6 +837,8 @@ abstract class _ProcessInstance implements ProcessInstance {
 
   @override
   Process get process;
+  @override
+  List<TaskInstance> get taskInstances;
   @override
   DateTime? get start;
   @override

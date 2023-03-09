@@ -42,6 +42,7 @@ class Process with _$Process {
 class ProcessInstance with _$ProcessInstance {
   factory ProcessInstance(
       {required Process process,
+      @Default([]) List<TaskInstance> taskInstances,
       DateTime? start,
       DateTime? end}) = _ProcessInstance;
 
