@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/model.dart';
+import 'package:myprocess/util.dart';
 
 import 'in_progress_process_checklist_widget.dart';
 import 'model/providers.dart';
@@ -127,21 +129,24 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
               title: Text(widget.processInstance.process.name),
             ),
             if (widget.processInstance.process.tasks.isNotEmpty)
-              // buildStepper(widget.processInstance),
               InProgressTaskChecklistWidget(
                 processInstance: widget.processInstance,
               ),
+            const Padding(padding: EdgeInsets.only(bottom: 20)),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Padding(padding: EdgeInsets.only(left: 20)),
-                Text("Time Elapsed: $timeElapsed s"),
+                const Padding(padding: EdgeInsets.only(left: 10)),
+                const Icon(Icons.timer_outlined),
+                const Padding(padding: EdgeInsets.only(left: 10)),
+                Text(TimeUtil.formatTime(timeElapsed)),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 IconButton(
+                  tooltip: "Complete Process",
                   onPressed: () {
                     widget.ref
                         .read(inProgressProcessListProvider.notifier)
@@ -151,8 +156,9 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
                         .add(widget.processInstance);
                     widget.tabController.index = ProcessTab.completed.index;
                   },
-                  icon: const Icon(Icons.stop),
-                  color: Colors.red,
+                  iconSize: 30,
+                  icon: const Icon(Icons.done_sharp),
+                  color: Colors.blue,
                 ),
                 const SizedBox(width: 8),
               ],

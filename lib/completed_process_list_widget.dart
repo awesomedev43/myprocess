@@ -3,6 +3,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/model.dart';
 import 'package:intl/intl.dart';
+import 'package:myprocess/util.dart';
 
 import 'model/providers.dart';
 
@@ -39,18 +40,22 @@ class _CompletedProcessCardState extends State<CompletedProcessCard> {
 
   @override
   Widget build(BuildContext context) {
+    final allCompleted =
+        widget.processInstance.taskInstances.every((t) => t.completed);
     final duration = widget.processInstance.end
         ?.difference(widget.processInstance.start ?? DateTime.now())
         .inSeconds;
+    final finishedIcon = allCompleted ? Icons.check_circle : Icons.cancel;
+    final finishedColor = allCompleted ? Colors.green : Colors.red;
     return Center(
       child: Card(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             ListTile(
-              leading: const Icon(
-                Icons.check_circle,
-                color: Colors.green,
+              leading: Icon(
+                finishedIcon,
+                color: finishedColor,
               ),
               title: Text(widget.processInstance.process.name),
             ),
@@ -83,7 +88,7 @@ class _CompletedProcessCardState extends State<CompletedProcessCard> {
                     Icons.timer_sharp,
                     color: Colors.black,
                   ),
-                  title: Text("$duration s"),
+                  title: Text(TimeUtil.formatTime(duration ?? 0)),
                 ),
               ]),
             )
