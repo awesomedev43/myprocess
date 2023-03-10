@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:uuid/uuid.dart';
+import 'package:collection/collection.dart';
 
 import 'model.dart';
 
@@ -128,7 +130,16 @@ class InProgressProcessNotifier extends StateNotifier<List<ProcessInstance>> {
 
     state = [
       ...state,
-      ProcessInstance(process: process, start: DateTime.now())
+      ProcessInstance(
+          process: process,
+          start: DateTime.now(),
+          taskInstances: process.tasks
+              .map((t) => TaskInstance(
+                  task: t,
+                  id: const Uuid().v1(),
+                  title: t.title,
+                  description: t.description))
+              .toList())
     ];
 
     final processList = ProcessInstanceList(processes: state);
@@ -146,6 +157,39 @@ class InProgressProcessNotifier extends StateNotifier<List<ProcessInstance>> {
     PersistantLocalStorage.writeContent(
         jsonEncode(processList.toJson()), FileStorageObjectType.inprogresslist);
   }
+
+  void update(String processId, String taskId, bool completed) {
+    final processInstance =
+        state.firstWhere((element) => element.process.id == processId);
+    final newProcessTasksInstances = processInstance.taskInstances.map((t) {
+      if (t.task.id == taskId) {
+        return TaskInstance(
+            task: t.task,
+            id: t.id,
+            title: t.title,
+            description: t.description,
+            completed: completed);
+      } else {
+        return t;
+      }
+    }).toList();
+
+    state = [
+      for (final instance in state)
+        if (instance.process.id != processInstance.process.id)
+          instance
+        else
+          ProcessInstance(
+              process: processInstance.process,
+              taskInstances: newProcessTasksInstances,
+              start: processInstance.start,
+              end: processInstance.end)
+    ];
+
+    final processList = ProcessInstanceList(processes: state);
+    PersistantLocalStorage.writeContent(
+        jsonEncode(processList.toJson()), FileStorageObjectType.inprogresslist);
+  }
 }
 
 final inProgressProcessListProvider =
@@ -153,6 +197,16 @@ final inProgressProcessListProvider =
         (ref) {
   return InProgressProcessNotifier();
 });
+
+final inProgressTaskListProvider = Provider.family<List<TaskInstance>, String>(
+  (ref, processId) {
+    final process = ref
+        .watch(inProgressProcessListProvider)
+        .firstWhereOrNull((instance) => instance.process.id == processId);
+
+    return process?.taskInstances ?? [];
+  },
+);
 
 class CompletedProcessNotifier extends StateNotifier<List<ProcessInstance>> {
   CompletedProcessNotifier([List<ProcessInstance>? initialList])
@@ -163,7 +217,8 @@ class CompletedProcessNotifier extends StateNotifier<List<ProcessInstance>> {
       ProcessInstance(
           process: processInstance.process,
           start: processInstance.start,
-          end: DateTime.now()),
+          end: DateTime.now(),
+          taskInstances: processInstance.taskInstances),
       ...state,
     ];
     final processList = ProcessInstanceList(processes: state);

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/model.dart';
 
+import 'in_progress_process_checklist_widget.dart';
 import 'model/providers.dart';
 import 'tabs.dart';
 
@@ -126,7 +127,10 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
               title: Text(widget.processInstance.process.name),
             ),
             if (widget.processInstance.process.tasks.isNotEmpty)
-              buildStepper(widget.processInstance),
+              // buildStepper(widget.processInstance),
+              InProgressTaskChecklistWidget(
+                processInstance: widget.processInstance,
+              ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
