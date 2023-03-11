@@ -158,7 +158,7 @@ class TaskListWidget extends StatelessWidget {
         .toList();
 
     return ListView(
-      children: cards,
+      children: [...cards, const Padding(padding: EdgeInsets.only(bottom: 56))],
     );
   }
 }
