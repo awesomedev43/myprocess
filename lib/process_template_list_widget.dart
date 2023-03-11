@@ -89,18 +89,25 @@ class _ProcessTemplateListWidgetState
     final templateList = ref.watch(processTemplateListProvider);
     final cards = templateList.map((process) {
       return Card(
-        child: ListTile(
-          leading: const Icon(Icons.checklist),
-          title: Text(process.name),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              createInfoButton(context, process),
-              createRemoveButton(process),
-              createEditButton(context, process),
-              createPlayButton(process),
-            ],
-          ),
+        child: Column(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.checklist),
+              title: Text(process.name),
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  createInfoButton(context, process),
+                  createRemoveButton(process),
+                  createEditButton(context, process),
+                  createPlayButton(process),
+                ],
+              ),
+            )
+          ],
         ),
       );
     }).toList();
