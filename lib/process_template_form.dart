@@ -42,6 +42,19 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add New Process"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                final process = Process(
+                    id: editingProcess?.id ?? const Uuid().v1(),
+                    name: nameController.text,
+                    tasks: tasks.value);
+
+                ref.read(processTemplateListProvider.notifier).add(process);
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.save))
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -83,16 +96,6 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
                           fontSize: 20)),
                 ),
               ),
-              Align(
-                  alignment: Alignment.centerLeft,
-                  child: Row(children: [
-                    IconButton(
-                      icon: const Icon(Icons.add),
-                      onPressed: () {
-                        _dialogBuilder(context, tasks);
-                      },
-                    )
-                  ])),
             ]),
             const Divider(),
             Expanded(
@@ -113,16 +116,10 @@ class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          final process = Process(
-              id: editingProcess?.id ?? const Uuid().v1(),
-              name: nameController.text,
-              tasks: tasks.value);
-
-          ref.read(processTemplateListProvider.notifier).add(process);
-          Navigator.pop(context);
+          _dialogBuilder(context, tasks);
         },
-        tooltip: "Save",
-        child: const Icon(Icons.save_rounded),
+        tooltip: "Add Task",
+        child: const Icon(Icons.add_box_outlined),
       ),
     );
   }
