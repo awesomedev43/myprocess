@@ -17,7 +17,7 @@ void main() async {
     UncontrolledProviderScope(
       container: container,
       child: MaterialApp(
-        title: 'MyProcess',
+        title: 'Process Your Life',
         initialRoute: '/',
         routes: {
           '/': (context) => const MainApp(),
@@ -72,7 +72,7 @@ class _MainAppState extends State<MainApp> with SingleTickerProviderStateMixin {
     return Scaffold(
       appBar: AppBar(
         bottom: TabBar(controller: _tabController, tabs: sProcessTabs),
-        title: const Text("MyProcess"),
+        title: const Text("Process Your Life"),
       ),
       body: TabBarView(controller: _tabController, children: [
         ProcessTemplateListWidget(controller: _tabController),
