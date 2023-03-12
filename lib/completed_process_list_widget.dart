@@ -26,16 +26,17 @@ class _CompletedProcessListWidgetState
   }
 }
 
-class CompletedProcessCard extends StatefulWidget {
+class CompletedProcessCard extends ConsumerStatefulWidget {
   const CompletedProcessCard({super.key, required this.processInstance});
 
   final ProcessInstance processInstance;
 
   @override
-  State<CompletedProcessCard> createState() => _CompletedProcessCardState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _CompletedProcessCardState();
 }
 
-class _CompletedProcessCardState extends State<CompletedProcessCard> {
+class _CompletedProcessCardState extends ConsumerState<CompletedProcessCard> {
   final DateFormat formatter = DateFormat('h:mm:ss a, MMMM 4 yyyy');
 
   @override
@@ -60,7 +61,7 @@ class _CompletedProcessCardState extends State<CompletedProcessCard> {
               title: Text(widget.processInstance.process.name),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 47),
+              padding: const EdgeInsets.only(left: 20),
               child: ListView(primary: false, shrinkWrap: true, children: [
                 ListTile(
                   dense: true,
@@ -91,6 +92,28 @@ class _CompletedProcessCardState extends State<CompletedProcessCard> {
                   title: Text(TimeUtil.formatTime(duration ?? 0)),
                 ),
               ]),
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: IconButton(
+                          onPressed: () {
+                            ref
+                                .read(completedProcessListProvider.notifier)
+                                .remove(widget.processInstance);
+                          },
+                          icon: const Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                          )),
+                    ),
+                  ),
+                )
+              ],
             )
           ],
         ),

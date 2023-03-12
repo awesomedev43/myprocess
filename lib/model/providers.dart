@@ -225,6 +225,17 @@ class CompletedProcessNotifier extends StateNotifier<List<ProcessInstance>> {
     PersistantLocalStorage.writeContent(
         jsonEncode(processList.toJson()), FileStorageObjectType.completedlist);
   }
+
+  void remove(ProcessInstance processInstance) {
+    state = [
+      for (final instance in state)
+        if (instance.process.id != processInstance.process.id) instance
+    ];
+
+    final processList = ProcessInstanceList(processes: state);
+    PersistantLocalStorage.writeContent(
+        jsonEncode(processList.toJson()), FileStorageObjectType.completedlist);
+  }
 }
 
 final completedProcessListProvider =
