@@ -131,6 +131,7 @@ class InProgressProcessNotifier extends StateNotifier<List<ProcessInstance>> {
     state = [
       ...state,
       ProcessInstance(
+          id: const Uuid().v1(),
           process: process,
           start: DateTime.now(),
           taskInstances: process.tasks
@@ -150,7 +151,7 @@ class InProgressProcessNotifier extends StateNotifier<List<ProcessInstance>> {
   void remove(ProcessInstance processInstance) {
     state = [
       for (final instance in state)
-        if (instance.process.id != processInstance.process.id) instance
+        if (instance.id != processInstance.id) instance
     ];
 
     final processList = ProcessInstanceList(processes: state);
@@ -180,6 +181,7 @@ class InProgressProcessNotifier extends StateNotifier<List<ProcessInstance>> {
           instance
         else
           ProcessInstance(
+              id: const Uuid().v1(),
               process: processInstance.process,
               taskInstances: newProcessTasksInstances,
               start: processInstance.start,
@@ -215,6 +217,7 @@ class CompletedProcessNotifier extends StateNotifier<List<ProcessInstance>> {
   void add(ProcessInstance processInstance) {
     state = [
       ProcessInstance(
+          id: const Uuid().v1(),
           process: processInstance.process,
           start: processInstance.start,
           end: DateTime.now(),
@@ -229,7 +232,7 @@ class CompletedProcessNotifier extends StateNotifier<List<ProcessInstance>> {
   void remove(ProcessInstance processInstance) {
     state = [
       for (final instance in state)
-        if (instance.process.id != processInstance.process.id) instance
+        if (instance.id != processInstance.id) instance
     ];
 
     final processList = ProcessInstanceList(processes: state);

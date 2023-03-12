@@ -619,6 +619,7 @@ ProcessInstance _$ProcessInstanceFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProcessInstance {
+  String get id => throw _privateConstructorUsedError;
   Process get process => throw _privateConstructorUsedError;
   List<TaskInstance> get taskInstances => throw _privateConstructorUsedError;
   DateTime? get start => throw _privateConstructorUsedError;
@@ -637,7 +638,8 @@ abstract class $ProcessInstanceCopyWith<$Res> {
       _$ProcessInstanceCopyWithImpl<$Res, ProcessInstance>;
   @useResult
   $Res call(
-      {Process process,
+      {String id,
+      Process process,
       List<TaskInstance> taskInstances,
       DateTime? start,
       DateTime? end});
@@ -658,12 +660,17 @@ class _$ProcessInstanceCopyWithImpl<$Res, $Val extends ProcessInstance>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? process = null,
     Object? taskInstances = null,
     Object? start = freezed,
     Object? end = freezed,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       process: null == process
           ? _value.process
           : process // ignore: cast_nullable_to_non_nullable
@@ -701,7 +708,8 @@ abstract class _$$_ProcessInstanceCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {Process process,
+      {String id,
+      Process process,
       List<TaskInstance> taskInstances,
       DateTime? start,
       DateTime? end});
@@ -721,12 +729,17 @@ class __$$_ProcessInstanceCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? process = null,
     Object? taskInstances = null,
     Object? start = freezed,
     Object? end = freezed,
   }) {
     return _then(_$_ProcessInstance(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       process: null == process
           ? _value.process
           : process // ignore: cast_nullable_to_non_nullable
@@ -753,7 +766,8 @@ class _$_ProcessInstance
     with DiagnosticableTreeMixin
     implements _ProcessInstance {
   _$_ProcessInstance(
-      {required this.process,
+      {required this.id,
+      required this.process,
       final List<TaskInstance> taskInstances = const [],
       this.start,
       this.end})
@@ -762,6 +776,8 @@ class _$_ProcessInstance
   factory _$_ProcessInstance.fromJson(Map<String, dynamic> json) =>
       _$$_ProcessInstanceFromJson(json);
 
+  @override
+  final String id;
   @override
   final Process process;
   final List<TaskInstance> _taskInstances;
@@ -780,7 +796,7 @@ class _$_ProcessInstance
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ProcessInstance(process: $process, taskInstances: $taskInstances, start: $start, end: $end)';
+    return 'ProcessInstance(id: $id, process: $process, taskInstances: $taskInstances, start: $start, end: $end)';
   }
 
   @override
@@ -788,6 +804,7 @@ class _$_ProcessInstance
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'ProcessInstance'))
+      ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('process', process))
       ..add(DiagnosticsProperty('taskInstances', taskInstances))
       ..add(DiagnosticsProperty('start', start))
@@ -799,6 +816,7 @@ class _$_ProcessInstance
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ProcessInstance &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.process, process) || other.process == process) &&
             const DeepCollectionEquality()
                 .equals(other._taskInstances, _taskInstances) &&
@@ -808,7 +826,7 @@ class _$_ProcessInstance
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, process,
+  int get hashCode => Object.hash(runtimeType, id, process,
       const DeepCollectionEquality().hash(_taskInstances), start, end);
 
   @JsonKey(ignore: true)
@@ -827,7 +845,8 @@ class _$_ProcessInstance
 
 abstract class _ProcessInstance implements ProcessInstance {
   factory _ProcessInstance(
-      {required final Process process,
+      {required final String id,
+      required final Process process,
       final List<TaskInstance> taskInstances,
       final DateTime? start,
       final DateTime? end}) = _$_ProcessInstance;
@@ -835,6 +854,8 @@ abstract class _ProcessInstance implements ProcessInstance {
   factory _ProcessInstance.fromJson(Map<String, dynamic> json) =
       _$_ProcessInstance.fromJson;
 
+  @override
+  String get id;
   @override
   Process get process;
   @override

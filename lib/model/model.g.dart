@@ -53,6 +53,7 @@ Map<String, dynamic> _$$_ProcessToJson(_$_Process instance) =>
 
 _$_ProcessInstance _$$_ProcessInstanceFromJson(Map<String, dynamic> json) =>
     _$_ProcessInstance(
+      id: json['id'] as String,
       process: Process.fromJson(json['process'] as Map<String, dynamic>),
       taskInstances: (json['taskInstances'] as List<dynamic>?)
               ?.map((e) => TaskInstance.fromJson(e as Map<String, dynamic>))
@@ -66,6 +67,7 @@ _$_ProcessInstance _$$_ProcessInstanceFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$_ProcessInstanceToJson(_$_ProcessInstance instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'process': instance.process,
       'taskInstances': instance.taskInstances,
       'start': instance.start?.toIso8601String(),
