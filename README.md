@@ -1,22 +1,35 @@
-# MyProcess (New Name TBD)
+# Process My Life
 
 Alternative to traditional todo application, this app allows you to create a `process`. A `process` in this context is a list of steps needed to reach a specific goal.
 
-## Specs
+# Specs
 
-### Definitions (V1)
+## V1
+---
 
-- `checklist` 
-	- List of `task`
-	- A goal that is needed to be accomplished by the user
+<details>
+<summary><b>Description</b></summary>
+
+The first milestone will be just a cross platform application that works off a local database
+</details>
+
+<details>
+<summary><b>Definitions</b></summary>
+
+- `process` 
+	- a series of actions or steps taken in order to achieve a particular end
 -  `task`
-	- something to do
-- `checklist instance`
-		- Instance of checklist
+	- something to be done
+-  `task instance`
+	- Instance of a `task` that is in progress, or needs to be done
+- `process instance`
+		- Instance of `process` that is either in progress or needs to be done
 		- Start Time
 		- End Time
+</details>
 
-### Functionality (V1)
+<details>
+<summary><b>Functionality</b></summary>
 
 1. Allows user to create a `checklist`
 	1. User defines the goal
@@ -31,15 +44,30 @@ Alternative to traditional todo application, this app allows you to create a `pr
 	5. User is displayed a prompt showing the result
 		- User can share the data with friend
 	6. User can view past `checklist instances`
+</details>
 
 
+<details>
+<summary><b>Pending</b></summary>
 
-## Milestone 1
+- [ ] Ability to Delete Completed Task Instances
+- [	] Replace Splashscreen
+- [ ] New Name for the Application
+- [ ] Info Screen for Completed Task
+- [ ] Monetization for the Application
+	- [ ] Ads
+	- [ ] Pay to remove Ads
 
-The first milestone will be just a cross platform application that works off a local database
+</details>
 
-## Milestone 2
+
+## V2
+---
+
+<details>
+<summary><b>Description</b></summary>
 
 In this milestone the project will integrate with a backend service
 - Provide authentication using some signin provider
 - User `checklist` and `checklist instances` are backed up in the cloud
+</details>
