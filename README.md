@@ -1,4 +1,4 @@
-# Process My Life
+# Process Your Life (PYL)
 
 Alternative to traditional todo application, this app allows you to create a `process`. A `process` in this context is a list of steps needed to reach a specific goal.
 
@@ -6,6 +6,19 @@ Alternative to traditional todo application, this app allows you to create a `pr
 
 ## V1
 ---
+
+<details>
+<summary><b>Pending</b></summary>
+
+- [ ] Ability to Delete Completed Task Instances
+- [	] Replace Splashscreen
+- [ ] New Name for the Application
+- [ ] Info Screen for Completed Task
+- [ ] Monetization for the Application
+	- [ ] Ads
+	- [ ] Pay to remove Ads
+
+</details>
 
 <details>
 <summary><b>Description</b></summary>
@@ -44,20 +57,6 @@ The first milestone will be just a cross platform application that works off a l
 	5. User is displayed a prompt showing the result
 		- User can share the data with friend
 	6. User can view past `checklist instances`
-</details>
-
-
-<details>
-<summary><b>Pending</b></summary>
-
-- [ ] Ability to Delete Completed Task Instances
-- [	] Replace Splashscreen
-- [ ] New Name for the Application
-- [ ] Info Screen for Completed Task
-- [ ] Monetization for the Application
-	- [ ] Ads
-	- [ ] Pay to remove Ads
-
 </details>
 
 
