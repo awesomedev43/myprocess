@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myprocess/tabs.dart';
 
-import 'model/model.dart';
-import 'model/providers.dart';
+import 'tabs.dart';
+import '../model/model.dart';
+import '../model/providers.dart';
 
-class ProcessTemplateListWidget extends ConsumerStatefulWidget {
-  const ProcessTemplateListWidget({super.key, required this.controller});
+class ProcessTemplateListTab extends ConsumerStatefulWidget {
+  const ProcessTemplateListTab({super.key, required this.controller});
 
   final TabController controller;
 
@@ -16,7 +16,7 @@ class ProcessTemplateListWidget extends ConsumerStatefulWidget {
 }
 
 class _ProcessTemplateListWidgetState
-    extends ConsumerState<ProcessTemplateListWidget> {
+    extends ConsumerState<ProcessTemplateListTab> {
   IconButton createInfoButton(BuildContext context, Process process) {
     return IconButton(
         onPressed: () {

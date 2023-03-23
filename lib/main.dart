@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myprocess/process_template_form.dart';
-import 'package:myprocess/process_template_list_widget.dart';
-import 'package:myprocess/tabs.dart';
+import 'package:myprocess/screens/process_template_form_screen.dart';
+import 'package:myprocess/tabs/process_template_list_tab.dart';
 
-import 'completed_process_list_widget.dart';
-import 'in_progress_process_list_widget.dart';
+import 'tabs/completed_process_list_tab.dart';
+import 'tabs/in_progress_process_list_tab.dart';
 import 'model/providers.dart';
+import 'tabs/tabs.dart';
 
 void main() async {
-  // Only initilize state at the start
+  // Only initialize state at the start
   WidgetsFlutterBinding.ensureInitialized();
   final container = await initializeState();
 
@@ -21,7 +21,7 @@ void main() async {
         initialRoute: '/',
         routes: {
           '/': (context) => const MainApp(),
-          '/addprocess': (context) => const ProcessTemplateForm(),
+          '/addprocess': (context) => const ProcessTemplateFormScreen(),
         },
       ),
     ),
@@ -75,9 +75,9 @@ class _MainAppState extends State<MainApp> with SingleTickerProviderStateMixin {
         title: const Text("Process Your Life"),
       ),
       body: TabBarView(controller: _tabController, children: [
-        ProcessTemplateListWidget(controller: _tabController),
-        InProgressProcessListWidget(tabController: _tabController),
-        const CompletedProcessListWidget(),
+        ProcessTemplateListTab(controller: _tabController),
+        InProgressProcessListTab(tabController: _tabController),
+        const CompletedProcessListTab(),
       ]),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

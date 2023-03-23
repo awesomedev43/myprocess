@@ -5,17 +5,17 @@ import 'package:myprocess/model/model.dart';
 import 'package:intl/intl.dart';
 import 'package:myprocess/util.dart';
 
-import 'model/providers.dart';
+import '../model/providers.dart';
 
-class CompletedProcessListWidget extends ConsumerStatefulWidget {
-  const CompletedProcessListWidget({super.key});
+class CompletedProcessListTab extends ConsumerStatefulWidget {
+  const CompletedProcessListTab({super.key});
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
       _CompletedProcessListWidgetState();
 }
 
 class _CompletedProcessListWidgetState
-    extends ConsumerState<CompletedProcessListWidget> {
+    extends ConsumerState<CompletedProcessListTab> {
   @override
   Widget build(BuildContext context) {
     final completedProcesses = ref.watch(completedProcessListProvider);

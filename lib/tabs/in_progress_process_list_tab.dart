@@ -2,17 +2,16 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/model.dart';
 import 'package:myprocess/util.dart';
 
-import 'in_progress_process_checklist_widget.dart';
-import 'model/providers.dart';
+import '../widgets/in_progress_process_checklist_widget.dart';
+import '../model/providers.dart';
 import 'tabs.dart';
 
-class InProgressProcessListWidget extends ConsumerStatefulWidget {
-  const InProgressProcessListWidget({super.key, required this.tabController});
+class InProgressProcessListTab extends ConsumerStatefulWidget {
+  const InProgressProcessListTab({super.key, required this.tabController});
 
   final TabController tabController;
 
@@ -22,7 +21,7 @@ class InProgressProcessListWidget extends ConsumerStatefulWidget {
 }
 
 class _InProgressProcessListWidgetState
-    extends ConsumerState<InProgressProcessListWidget> {
+    extends ConsumerState<InProgressProcessListTab> {
   @override
   Widget build(BuildContext context) {
     final inProgressProcesses = ref.watch(inProgressProcessListProvider);

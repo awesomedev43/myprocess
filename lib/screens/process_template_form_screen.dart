@@ -4,18 +4,22 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:myprocess/model/model.dart';
 import 'package:uuid/uuid.dart';
 
-import 'add_task_dialog.dart';
-import 'model/providers.dart';
+import '../model/providers.dart';
+import '../widgets/add_task_dialog.dart';
 
-class ProcessTemplateForm extends StatefulHookConsumerWidget {
-  const ProcessTemplateForm({super.key});
+// import '../widgets/add_task_dialog.dart';
+// import '../model/providers.dart';
+
+class ProcessTemplateFormScreen extends StatefulHookConsumerWidget {
+  const ProcessTemplateFormScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
       _ProcessTemplateFormState();
 }
 
-class _ProcessTemplateFormState extends ConsumerState<ProcessTemplateForm> {
+class _ProcessTemplateFormState
+    extends ConsumerState<ProcessTemplateFormScreen> {
   final nameController = TextEditingController();
   final taskController = TextEditingController();
   late Process? editingProcess;
