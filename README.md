@@ -14,6 +14,7 @@ Alternative to traditional todo application, this app allows you to create a `pr
 - [X] Replace Splashscreen
 - [X] New Name for the Application
 - [X] Info Screen for Completed Task
+- [ ] Get App ready for Publishing
 - [ ] Monetization for the Application
 	- [ ] Ads
 	- [ ] Pay to remove Ads
