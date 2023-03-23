@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myprocess">
    <application
-        android:label="Life Process"
+        android:label="PYL"
         android:name="${applicationName}"
         android:icon="@drawable/icon">
         <activity
