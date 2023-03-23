@@ -100,21 +100,36 @@ class _CompletedProcessCardState extends ConsumerState<CompletedProcessCard> {
                     padding: const EdgeInsets.only(right: 10),
                     child: Align(
                       alignment: Alignment.centerRight,
-                      child: IconButton(
-                          onPressed: () {
-                            ref
-                                .read(completedProcessListProvider.notifier)
-                                .remove(widget.processInstance);
-                          },
-                          icon: const Icon(
-                            Icons.delete,
-                            color: Colors.red,
-                          )),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                    context, "/completedprocessinfo",
+                                    arguments: widget.processInstance);
+                              },
+                              icon: const Icon(
+                                Icons.info,
+                                color: Colors.blue,
+                              )),
+                          IconButton(
+                              onPressed: () {
+                                ref
+                                    .read(completedProcessListProvider.notifier)
+                                    .remove(widget.processInstance);
+                              },
+                              icon: const Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                              )),
+                        ],
+                      ),
                     ),
                   ),
-                )
+                ),
               ],
-            )
+            ),
           ],
         ),
       ),

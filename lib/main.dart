@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myprocess/screens/completed_process_info_screen.dart';
 import 'package:myprocess/screens/process_template_form_screen.dart';
 import 'package:myprocess/tabs/process_template_list_tab.dart';
 
@@ -22,6 +23,7 @@ void main() async {
         routes: {
           '/': (context) => const MainApp(),
           '/addprocess': (context) => const ProcessTemplateFormScreen(),
+          '/completedprocessinfo': (context) => CompletedProcessInfoScreen(),
         },
       ),
     ),
