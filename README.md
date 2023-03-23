@@ -10,9 +10,9 @@ Alternative to traditional todo application, this app allows you to create a `pr
 <details>
 <summary><b>Pending</b></summary>
 
-- [ ] Ability to Delete Completed Task Instances
-- [	] Replace Splashscreen
-- [ ] New Name for the Application
+- [X] Ability to Delete Completed Task Instances
+- [X] Replace Splashscreen
+- [X] New Name for the Application
 - [ ] Info Screen for Completed Task
 - [ ] Monetization for the Application
 	- [ ] Ads
