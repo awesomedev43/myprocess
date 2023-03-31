@@ -25,7 +25,7 @@ class CompletedProcessInfoScreen extends ConsumerWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
+        child: ListView(
           children: [
             ListTile(
               title: Text(
