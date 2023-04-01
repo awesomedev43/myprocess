@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -58,7 +57,7 @@ class InProgressProcessCard extends StatefulWidget {
 
 class _InProgressProcessCardState extends State<InProgressProcessCard> {
   int timeElapsed = 0;
-  int _index = 0;
+  // int _index = 0;
   late Timer timer;
 
   @override
@@ -79,42 +78,76 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
     timer.cancel();
   }
 
-  List<Step> buildSteps(List<Task> tasks) {
-    return tasks.map((task) {
-      return Step(title: Text(task.description), content: Container());
-    }).toList();
+  // List<Step> buildSteps(List<Task> tasks) {
+  //   return tasks.map((task) {
+  //     return Step(title: Text(task.description), content: Container());
+  //   }).toList();
+  // }
+
+  // Stepper buildStepper(ProcessInstance instance) {
+  //   return Stepper(
+  //     physics: const NeverScrollableScrollPhysics(),
+  //     key: Key(Random.secure().nextDouble().toString()),
+  //     currentStep: _index,
+  //     onStepCancel: () {
+  //       if (_index > 0) {
+  //         setState(() {
+  //           _index -= 1;
+  //         });
+  //       }
+  //     },
+  //     onStepContinue: () {
+  //       if (_index + 1 < instance.process.tasks.length) {
+  //         setState(() {
+  //           _index += 1;
+  //         });
+  //       }
+  //     },
+  //     onStepTapped: (int index) {
+  //       setState(() {
+  //         _index = index;
+  //       });
+  //     },
+  //     steps: buildSteps(instance.process.tasks),
+  //   );
+  // }
+
+  void completeTask() {
+    widget.ref
+        .read(inProgressProcessListProvider.notifier)
+        .remove(widget.processInstance);
+    widget.ref
+        .read(completedProcessListProvider.notifier)
+        .add(widget.processInstance);
+    widget.tabController.index = ProcessTab.completed.index;
   }
 
-  Stepper buildStepper(ProcessInstance instance) {
-    return Stepper(
-      physics: const NeverScrollableScrollPhysics(),
-      key: Key(Random.secure().nextDouble().toString()),
-      currentStep: _index,
-      onStepCancel: () {
-        if (_index > 0) {
-          setState(() {
-            _index -= 1;
-          });
-        }
-      },
-      onStepContinue: () {
-        if (_index + 1 < instance.process.tasks.length) {
-          setState(() {
-            _index += 1;
-          });
-        }
-      },
-      onStepTapped: (int index) {
-        setState(() {
-          _index = index;
+  void displayIncompleteTasksAlert(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Not all tasks are completed"),
+            actions: [
+              TextButton(
+                  onPressed: () => {Navigator.of(context).pop()},
+                  child: const Text("Remain")),
+              TextButton(
+                  onPressed: () {
+                    completeTask();
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Proceed"))
+            ],
+          );
         });
-      },
-      steps: buildSteps(instance.process.tasks),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final taskInstances = widget.ref
+        .watch(inProgressTaskListProvider(widget.processInstance.process.id));
+
     return Center(
       child: Card(
         child: Column(
@@ -144,13 +177,12 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
                 IconButton(
                   tooltip: "Complete Process",
                   onPressed: () {
-                    widget.ref
-                        .read(inProgressProcessListProvider.notifier)
-                        .remove(widget.processInstance);
-                    widget.ref
-                        .read(completedProcessListProvider.notifier)
-                        .add(widget.processInstance);
-                    widget.tabController.index = ProcessTab.completed.index;
+                    if (taskInstances
+                        .any((element) => element.completed != true)) {
+                      displayIncompleteTasksAlert(context);
+                    } else {
+                      completeTask();
+                    }
                   },
                   iconSize: 30,
                   icon: const Icon(Icons.done_sharp),
