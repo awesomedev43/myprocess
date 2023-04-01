@@ -64,14 +64,11 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      timeElapsed = DateTime.now()
-          .difference(widget.processInstance.start ?? DateTime.now())
-          .inSeconds;
-    });
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
-        timeElapsed++;
+        timeElapsed = DateTime.now()
+            .difference(widget.processInstance.start ?? DateTime.now())
+            .inSeconds;
       });
     });
   }
