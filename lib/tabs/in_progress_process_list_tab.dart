@@ -155,7 +155,10 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
           children: <Widget>[
             ListTile(
               leading: const Icon(Icons.checklist),
-              title: Text(widget.processInstance.process.name),
+              title: Text(
+                widget.processInstance.process.name,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
             if (widget.processInstance.process.tasks.isNotEmpty)
               InProgressTaskChecklistWidget(
