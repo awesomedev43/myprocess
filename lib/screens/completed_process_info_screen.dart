@@ -8,7 +8,7 @@ import '../util.dart';
 class CompletedProcessInfoScreen extends ConsumerWidget {
   CompletedProcessInfoScreen({super.key});
 
-  final DateFormat formatter = DateFormat('h:mm:ss a, MMMM 4 yyyy');
+  final DateFormat formatter = DateFormat('h:mm:ss a, MMMM d yyyy');
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
