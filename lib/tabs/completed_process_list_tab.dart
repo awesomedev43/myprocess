@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/model.dart';
 import 'package:intl/intl.dart';
@@ -69,9 +68,8 @@ class _CompletedProcessCardState extends ConsumerState<CompletedProcessCard> {
                     Icons.play_arrow,
                     color: Colors.green,
                   ),
-                  title: Html(
-                      data: formatter.format(
-                          widget.processInstance.start ?? DateTime.now())),
+                  title: Text(formatter
+                      .format(widget.processInstance.start ?? DateTime.now())),
                 ),
                 ListTile(
                   dense: true,
@@ -79,9 +77,8 @@ class _CompletedProcessCardState extends ConsumerState<CompletedProcessCard> {
                     Icons.stop,
                     color: Colors.red,
                   ),
-                  title: Html(
-                      data: formatter.format(
-                          widget.processInstance.end ?? DateTime.now())),
+                  title: Text(formatter
+                      .format(widget.processInstance.end ?? DateTime.now())),
                 ),
                 ListTile(
                   dense: true,
