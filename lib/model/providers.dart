@@ -10,14 +10,13 @@ import 'model.dart';
 
 enum FileStorageObjectType {
   processlist,
-  inprogresslist,
-  completedlist,
+  processinstancelist,
 }
 
 class PersistantLocalStorage {
   static const Map<FileStorageObjectType, String> sFileName = {
     FileStorageObjectType.processlist: ".processList.json",
-    FileStorageObjectType.inprogresslist: ".inprogresslist.json",
+    FileStorageObjectType.processinstancelist: ".processinstancelist.json",
   };
 
   static Future<String> getLocalPath() async {
@@ -61,8 +60,7 @@ class PersistantLocalStorage {
         }
         final processList = ProcessList.fromJson(jsonDecode(contents));
         return processList.processes;
-      case FileStorageObjectType.inprogresslist:
-      case FileStorageObjectType.completedlist:
+      case FileStorageObjectType.processinstancelist:
         return [];
     }
   }
@@ -72,8 +70,7 @@ class PersistantLocalStorage {
     switch (type) {
       case FileStorageObjectType.processlist:
         return [];
-      case FileStorageObjectType.inprogresslist:
-      case FileStorageObjectType.completedlist:
+      case FileStorageObjectType.processinstancelist:
         String contents = await PersistantLocalStorage.readContent(type);
         if (contents.isEmpty) {
           return [];
@@ -145,8 +142,8 @@ class ProcessInstanceNotifier extends StateNotifier<List<ProcessInstance>> {
     ];
 
     final processList = ProcessInstanceList(processes: state);
-    PersistantLocalStorage.writeContent(
-        jsonEncode(processList.toJson()), FileStorageObjectType.inprogresslist);
+    PersistantLocalStorage.writeContent(jsonEncode(processList.toJson()),
+        FileStorageObjectType.processinstancelist);
   }
 
   void remove(ProcessInstance processInstance) {
@@ -156,8 +153,8 @@ class ProcessInstanceNotifier extends StateNotifier<List<ProcessInstance>> {
     ];
 
     final processList = ProcessInstanceList(processes: state);
-    PersistantLocalStorage.writeContent(
-        jsonEncode(processList.toJson()), FileStorageObjectType.inprogresslist);
+    PersistantLocalStorage.writeContent(jsonEncode(processList.toJson()),
+        FileStorageObjectType.processinstancelist);
   }
 
   void completed(ProcessInstance processInstance) {
@@ -170,8 +167,8 @@ class ProcessInstanceNotifier extends StateNotifier<List<ProcessInstance>> {
     ];
 
     final processList = ProcessInstanceList(processes: state);
-    PersistantLocalStorage.writeContent(
-        jsonEncode(processList.toJson()), FileStorageObjectType.inprogresslist);
+    PersistantLocalStorage.writeContent(jsonEncode(processList.toJson()),
+        FileStorageObjectType.processinstancelist);
   }
 
   void update(String processId, String taskId, bool completed) {
@@ -179,12 +176,7 @@ class ProcessInstanceNotifier extends StateNotifier<List<ProcessInstance>> {
         element.process.id == processId && element.completed == false);
     final newProcessTasksInstances = processInstance.taskInstances.map((t) {
       if (t.task.id == taskId) {
-        return TaskInstance(
-            task: t.task,
-            id: t.id,
-            title: t.title,
-            description: t.description,
-            completed: completed);
+        return t.copyWith(completed: completed);
       } else {
         return t;
       }
@@ -205,8 +197,8 @@ class ProcessInstanceNotifier extends StateNotifier<List<ProcessInstance>> {
     ];
 
     final processList = ProcessInstanceList(processes: state);
-    PersistantLocalStorage.writeContent(
-        jsonEncode(processList.toJson()), FileStorageObjectType.inprogresslist);
+    PersistantLocalStorage.writeContent(jsonEncode(processList.toJson()),
+        FileStorageObjectType.processinstancelist);
   }
 }
 
