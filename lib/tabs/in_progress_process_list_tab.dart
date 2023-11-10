@@ -142,8 +142,8 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
 
   @override
   Widget build(BuildContext context) {
-    final taskInstances = widget.ref
-        .watch(inProgressTaskListProvider(widget.processInstance.process.id));
+    final taskInstances =
+        widget.ref.watch(inProgressTaskListProvider(widget.processInstance.id));
 
     return Center(
       child: Card(

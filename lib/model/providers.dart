@@ -160,7 +160,7 @@ class ProcessInstanceNotifier extends StateNotifier<List<ProcessInstance>> {
   void completed(ProcessInstance processInstance) {
     state = [
       for (final instance in state)
-        if (instance.id != processInstance.id || instance.completed == true)
+        if (instance.id != processInstance.id)
           instance
         else
           instance.copyWith(completed: true, end: DateTime.now())
@@ -171,9 +171,9 @@ class ProcessInstanceNotifier extends StateNotifier<List<ProcessInstance>> {
         FileStorageObjectType.processinstancelist);
   }
 
-  void update(String processId, String taskId, bool completed) {
-    final processInstance = state.firstWhere((element) =>
-        element.process.id == processId && element.completed == false);
+  void update(String processInstanceId, String taskId, bool completed) {
+    final processInstance =
+        state.firstWhere((element) => element.id == processInstanceId);
     final newProcessTasksInstances = processInstance.taskInstances.map((t) {
       if (t.task.id == taskId) {
         return t.copyWith(completed: completed);
@@ -184,8 +184,7 @@ class ProcessInstanceNotifier extends StateNotifier<List<ProcessInstance>> {
 
     state = [
       for (final instance in state)
-        if (instance.completed == true ||
-            instance.process.id != processInstance.process.id)
+        if (instance.id != processInstance.id)
           instance
         else
           ProcessInstance(
@@ -228,11 +227,11 @@ final completedProgressProcessListNewProvider = Provider<List<ProcessInstance>>(
 );
 
 final inProgressTaskListProvider = Provider.family<List<TaskInstance>, String>(
-  (ref, processId) {
-    final process = ref.watch(processInstanceListProvider).firstWhereOrNull(
-        (instance) =>
-            instance.process.id == processId && instance.completed == false);
+  (ref, processInstanceId) {
+    final processInstance = ref
+        .watch(processInstanceListProvider)
+        .firstWhereOrNull((instance) => instance.id == processInstanceId);
 
-    return process?.taskInstances ?? [];
+    return processInstance?.taskInstances ?? [];
   },
 );
