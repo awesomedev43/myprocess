@@ -26,7 +26,7 @@ class _InProgressTaskChecklistWidgetState
               value: t.completed,
               onChanged: (bool? value) {
                 setState(() {
-                  ref.read(inProgressProcessListProvider.notifier).update(
+                  ref.read(processInstanceListProvider.notifier).update(
                       widget.processInstance.process.id,
                       t.task.id,
                       value ?? false);

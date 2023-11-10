@@ -18,7 +18,6 @@ class PersistantLocalStorage {
   static const Map<FileStorageObjectType, String> sFileName = {
     FileStorageObjectType.processlist: ".processList.json",
     FileStorageObjectType.inprogresslist: ".inprogresslist.json",
-    FileStorageObjectType.completedlist: ".completedlist.json"
   };
 
   static Future<String> getLocalPath() async {
@@ -116,8 +115,8 @@ final processTemplateListProvider =
   return ProcessTemplateList();
 });
 
-class InProgressProcessNotifier extends StateNotifier<List<ProcessInstance>> {
-  InProgressProcessNotifier([List<ProcessInstance>? initialList])
+class ProcessInstanceNotifier extends StateNotifier<List<ProcessInstance>> {
+  ProcessInstanceNotifier([List<ProcessInstance>? initialList])
       : super(initialList ?? []);
 
   void add(Process process) {
@@ -211,25 +210,25 @@ class InProgressProcessNotifier extends StateNotifier<List<ProcessInstance>> {
   }
 }
 
-final inProgressProcessListProvider =
-    StateNotifierProvider<InProgressProcessNotifier, List<ProcessInstance>>(
+final processInstanceListProvider =
+    StateNotifierProvider<ProcessInstanceNotifier, List<ProcessInstance>>(
         (ref) {
-  return InProgressProcessNotifier();
+  return ProcessInstanceNotifier();
 });
 
-final inProgressProcessListNewProvider = Provider<List<ProcessInstance>>(
+final inProgressProcessListProvider = Provider<List<ProcessInstance>>(
   (ref) {
     final processList = ref
-        .watch(inProgressProcessListProvider)
+        .watch(processInstanceListProvider)
         .where((processInstance) => processInstance.completed == false);
     return processList.toList();
   },
 );
 
-final finishedProgressProcessListNewProvider = Provider<List<ProcessInstance>>(
+final completedProgressProcessListNewProvider = Provider<List<ProcessInstance>>(
   (ref) {
     final processList = ref
-        .watch(inProgressProcessListProvider)
+        .watch(processInstanceListProvider)
         .where((processInstance) => processInstance.completed == true)
         .sorted((a, b) => -1 * a.end!.compareTo(b.end!));
     return processList.toList();
@@ -238,47 +237,10 @@ final finishedProgressProcessListNewProvider = Provider<List<ProcessInstance>>(
 
 final inProgressTaskListProvider = Provider.family<List<TaskInstance>, String>(
   (ref, processId) {
-    final process = ref.watch(inProgressProcessListProvider).firstWhereOrNull(
+    final process = ref.watch(processInstanceListProvider).firstWhereOrNull(
         (instance) =>
             instance.process.id == processId && instance.completed == false);
 
     return process?.taskInstances ?? [];
   },
 );
-
-// class CompletedProcessNotifier extends StateNotifier<List<ProcessInstance>> {
-//   CompletedProcessNotifier([List<ProcessInstance>? initialList])
-//       : super(initialList ?? []);
-
-//   void add(ProcessInstance processInstance) {
-//     state = [
-//       ProcessInstance(
-//           id: const Uuid().v1(),
-//           process: processInstance.process,
-//           start: processInstance.start,
-//           end: DateTime.now(),
-//           taskInstances: processInstance.taskInstances),
-//       ...state,
-//     ];
-//     final processList = ProcessInstanceList(processes: state);
-//     PersistantLocalStorage.writeContent(
-//         jsonEncode(processList.toJson()), FileStorageObjectType.completedlist);
-//   }
-
-//   void remove(ProcessInstance processInstance) {
-//     state = [
-//       for (final instance in state)
-//         if (instance.id != processInstance.id) instance
-//     ];
-
-//     final processList = ProcessInstanceList(processes: state);
-//     PersistantLocalStorage.writeContent(
-//         jsonEncode(processList.toJson()), FileStorageObjectType.completedlist);
-//   }
-// }
-
-// final completedProcessListProvider =
-//     StateNotifierProvider<CompletedProcessNotifier, List<ProcessInstance>>(
-//         (ref) {
-//   return CompletedProcessNotifier();
-// });

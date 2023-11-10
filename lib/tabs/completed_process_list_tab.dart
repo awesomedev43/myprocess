@@ -18,7 +18,7 @@ class _CompletedProcessListWidgetState
   @override
   Widget build(BuildContext context) {
     final completedProcesses =
-        ref.watch(finishedProgressProcessListNewProvider);
+        ref.watch(completedProgressProcessListNewProvider);
     return ListView(
         children: completedProcesses
             .map((instance) => CompletedProcessCard(processInstance: instance))
@@ -114,8 +114,7 @@ class _CompletedProcessCardState extends ConsumerState<CompletedProcessCard> {
                           IconButton(
                               onPressed: () {
                                 ref
-                                    .read(
-                                        inProgressProcessListProvider.notifier)
+                                    .read(processInstanceListProvider.notifier)
                                     .remove(widget.processInstance);
                               },
                               icon: const Icon(

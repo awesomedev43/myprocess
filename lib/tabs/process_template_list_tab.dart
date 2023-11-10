@@ -31,7 +31,7 @@ class _ProcessTemplateListWidgetState
   IconButton createPlayButton(Process process) {
     return IconButton(
         onPressed: () {
-          ref.read(inProgressProcessListProvider.notifier).add(process);
+          ref.read(processInstanceListProvider.notifier).add(process);
           widget.controller.index = ProcessTab.inprogress.index;
         },
         icon: const Icon(

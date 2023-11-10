@@ -36,7 +36,7 @@ Future<ProviderContainer> initializeState() async {
       await PersistantLocalStorage.readProcessList(
           FileStorageObjectType.processlist));
 
-  container.read(inProgressProcessListProvider).addAll(
+  container.read(processInstanceListProvider).addAll(
       await PersistantLocalStorage.readProcessInstanceList(
           FileStorageObjectType.inprogresslist));
 
