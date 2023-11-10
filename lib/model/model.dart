@@ -44,6 +44,7 @@ class ProcessInstance with _$ProcessInstance {
       {required String id,
       required Process process,
       @Default([]) List<TaskInstance> taskInstances,
+      @Default(false) bool completed,
       DateTime? start,
       DateTime? end}) = _ProcessInstance;
 

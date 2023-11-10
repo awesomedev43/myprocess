@@ -121,8 +121,8 @@ class InProgressProcessNotifier extends StateNotifier<List<ProcessInstance>> {
       : super(initialList ?? []);
 
   void add(Process process) {
-    final alreadyInstantiated =
-        state.any((element) => element.process.id == process.id);
+    final alreadyInstantiated = state.any((element) =>
+        element.process.id == process.id && element.completed == false);
 
     if (alreadyInstantiated) {
       return;
@@ -134,11 +134,13 @@ class InProgressProcessNotifier extends StateNotifier<List<ProcessInstance>> {
           id: const Uuid().v1(),
           process: process,
           start: DateTime.now(),
+          completed: false,
           taskInstances: process.tasks
               .map((t) => TaskInstance(
                   task: t,
                   id: const Uuid().v1(),
                   title: t.title,
+                  completed: false,
                   description: t.description))
               .toList())
     ];
@@ -159,9 +161,23 @@ class InProgressProcessNotifier extends StateNotifier<List<ProcessInstance>> {
         jsonEncode(processList.toJson()), FileStorageObjectType.inprogresslist);
   }
 
+  void completed(ProcessInstance processInstance) {
+    state = [
+      for (final instance in state)
+        if (instance.id != processInstance.id || instance.completed == true)
+          instance
+        else
+          instance.copyWith(completed: true, end: DateTime.now())
+    ];
+
+    final processList = ProcessInstanceList(processes: state);
+    PersistantLocalStorage.writeContent(
+        jsonEncode(processList.toJson()), FileStorageObjectType.inprogresslist);
+  }
+
   void update(String processId, String taskId, bool completed) {
-    final processInstance =
-        state.firstWhere((element) => element.process.id == processId);
+    final processInstance = state.firstWhere((element) =>
+        element.process.id == processId && element.completed == false);
     final newProcessTasksInstances = processInstance.taskInstances.map((t) {
       if (t.task.id == taskId) {
         return TaskInstance(
@@ -177,7 +193,8 @@ class InProgressProcessNotifier extends StateNotifier<List<ProcessInstance>> {
 
     state = [
       for (final instance in state)
-        if (instance.process.id != processInstance.process.id)
+        if (instance.completed == true ||
+            instance.process.id != processInstance.process.id)
           instance
         else
           ProcessInstance(
@@ -200,49 +217,68 @@ final inProgressProcessListProvider =
   return InProgressProcessNotifier();
 });
 
+final inProgressProcessListNewProvider = Provider<List<ProcessInstance>>(
+  (ref) {
+    final processList = ref
+        .watch(inProgressProcessListProvider)
+        .where((processInstance) => processInstance.completed == false);
+    return processList.toList();
+  },
+);
+
+final finishedProgressProcessListNewProvider = Provider<List<ProcessInstance>>(
+  (ref) {
+    final processList = ref
+        .watch(inProgressProcessListProvider)
+        .where((processInstance) => processInstance.completed == true)
+        .sorted((a, b) => -1 * a.end!.compareTo(b.end!));
+    return processList.toList();
+  },
+);
+
 final inProgressTaskListProvider = Provider.family<List<TaskInstance>, String>(
   (ref, processId) {
-    final process = ref
-        .watch(inProgressProcessListProvider)
-        .firstWhereOrNull((instance) => instance.process.id == processId);
+    final process = ref.watch(inProgressProcessListProvider).firstWhereOrNull(
+        (instance) =>
+            instance.process.id == processId && instance.completed == false);
 
     return process?.taskInstances ?? [];
   },
 );
 
-class CompletedProcessNotifier extends StateNotifier<List<ProcessInstance>> {
-  CompletedProcessNotifier([List<ProcessInstance>? initialList])
-      : super(initialList ?? []);
+// class CompletedProcessNotifier extends StateNotifier<List<ProcessInstance>> {
+//   CompletedProcessNotifier([List<ProcessInstance>? initialList])
+//       : super(initialList ?? []);
 
-  void add(ProcessInstance processInstance) {
-    state = [
-      ProcessInstance(
-          id: const Uuid().v1(),
-          process: processInstance.process,
-          start: processInstance.start,
-          end: DateTime.now(),
-          taskInstances: processInstance.taskInstances),
-      ...state,
-    ];
-    final processList = ProcessInstanceList(processes: state);
-    PersistantLocalStorage.writeContent(
-        jsonEncode(processList.toJson()), FileStorageObjectType.completedlist);
-  }
+//   void add(ProcessInstance processInstance) {
+//     state = [
+//       ProcessInstance(
+//           id: const Uuid().v1(),
+//           process: processInstance.process,
+//           start: processInstance.start,
+//           end: DateTime.now(),
+//           taskInstances: processInstance.taskInstances),
+//       ...state,
+//     ];
+//     final processList = ProcessInstanceList(processes: state);
+//     PersistantLocalStorage.writeContent(
+//         jsonEncode(processList.toJson()), FileStorageObjectType.completedlist);
+//   }
 
-  void remove(ProcessInstance processInstance) {
-    state = [
-      for (final instance in state)
-        if (instance.id != processInstance.id) instance
-    ];
+//   void remove(ProcessInstance processInstance) {
+//     state = [
+//       for (final instance in state)
+//         if (instance.id != processInstance.id) instance
+//     ];
 
-    final processList = ProcessInstanceList(processes: state);
-    PersistantLocalStorage.writeContent(
-        jsonEncode(processList.toJson()), FileStorageObjectType.completedlist);
-  }
-}
+//     final processList = ProcessInstanceList(processes: state);
+//     PersistantLocalStorage.writeContent(
+//         jsonEncode(processList.toJson()), FileStorageObjectType.completedlist);
+//   }
+// }
 
-final completedProcessListProvider =
-    StateNotifierProvider<CompletedProcessNotifier, List<ProcessInstance>>(
-        (ref) {
-  return CompletedProcessNotifier();
-});
+// final completedProcessListProvider =
+//     StateNotifierProvider<CompletedProcessNotifier, List<ProcessInstance>>(
+//         (ref) {
+//   return CompletedProcessNotifier();
+// });

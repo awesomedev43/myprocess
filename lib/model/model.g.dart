@@ -6,20 +6,21 @@ part of 'model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Task _$$_TaskFromJson(Map<String, dynamic> json) => _$_Task(
+_$TaskImpl _$$TaskImplFromJson(Map<String, dynamic> json) => _$TaskImpl(
       id: json['id'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
     );
 
-Map<String, dynamic> _$$_TaskToJson(_$_Task instance) => <String, dynamic>{
+Map<String, dynamic> _$$TaskImplToJson(_$TaskImpl instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'description': instance.description,
     };
 
-_$_TaskInstance _$$_TaskInstanceFromJson(Map<String, dynamic> json) =>
-    _$_TaskInstance(
+_$TaskInstanceImpl _$$TaskInstanceImplFromJson(Map<String, dynamic> json) =>
+    _$TaskInstanceImpl(
       task: Task.fromJson(json['task'] as Map<String, dynamic>),
       id: json['id'] as String,
       title: json['title'] as String,
@@ -27,7 +28,7 @@ _$_TaskInstance _$$_TaskInstanceFromJson(Map<String, dynamic> json) =>
       completed: json['completed'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$$_TaskInstanceToJson(_$_TaskInstance instance) =>
+Map<String, dynamic> _$$TaskInstanceImplToJson(_$TaskInstanceImpl instance) =>
     <String, dynamic>{
       'task': instance.task,
       'id': instance.id,
@@ -36,7 +37,8 @@ Map<String, dynamic> _$$_TaskInstanceToJson(_$_TaskInstance instance) =>
       'completed': instance.completed,
     };
 
-_$_Process _$$_ProcessFromJson(Map<String, dynamic> json) => _$_Process(
+_$ProcessImpl _$$ProcessImplFromJson(Map<String, dynamic> json) =>
+    _$ProcessImpl(
       id: json['id'] as String,
       name: json['name'] as String,
       tasks: (json['tasks'] as List<dynamic>)
@@ -44,58 +46,62 @@ _$_Process _$$_ProcessFromJson(Map<String, dynamic> json) => _$_Process(
           .toList(),
     );
 
-Map<String, dynamic> _$$_ProcessToJson(_$_Process instance) =>
+Map<String, dynamic> _$$ProcessImplToJson(_$ProcessImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'tasks': instance.tasks,
     };
 
-_$_ProcessInstance _$$_ProcessInstanceFromJson(Map<String, dynamic> json) =>
-    _$_ProcessInstance(
+_$ProcessInstanceImpl _$$ProcessInstanceImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ProcessInstanceImpl(
       id: json['id'] as String,
       process: Process.fromJson(json['process'] as Map<String, dynamic>),
       taskInstances: (json['taskInstances'] as List<dynamic>?)
               ?.map((e) => TaskInstance.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      completed: json['completed'] as bool? ?? false,
       start: json['start'] == null
           ? null
           : DateTime.parse(json['start'] as String),
       end: json['end'] == null ? null : DateTime.parse(json['end'] as String),
     );
 
-Map<String, dynamic> _$$_ProcessInstanceToJson(_$_ProcessInstance instance) =>
+Map<String, dynamic> _$$ProcessInstanceImplToJson(
+        _$ProcessInstanceImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'process': instance.process,
       'taskInstances': instance.taskInstances,
+      'completed': instance.completed,
       'start': instance.start?.toIso8601String(),
       'end': instance.end?.toIso8601String(),
     };
 
-_$_ProcessList _$$_ProcessListFromJson(Map<String, dynamic> json) =>
-    _$_ProcessList(
+_$ProcessListImpl _$$ProcessListImplFromJson(Map<String, dynamic> json) =>
+    _$ProcessListImpl(
       processes: (json['processes'] as List<dynamic>)
           .map((e) => Process.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$_ProcessListToJson(_$_ProcessList instance) =>
+Map<String, dynamic> _$$ProcessListImplToJson(_$ProcessListImpl instance) =>
     <String, dynamic>{
       'processes': instance.processes,
     };
 
-_$_ProcessInstanceList _$$_ProcessInstanceListFromJson(
+_$ProcessInstanceListImpl _$$ProcessInstanceListImplFromJson(
         Map<String, dynamic> json) =>
-    _$_ProcessInstanceList(
+    _$ProcessInstanceListImpl(
       processes: (json['processes'] as List<dynamic>)
           .map((e) => ProcessInstance.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$_ProcessInstanceListToJson(
-        _$_ProcessInstanceList instance) =>
+Map<String, dynamic> _$$ProcessInstanceListImplToJson(
+        _$ProcessInstanceListImpl instance) =>
     <String, dynamic>{
       'processes': instance.processes,
     };

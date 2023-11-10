@@ -23,7 +23,7 @@ class _InProgressProcessListWidgetState
     extends ConsumerState<InProgressProcessListTab> {
   @override
   Widget build(BuildContext context) {
-    final inProgressProcesses = ref.watch(inProgressProcessListProvider);
+    final inProgressProcesses = ref.watch(inProgressProcessListNewProvider);
     final children = inProgressProcesses
         .map((instance) => InProgressProcessCard(
               processInstance: instance,
@@ -115,10 +115,10 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
   void completeTask() {
     widget.ref
         .read(inProgressProcessListProvider.notifier)
-        .remove(widget.processInstance);
-    widget.ref
-        .read(completedProcessListProvider.notifier)
-        .add(widget.processInstance);
+        .completed(widget.processInstance);
+    // widget.ref
+    //     .read(completedProcessListProvider.notifier)
+    //     .add(widget.processInstance);
     widget.tabController.index = ProcessTab.completed.index;
   }
 
