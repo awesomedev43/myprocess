@@ -78,40 +78,6 @@ class _InProgressSessionCardState extends State<InProgressSessionCard> {
     timer.cancel();
   }
 
-  // List<Step> buildSteps(List<Task> tasks) {
-  //   return tasks.map((task) {
-  //     return Step(title: Text(task.description), content: Container());
-  //   }).toList();
-  // }
-
-  // Stepper buildStepper(ProcessInstance instance) {
-  //   return Stepper(
-  //     physics: const NeverScrollableScrollPhysics(),
-  //     key: Key(Random.secure().nextDouble().toString()),
-  //     currentStep: _index,
-  //     onStepCancel: () {
-  //       if (_index > 0) {
-  //         setState(() {
-  //           _index -= 1;
-  //         });
-  //       }
-  //     },
-  //     onStepContinue: () {
-  //       if (_index + 1 < instance.process.tasks.length) {
-  //         setState(() {
-  //           _index += 1;
-  //         });
-  //       }
-  //     },
-  //     onStepTapped: (int index) {
-  //       setState(() {
-  //         _index = index;
-  //       });
-  //     },
-  //     steps: buildSteps(instance.process.tasks),
-  //   );
-  // }
-
   void completeTask() {
     widget.ref
         .read(sessionInstanceListProvider.notifier)
