@@ -5,6 +5,33 @@ part 'model.freezed.dart';
 part 'model.g.dart';
 
 @freezed
+class CounterTask with _$CounterTask {
+  const factory CounterTask({
+    required String id,
+    required String title,
+    required String description,
+    @Default(0) int increment,
+  }) = _CounterTask;
+
+  factory CounterTask.fromJson(Map<String, Object?> json) =>
+      _$CounterTaskFromJson(json);
+}
+
+@freezed
+class CounterTaskInstance with _$CounterTaskInstance {
+  const factory CounterTaskInstance({
+    required String id,
+    required String title,
+    required String description,
+    required int increment,
+    @Default(0) int count,
+  }) = _CounterTaskInstance;
+
+  factory CounterTaskInstance.fromJson(Map<String, Object?> json) =>
+      _$CounterTaskInstanceFromJson(json);
+}
+
+@freezed
 class Task with _$Task {
   const factory Task(
       {required String id,
@@ -32,7 +59,8 @@ class Session with _$Session {
   const factory Session(
       {required String id,
       required String name,
-      required List<Task> tasks}) = _Session;
+      required List<Task> tasks,
+      @Default([]) List<CounterTask> counters}) = _Session;
 
   factory Session.fromJson(Map<String, dynamic> json) =>
       _$SessionFromJson(json);

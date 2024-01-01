@@ -6,6 +6,42 @@ part of 'model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+_$CounterTaskImpl _$$CounterTaskImplFromJson(Map<String, dynamic> json) =>
+    _$CounterTaskImpl(
+      id: json['id'] as String,
+      title: json['title'] as String,
+      description: json['description'] as String,
+      increment: json['increment'] as int? ?? 0,
+    );
+
+Map<String, dynamic> _$$CounterTaskImplToJson(_$CounterTaskImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'description': instance.description,
+      'increment': instance.increment,
+    };
+
+_$CounterTaskInstanceImpl _$$CounterTaskInstanceImplFromJson(
+        Map<String, dynamic> json) =>
+    _$CounterTaskInstanceImpl(
+      id: json['id'] as String,
+      title: json['title'] as String,
+      description: json['description'] as String,
+      increment: json['increment'] as int,
+      count: json['count'] as int? ?? 0,
+    );
+
+Map<String, dynamic> _$$CounterTaskInstanceImplToJson(
+        _$CounterTaskInstanceImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'description': instance.description,
+      'increment': instance.increment,
+      'count': instance.count,
+    };
+
 _$TaskImpl _$$TaskImplFromJson(Map<String, dynamic> json) => _$TaskImpl(
       id: json['id'] as String,
       title: json['title'] as String,
@@ -44,6 +80,10 @@ _$SessionImpl _$$SessionImplFromJson(Map<String, dynamic> json) =>
       tasks: (json['tasks'] as List<dynamic>)
           .map((e) => Task.fromJson(e as Map<String, dynamic>))
           .toList(),
+      counters: (json['counters'] as List<dynamic>?)
+              ?.map((e) => CounterTask.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$SessionImplToJson(_$SessionImpl instance) =>
@@ -51,6 +91,7 @@ Map<String, dynamic> _$$SessionImplToJson(_$SessionImpl instance) =>
       'id': instance.id,
       'name': instance.name,
       'tasks': instance.tasks,
+      'counters': instance.counters,
     };
 
 _$SessionInstanceImpl _$$SessionInstanceImplFromJson(

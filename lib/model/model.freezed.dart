@@ -14,6 +14,444 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+CounterTask _$CounterTaskFromJson(Map<String, dynamic> json) {
+  return _CounterTask.fromJson(json);
+}
+
+/// @nodoc
+mixin _$CounterTask {
+  String get id => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  int get increment => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $CounterTaskCopyWith<CounterTask> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CounterTaskCopyWith<$Res> {
+  factory $CounterTaskCopyWith(
+          CounterTask value, $Res Function(CounterTask) then) =
+      _$CounterTaskCopyWithImpl<$Res, CounterTask>;
+  @useResult
+  $Res call({String id, String title, String description, int increment});
+}
+
+/// @nodoc
+class _$CounterTaskCopyWithImpl<$Res, $Val extends CounterTask>
+    implements $CounterTaskCopyWith<$Res> {
+  _$CounterTaskCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? title = null,
+    Object? description = null,
+    Object? increment = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      increment: null == increment
+          ? _value.increment
+          : increment // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$CounterTaskImplCopyWith<$Res>
+    implements $CounterTaskCopyWith<$Res> {
+  factory _$$CounterTaskImplCopyWith(
+          _$CounterTaskImpl value, $Res Function(_$CounterTaskImpl) then) =
+      __$$CounterTaskImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String id, String title, String description, int increment});
+}
+
+/// @nodoc
+class __$$CounterTaskImplCopyWithImpl<$Res>
+    extends _$CounterTaskCopyWithImpl<$Res, _$CounterTaskImpl>
+    implements _$$CounterTaskImplCopyWith<$Res> {
+  __$$CounterTaskImplCopyWithImpl(
+      _$CounterTaskImpl _value, $Res Function(_$CounterTaskImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? title = null,
+    Object? description = null,
+    Object? increment = null,
+  }) {
+    return _then(_$CounterTaskImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      increment: null == increment
+          ? _value.increment
+          : increment // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$CounterTaskImpl with DiagnosticableTreeMixin implements _CounterTask {
+  const _$CounterTaskImpl(
+      {required this.id,
+      required this.title,
+      required this.description,
+      this.increment = 0});
+
+  factory _$CounterTaskImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CounterTaskImplFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String title;
+  @override
+  final String description;
+  @override
+  @JsonKey()
+  final int increment;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'CounterTask(id: $id, title: $title, description: $description, increment: $increment)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'CounterTask'))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('title', title))
+      ..add(DiagnosticsProperty('description', description))
+      ..add(DiagnosticsProperty('increment', increment));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CounterTaskImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.increment, increment) ||
+                other.increment == increment));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, id, title, description, increment);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CounterTaskImplCopyWith<_$CounterTaskImpl> get copyWith =>
+      __$$CounterTaskImplCopyWithImpl<_$CounterTaskImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CounterTaskImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _CounterTask implements CounterTask {
+  const factory _CounterTask(
+      {required final String id,
+      required final String title,
+      required final String description,
+      final int increment}) = _$CounterTaskImpl;
+
+  factory _CounterTask.fromJson(Map<String, dynamic> json) =
+      _$CounterTaskImpl.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get title;
+  @override
+  String get description;
+  @override
+  int get increment;
+  @override
+  @JsonKey(ignore: true)
+  _$$CounterTaskImplCopyWith<_$CounterTaskImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+CounterTaskInstance _$CounterTaskInstanceFromJson(Map<String, dynamic> json) {
+  return _CounterTaskInstance.fromJson(json);
+}
+
+/// @nodoc
+mixin _$CounterTaskInstance {
+  String get id => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  int get increment => throw _privateConstructorUsedError;
+  int get count => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $CounterTaskInstanceCopyWith<CounterTaskInstance> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CounterTaskInstanceCopyWith<$Res> {
+  factory $CounterTaskInstanceCopyWith(
+          CounterTaskInstance value, $Res Function(CounterTaskInstance) then) =
+      _$CounterTaskInstanceCopyWithImpl<$Res, CounterTaskInstance>;
+  @useResult
+  $Res call(
+      {String id, String title, String description, int increment, int count});
+}
+
+/// @nodoc
+class _$CounterTaskInstanceCopyWithImpl<$Res, $Val extends CounterTaskInstance>
+    implements $CounterTaskInstanceCopyWith<$Res> {
+  _$CounterTaskInstanceCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? title = null,
+    Object? description = null,
+    Object? increment = null,
+    Object? count = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      increment: null == increment
+          ? _value.increment
+          : increment // ignore: cast_nullable_to_non_nullable
+              as int,
+      count: null == count
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$CounterTaskInstanceImplCopyWith<$Res>
+    implements $CounterTaskInstanceCopyWith<$Res> {
+  factory _$$CounterTaskInstanceImplCopyWith(_$CounterTaskInstanceImpl value,
+          $Res Function(_$CounterTaskInstanceImpl) then) =
+      __$$CounterTaskInstanceImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id, String title, String description, int increment, int count});
+}
+
+/// @nodoc
+class __$$CounterTaskInstanceImplCopyWithImpl<$Res>
+    extends _$CounterTaskInstanceCopyWithImpl<$Res, _$CounterTaskInstanceImpl>
+    implements _$$CounterTaskInstanceImplCopyWith<$Res> {
+  __$$CounterTaskInstanceImplCopyWithImpl(_$CounterTaskInstanceImpl _value,
+      $Res Function(_$CounterTaskInstanceImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? title = null,
+    Object? description = null,
+    Object? increment = null,
+    Object? count = null,
+  }) {
+    return _then(_$CounterTaskInstanceImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      increment: null == increment
+          ? _value.increment
+          : increment // ignore: cast_nullable_to_non_nullable
+              as int,
+      count: null == count
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$CounterTaskInstanceImpl
+    with DiagnosticableTreeMixin
+    implements _CounterTaskInstance {
+  const _$CounterTaskInstanceImpl(
+      {required this.id,
+      required this.title,
+      required this.description,
+      required this.increment,
+      this.count = 0});
+
+  factory _$CounterTaskInstanceImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CounterTaskInstanceImplFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String title;
+  @override
+  final String description;
+  @override
+  final int increment;
+  @override
+  @JsonKey()
+  final int count;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'CounterTaskInstance(id: $id, title: $title, description: $description, increment: $increment, count: $count)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'CounterTaskInstance'))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('title', title))
+      ..add(DiagnosticsProperty('description', description))
+      ..add(DiagnosticsProperty('increment', increment))
+      ..add(DiagnosticsProperty('count', count));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CounterTaskInstanceImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.increment, increment) ||
+                other.increment == increment) &&
+            (identical(other.count, count) || other.count == count));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, id, title, description, increment, count);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CounterTaskInstanceImplCopyWith<_$CounterTaskInstanceImpl> get copyWith =>
+      __$$CounterTaskInstanceImplCopyWithImpl<_$CounterTaskInstanceImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CounterTaskInstanceImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _CounterTaskInstance implements CounterTaskInstance {
+  const factory _CounterTaskInstance(
+      {required final String id,
+      required final String title,
+      required final String description,
+      required final int increment,
+      final int count}) = _$CounterTaskInstanceImpl;
+
+  factory _CounterTaskInstance.fromJson(Map<String, dynamic> json) =
+      _$CounterTaskInstanceImpl.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get title;
+  @override
+  String get description;
+  @override
+  int get increment;
+  @override
+  int get count;
+  @override
+  @JsonKey(ignore: true)
+  _$$CounterTaskInstanceImplCopyWith<_$CounterTaskInstanceImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 Task _$TaskFromJson(Map<String, dynamic> json) {
   return _Task.fromJson(json);
 }
@@ -442,6 +880,7 @@ mixin _$Session {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   List<Task> get tasks => throw _privateConstructorUsedError;
+  List<CounterTask> get counters => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -453,7 +892,8 @@ abstract class $SessionCopyWith<$Res> {
   factory $SessionCopyWith(Session value, $Res Function(Session) then) =
       _$SessionCopyWithImpl<$Res, Session>;
   @useResult
-  $Res call({String id, String name, List<Task> tasks});
+  $Res call(
+      {String id, String name, List<Task> tasks, List<CounterTask> counters});
 }
 
 /// @nodoc
@@ -472,6 +912,7 @@ class _$SessionCopyWithImpl<$Res, $Val extends Session>
     Object? id = null,
     Object? name = null,
     Object? tasks = null,
+    Object? counters = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -486,6 +927,10 @@ class _$SessionCopyWithImpl<$Res, $Val extends Session>
           ? _value.tasks
           : tasks // ignore: cast_nullable_to_non_nullable
               as List<Task>,
+      counters: null == counters
+          ? _value.counters
+          : counters // ignore: cast_nullable_to_non_nullable
+              as List<CounterTask>,
     ) as $Val);
   }
 }
@@ -497,7 +942,8 @@ abstract class _$$SessionImplCopyWith<$Res> implements $SessionCopyWith<$Res> {
       __$$SessionImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, List<Task> tasks});
+  $Res call(
+      {String id, String name, List<Task> tasks, List<CounterTask> counters});
 }
 
 /// @nodoc
@@ -514,6 +960,7 @@ class __$$SessionImplCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? tasks = null,
+    Object? counters = null,
   }) {
     return _then(_$SessionImpl(
       id: null == id
@@ -528,6 +975,10 @@ class __$$SessionImplCopyWithImpl<$Res>
           ? _value._tasks
           : tasks // ignore: cast_nullable_to_non_nullable
               as List<Task>,
+      counters: null == counters
+          ? _value._counters
+          : counters // ignore: cast_nullable_to_non_nullable
+              as List<CounterTask>,
     ));
   }
 }
@@ -536,8 +987,12 @@ class __$$SessionImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$SessionImpl with DiagnosticableTreeMixin implements _Session {
   const _$SessionImpl(
-      {required this.id, required this.name, required final List<Task> tasks})
-      : _tasks = tasks;
+      {required this.id,
+      required this.name,
+      required final List<Task> tasks,
+      final List<CounterTask> counters = const []})
+      : _tasks = tasks,
+        _counters = counters;
 
   factory _$SessionImpl.fromJson(Map<String, dynamic> json) =>
       _$$SessionImplFromJson(json);
@@ -554,9 +1009,18 @@ class _$SessionImpl with DiagnosticableTreeMixin implements _Session {
     return EqualUnmodifiableListView(_tasks);
   }
 
+  final List<CounterTask> _counters;
+  @override
+  @JsonKey()
+  List<CounterTask> get counters {
+    if (_counters is EqualUnmodifiableListView) return _counters;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_counters);
+  }
+
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Session(id: $id, name: $name, tasks: $tasks)';
+    return 'Session(id: $id, name: $name, tasks: $tasks, counters: $counters)';
   }
 
   @override
@@ -566,7 +1030,8 @@ class _$SessionImpl with DiagnosticableTreeMixin implements _Session {
       ..add(DiagnosticsProperty('type', 'Session'))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('tasks', tasks));
+      ..add(DiagnosticsProperty('tasks', tasks))
+      ..add(DiagnosticsProperty('counters', counters));
   }
 
   @override
@@ -576,13 +1041,18 @@ class _$SessionImpl with DiagnosticableTreeMixin implements _Session {
             other is _$SessionImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            const DeepCollectionEquality().equals(other._tasks, _tasks));
+            const DeepCollectionEquality().equals(other._tasks, _tasks) &&
+            const DeepCollectionEquality().equals(other._counters, _counters));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, name, const DeepCollectionEquality().hash(_tasks));
+      runtimeType,
+      id,
+      name,
+      const DeepCollectionEquality().hash(_tasks),
+      const DeepCollectionEquality().hash(_counters));
 
   @JsonKey(ignore: true)
   @override
@@ -602,7 +1072,8 @@ abstract class _Session implements Session {
   const factory _Session(
       {required final String id,
       required final String name,
-      required final List<Task> tasks}) = _$SessionImpl;
+      required final List<Task> tasks,
+      final List<CounterTask> counters}) = _$SessionImpl;
 
   factory _Session.fromJson(Map<String, dynamic> json) = _$SessionImpl.fromJson;
 
@@ -612,6 +1083,8 @@ abstract class _Session implements Session {
   String get name;
   @override
   List<Task> get tasks;
+  @override
+  List<CounterTask> get counters;
   @override
   @JsonKey(ignore: true)
   _$$SessionImplCopyWith<_$SessionImpl> get copyWith =>

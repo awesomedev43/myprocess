@@ -101,7 +101,7 @@ class SessionTemplateListNotifier extends _$SessionTemplateListNotifier {
         if (p.id != session.id) p else session,
       if (!editing) session,
     ]);
-    final sessionList = SessionList(sessions: state.value!);
+    final sessionList = SessionList(sessions: state.value ?? []);
     PersistantLocalStorage.writeContent(
         jsonEncode(sessionList.toJson()), FileStorageObjectType.sessionlist);
   }
@@ -114,7 +114,7 @@ class SessionTemplateListNotifier extends _$SessionTemplateListNotifier {
         if (p.id != session.id) p
     ]);
 
-    final sessionList = SessionList(sessions: state.value!);
+    final sessionList = SessionList(sessions: state.value ?? []);
     PersistantLocalStorage.writeContent(
         jsonEncode(sessionList.toJson()), FileStorageObjectType.sessionlist);
   }
@@ -250,7 +250,7 @@ class SessionInstanceListNotifier extends _$SessionInstanceListNotifier {
               .toList())
     ]);
 
-    final sessionList = SessionInstanceList(sessions: state.value!);
+    final sessionList = SessionInstanceList(sessions: state.value ?? []);
     PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
         FileStorageObjectType.sessioninstancelist);
   }
@@ -263,7 +263,7 @@ class SessionInstanceListNotifier extends _$SessionInstanceListNotifier {
         if (instance.id != sessionInstance.id) instance
     ]);
 
-    final sessionList = SessionInstanceList(sessions: state.value!);
+    final sessionList = SessionInstanceList(sessions: state.value ?? []);
     PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
         FileStorageObjectType.sessioninstancelist);
   }
@@ -279,7 +279,7 @@ class SessionInstanceListNotifier extends _$SessionInstanceListNotifier {
           instance.copyWith(completed: true, end: DateTime.now())
     ]);
 
-    final sessionList = SessionInstanceList(sessions: state.value!);
+    final sessionList = SessionInstanceList(sessions: state.value ?? []);
     PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
         FileStorageObjectType.sessioninstancelist);
   }
@@ -311,7 +311,7 @@ class SessionInstanceListNotifier extends _$SessionInstanceListNotifier {
               end: sessionInstance.end)
     ]);
 
-    final sessionList = SessionInstanceList(sessions: state.value!);
+    final sessionList = SessionInstanceList(sessions: state.value ?? []);
     PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
         FileStorageObjectType.sessioninstancelist);
   }
