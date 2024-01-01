@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:collection/collection.dart';
@@ -96,124 +95,31 @@ class SessionTemplateListNotifier extends _$SessionTemplateListNotifier {
     final previousState = await future;
 
     final editing = previousState.any((p) => p.id == session.id);
-    state = AsyncData([
+    final newState = [
       for (final p in previousState)
         if (p.id != session.id) p else session,
       if (!editing) session,
-    ]);
-    final sessionList = SessionList(sessions: state.value ?? []);
-    PersistantLocalStorage.writeContent(
+    ];
+    state = AsyncData(newState);
+    final sessionList = SessionList(sessions: newState);
+    await PersistantLocalStorage.writeContent(
         jsonEncode(sessionList.toJson()), FileStorageObjectType.sessionlist);
   }
 
   Future<void> remove(Session session) async {
     final previousState = await future;
 
-    state = AsyncData([
+    final newState = [
       for (final p in previousState)
         if (p.id != session.id) p
-    ]);
+    ];
+    state = AsyncData(newState);
 
-    final sessionList = SessionList(sessions: state.value ?? []);
-    PersistantLocalStorage.writeContent(
+    final sessionList = SessionList(sessions: newState);
+    await PersistantLocalStorage.writeContent(
         jsonEncode(sessionList.toJson()), FileStorageObjectType.sessionlist);
   }
 }
-
-class SessionInstanceNotifier extends StateNotifier<List<SessionInstance>> {
-  SessionInstanceNotifier([List<SessionInstance>? initialList])
-      : super(initialList ?? []);
-
-  void add(Session session) {
-    final alreadyInstantiated = state.any((element) =>
-        element.session.id == session.id && element.completed == false);
-
-    if (alreadyInstantiated) {
-      return;
-    }
-
-    state = [
-      ...state,
-      SessionInstance(
-          id: const Uuid().v1(),
-          session: session,
-          start: DateTime.now(),
-          completed: false,
-          taskInstances: session.tasks
-              .map((t) => TaskInstance(
-                  task: t,
-                  id: const Uuid().v1(),
-                  title: t.title,
-                  completed: false,
-                  description: t.description))
-              .toList())
-    ];
-
-    final sessionList = SessionInstanceList(sessions: state);
-    PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
-        FileStorageObjectType.sessioninstancelist);
-  }
-
-  void remove(SessionInstance sessionInstance) {
-    state = [
-      for (final instance in state)
-        if (instance.id != sessionInstance.id) instance
-    ];
-
-    final sessionList = SessionInstanceList(sessions: state);
-    PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
-        FileStorageObjectType.sessioninstancelist);
-  }
-
-  void completed(SessionInstance sessionInstance) {
-    state = [
-      for (final instance in state)
-        if (instance.id != sessionInstance.id)
-          instance
-        else
-          instance.copyWith(completed: true, end: DateTime.now())
-    ];
-
-    final sessionList = SessionInstanceList(sessions: state);
-    PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
-        FileStorageObjectType.sessioninstancelist);
-  }
-
-  void update(String sessionInstanceId, String taskId, bool completed) {
-    final sessionInstance =
-        state.firstWhere((element) => element.id == sessionInstanceId);
-    final newsessionTasksInstances = sessionInstance.taskInstances.map((t) {
-      if (t.task.id == taskId) {
-        return t.copyWith(completed: completed);
-      } else {
-        return t;
-      }
-    }).toList();
-
-    state = [
-      for (final instance in state)
-        if (instance.id != sessionInstance.id)
-          instance
-        else
-          SessionInstance(
-              id: const Uuid().v1(),
-              session: sessionInstance.session,
-              taskInstances: newsessionTasksInstances,
-              start: sessionInstance.start,
-              end: sessionInstance.end)
-    ];
-
-    final sessionList = SessionInstanceList(sessions: state);
-    PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
-        FileStorageObjectType.sessioninstancelist);
-  }
-}
-
-final sessionInstanceListProvider =
-    StateNotifierProvider<SessionInstanceNotifier, List<SessionInstance>>(
-        (ref) {
-  return SessionInstanceNotifier();
-});
 
 @riverpod
 class SessionInstanceListNotifier extends _$SessionInstanceListNotifier {
@@ -233,7 +139,7 @@ class SessionInstanceListNotifier extends _$SessionInstanceListNotifier {
       return;
     }
 
-    state = AsyncData([
+    final newState = [
       ...previousState,
       SessionInstance(
           id: const Uuid().v1(),
@@ -248,39 +154,44 @@ class SessionInstanceListNotifier extends _$SessionInstanceListNotifier {
                   completed: false,
                   description: t.description))
               .toList())
-    ]);
+    ];
 
-    final sessionList = SessionInstanceList(sessions: state.value ?? []);
-    PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
+    state = AsyncData(newState);
+
+    final sessionList = SessionInstanceList(sessions: newState);
+    await PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
         FileStorageObjectType.sessioninstancelist);
   }
 
   Future<void> remove(SessionInstance sessionInstance) async {
     final previousState = await future;
 
-    state = AsyncData([
+    final newState = [
       for (final instance in previousState)
         if (instance.id != sessionInstance.id) instance
-    ]);
+    ];
+    state = AsyncData(newState);
 
-    final sessionList = SessionInstanceList(sessions: state.value ?? []);
-    PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
+    final sessionList = SessionInstanceList(sessions: newState);
+    await PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
         FileStorageObjectType.sessioninstancelist);
   }
 
   Future<void> completed(SessionInstance sessionInstance) async {
     final previousState = await future;
 
-    state = AsyncData([
+    final newState = [
       for (final instance in previousState)
         if (instance.id != sessionInstance.id)
           instance
         else
           instance.copyWith(completed: true, end: DateTime.now())
-    ]);
+    ];
 
-    final sessionList = SessionInstanceList(sessions: state.value ?? []);
-    PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
+    state = AsyncData(newState);
+
+    final sessionList = SessionInstanceList(sessions: newState);
+    await PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
         FileStorageObjectType.sessioninstancelist);
   }
 
@@ -298,7 +209,7 @@ class SessionInstanceListNotifier extends _$SessionInstanceListNotifier {
       }
     }).toList();
 
-    state = AsyncData([
+    final newState = [
       for (final instance in previousState)
         if (instance.id != sessionInstance.id)
           instance
@@ -309,10 +220,12 @@ class SessionInstanceListNotifier extends _$SessionInstanceListNotifier {
               taskInstances: newsessionTasksInstances,
               start: sessionInstance.start,
               end: sessionInstance.end)
-    ]);
+    ];
 
-    final sessionList = SessionInstanceList(sessions: state.value ?? []);
-    PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
+    state = AsyncData(newState);
+
+    final sessionList = SessionInstanceList(sessions: newState);
+    await PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
         FileStorageObjectType.sessioninstancelist);
   }
 }
@@ -321,29 +234,32 @@ class SessionInstanceListNotifier extends _$SessionInstanceListNotifier {
 Future<List<SessionInstance>> getInProgressSessionList(
     GetInProgressSessionListRef ref) async {
   final sessionList =
-      (ref.watch(sessionInstanceListNotifierProvider).value ?? [])
-          .where((sessionInstance) => sessionInstance.completed == false);
+      await ref.watch(sessionInstanceListNotifierProvider.future);
 
-  return sessionList.toList();
+  return sessionList
+      .where((sessionInstance) => sessionInstance.completed == false)
+      .toList();
 }
 
 @riverpod
 Future<List<SessionInstance>> getCompletedSessionList(
     GetCompletedSessionListRef ref) async {
   final sessionList =
-      (ref.watch(sessionInstanceListNotifierProvider).value ?? [])
-          .where((sessionInstance) => sessionInstance.completed == true)
-          .sorted((a, b) => -1 * a.end!.compareTo(b.end!));
+      await ref.watch(sessionInstanceListNotifierProvider.future);
 
-  return sessionList.toList();
+  return sessionList
+      .where((sessionInstance) => sessionInstance.completed == true)
+      .sorted((a, b) => -1 * a.end!.compareTo(b.end!));
 }
 
 @riverpod
 Future<List<TaskInstance>> getInProgressTaskList(
     GetInProgressTaskListRef ref, String sessionInstanceId) async {
-  final sessionInstance =
-      (ref.watch(sessionInstanceListNotifierProvider).value ?? [])
-          .firstWhereOrNull((instance) => instance.id == sessionInstanceId);
+  final sessionInstances =
+      await ref.watch(sessionInstanceListNotifierProvider.future);
+
+  final sessionInstance = sessionInstances
+      .firstWhereOrNull((instance) => instance.id == sessionInstanceId);
 
   return sessionInstance?.taskInstances ?? [];
 }
