@@ -28,45 +28,45 @@ class TaskInstance with _$TaskInstance {
 }
 
 @freezed
-class Process with _$Process {
-  const factory Process(
+class Session with _$Session {
+  const factory Session(
       {required String id,
       required String name,
-      required List<Task> tasks}) = _Process;
+      required List<Task> tasks}) = _Session;
 
-  factory Process.fromJson(Map<String, dynamic> json) =>
-      _$ProcessFromJson(json);
+  factory Session.fromJson(Map<String, dynamic> json) =>
+      _$SessionFromJson(json);
 }
 
 @freezed
-class ProcessInstance with _$ProcessInstance {
-  factory ProcessInstance(
+class SessionInstance with _$SessionInstance {
+  factory SessionInstance(
       {required String id,
-      required Process process,
+      required Session session,
       @Default([]) List<TaskInstance> taskInstances,
       @Default(false) bool completed,
       DateTime? start,
-      DateTime? end}) = _ProcessInstance;
+      DateTime? end}) = _SessionInstance;
 
-  factory ProcessInstance.fromJson(Map<String, dynamic> json) =>
-      _$ProcessInstanceFromJson(json);
+  factory SessionInstance.fromJson(Map<String, dynamic> json) =>
+      _$SessionInstanceFromJson(json);
 }
 
 @freezed
-class ProcessList with _$ProcessList {
-  // Used for JSON serialization of `Process` class
-  const factory ProcessList({required List<Process> processes}) = _ProcessList;
+class SessionList with _$SessionList {
+  // Used for JSON serialization of `Session` class
+  const factory SessionList({required List<Session> sessions}) = _SessionList;
 
-  factory ProcessList.fromJson(Map<String, dynamic> json) =>
-      _$ProcessListFromJson(json);
+  factory SessionList.fromJson(Map<String, dynamic> json) =>
+      _$SessionListFromJson(json);
 }
 
 @freezed
-class ProcessInstanceList with _$ProcessInstanceList {
-  // Used for JSON serialization of `ProcessInstance` class
-  const factory ProcessInstanceList(
-      {required List<ProcessInstance> processes}) = _ProcessInstanceList;
+class SessionInstanceList with _$SessionInstanceList {
+  // Used for JSON serialization of `SessionInstance` class
+  const factory SessionInstanceList({required List<SessionInstance> sessions}) =
+      _SessionInstanceList;
 
-  factory ProcessInstanceList.fromJson(Map<String, dynamic> json) =>
-      _$ProcessInstanceListFromJson(json);
+  factory SessionInstanceList.fromJson(Map<String, dynamic> json) =>
+      _$SessionInstanceListFromJson(json);
 }

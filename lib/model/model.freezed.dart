@@ -144,7 +144,7 @@ class _$TaskImpl with DiagnosticableTreeMixin implements _Task {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TaskImpl &&
@@ -374,7 +374,7 @@ class _$TaskInstanceImpl with DiagnosticableTreeMixin implements _TaskInstance {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TaskInstanceImpl &&
@@ -433,33 +433,33 @@ abstract class _TaskInstance implements TaskInstance {
       throw _privateConstructorUsedError;
 }
 
-Process _$ProcessFromJson(Map<String, dynamic> json) {
-  return _Process.fromJson(json);
+Session _$SessionFromJson(Map<String, dynamic> json) {
+  return _Session.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Process {
+mixin _$Session {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   List<Task> get tasks => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ProcessCopyWith<Process> get copyWith => throw _privateConstructorUsedError;
+  $SessionCopyWith<Session> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ProcessCopyWith<$Res> {
-  factory $ProcessCopyWith(Process value, $Res Function(Process) then) =
-      _$ProcessCopyWithImpl<$Res, Process>;
+abstract class $SessionCopyWith<$Res> {
+  factory $SessionCopyWith(Session value, $Res Function(Session) then) =
+      _$SessionCopyWithImpl<$Res, Session>;
   @useResult
   $Res call({String id, String name, List<Task> tasks});
 }
 
 /// @nodoc
-class _$ProcessCopyWithImpl<$Res, $Val extends Process>
-    implements $ProcessCopyWith<$Res> {
-  _$ProcessCopyWithImpl(this._value, this._then);
+class _$SessionCopyWithImpl<$Res, $Val extends Session>
+    implements $SessionCopyWith<$Res> {
+  _$SessionCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -491,21 +491,21 @@ class _$ProcessCopyWithImpl<$Res, $Val extends Process>
 }
 
 /// @nodoc
-abstract class _$$ProcessImplCopyWith<$Res> implements $ProcessCopyWith<$Res> {
-  factory _$$ProcessImplCopyWith(
-          _$ProcessImpl value, $Res Function(_$ProcessImpl) then) =
-      __$$ProcessImplCopyWithImpl<$Res>;
+abstract class _$$SessionImplCopyWith<$Res> implements $SessionCopyWith<$Res> {
+  factory _$$SessionImplCopyWith(
+          _$SessionImpl value, $Res Function(_$SessionImpl) then) =
+      __$$SessionImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String id, String name, List<Task> tasks});
 }
 
 /// @nodoc
-class __$$ProcessImplCopyWithImpl<$Res>
-    extends _$ProcessCopyWithImpl<$Res, _$ProcessImpl>
-    implements _$$ProcessImplCopyWith<$Res> {
-  __$$ProcessImplCopyWithImpl(
-      _$ProcessImpl _value, $Res Function(_$ProcessImpl) _then)
+class __$$SessionImplCopyWithImpl<$Res>
+    extends _$SessionCopyWithImpl<$Res, _$SessionImpl>
+    implements _$$SessionImplCopyWith<$Res> {
+  __$$SessionImplCopyWithImpl(
+      _$SessionImpl _value, $Res Function(_$SessionImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -515,7 +515,7 @@ class __$$ProcessImplCopyWithImpl<$Res>
     Object? name = null,
     Object? tasks = null,
   }) {
-    return _then(_$ProcessImpl(
+    return _then(_$SessionImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -534,13 +534,13 @@ class __$$ProcessImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ProcessImpl with DiagnosticableTreeMixin implements _Process {
-  const _$ProcessImpl(
+class _$SessionImpl with DiagnosticableTreeMixin implements _Session {
+  const _$SessionImpl(
       {required this.id, required this.name, required final List<Task> tasks})
       : _tasks = tasks;
 
-  factory _$ProcessImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ProcessImplFromJson(json);
+  factory _$SessionImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SessionImplFromJson(json);
 
   @override
   final String id;
@@ -556,24 +556,24 @@ class _$ProcessImpl with DiagnosticableTreeMixin implements _Process {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Process(id: $id, name: $name, tasks: $tasks)';
+    return 'Session(id: $id, name: $name, tasks: $tasks)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'Process'))
+      ..add(DiagnosticsProperty('type', 'Session'))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('tasks', tasks));
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ProcessImpl &&
+            other is _$SessionImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality().equals(other._tasks, _tasks));
@@ -587,24 +587,24 @@ class _$ProcessImpl with DiagnosticableTreeMixin implements _Process {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ProcessImplCopyWith<_$ProcessImpl> get copyWith =>
-      __$$ProcessImplCopyWithImpl<_$ProcessImpl>(this, _$identity);
+  _$$SessionImplCopyWith<_$SessionImpl> get copyWith =>
+      __$$SessionImplCopyWithImpl<_$SessionImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ProcessImplToJson(
+    return _$$SessionImplToJson(
       this,
     );
   }
 }
 
-abstract class _Process implements Process {
-  const factory _Process(
+abstract class _Session implements Session {
+  const factory _Session(
       {required final String id,
       required final String name,
-      required final List<Task> tasks}) = _$ProcessImpl;
+      required final List<Task> tasks}) = _$SessionImpl;
 
-  factory _Process.fromJson(Map<String, dynamic> json) = _$ProcessImpl.fromJson;
+  factory _Session.fromJson(Map<String, dynamic> json) = _$SessionImpl.fromJson;
 
   @override
   String get id;
@@ -614,18 +614,18 @@ abstract class _Process implements Process {
   List<Task> get tasks;
   @override
   @JsonKey(ignore: true)
-  _$$ProcessImplCopyWith<_$ProcessImpl> get copyWith =>
+  _$$SessionImplCopyWith<_$SessionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-ProcessInstance _$ProcessInstanceFromJson(Map<String, dynamic> json) {
-  return _ProcessInstance.fromJson(json);
+SessionInstance _$SessionInstanceFromJson(Map<String, dynamic> json) {
+  return _SessionInstance.fromJson(json);
 }
 
 /// @nodoc
-mixin _$ProcessInstance {
+mixin _$SessionInstance {
   String get id => throw _privateConstructorUsedError;
-  Process get process => throw _privateConstructorUsedError;
+  Session get session => throw _privateConstructorUsedError;
   List<TaskInstance> get taskInstances => throw _privateConstructorUsedError;
   bool get completed => throw _privateConstructorUsedError;
   DateTime? get start => throw _privateConstructorUsedError;
@@ -633,31 +633,31 @@ mixin _$ProcessInstance {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ProcessInstanceCopyWith<ProcessInstance> get copyWith =>
+  $SessionInstanceCopyWith<SessionInstance> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ProcessInstanceCopyWith<$Res> {
-  factory $ProcessInstanceCopyWith(
-          ProcessInstance value, $Res Function(ProcessInstance) then) =
-      _$ProcessInstanceCopyWithImpl<$Res, ProcessInstance>;
+abstract class $SessionInstanceCopyWith<$Res> {
+  factory $SessionInstanceCopyWith(
+          SessionInstance value, $Res Function(SessionInstance) then) =
+      _$SessionInstanceCopyWithImpl<$Res, SessionInstance>;
   @useResult
   $Res call(
       {String id,
-      Process process,
+      Session session,
       List<TaskInstance> taskInstances,
       bool completed,
       DateTime? start,
       DateTime? end});
 
-  $ProcessCopyWith<$Res> get process;
+  $SessionCopyWith<$Res> get session;
 }
 
 /// @nodoc
-class _$ProcessInstanceCopyWithImpl<$Res, $Val extends ProcessInstance>
-    implements $ProcessInstanceCopyWith<$Res> {
-  _$ProcessInstanceCopyWithImpl(this._value, this._then);
+class _$SessionInstanceCopyWithImpl<$Res, $Val extends SessionInstance>
+    implements $SessionInstanceCopyWith<$Res> {
+  _$SessionInstanceCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -668,7 +668,7 @@ class _$ProcessInstanceCopyWithImpl<$Res, $Val extends ProcessInstance>
   @override
   $Res call({
     Object? id = null,
-    Object? process = null,
+    Object? session = null,
     Object? taskInstances = null,
     Object? completed = null,
     Object? start = freezed,
@@ -679,10 +679,10 @@ class _$ProcessInstanceCopyWithImpl<$Res, $Val extends ProcessInstance>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      process: null == process
-          ? _value.process
-          : process // ignore: cast_nullable_to_non_nullable
-              as Process,
+      session: null == session
+          ? _value.session
+          : session // ignore: cast_nullable_to_non_nullable
+              as Session,
       taskInstances: null == taskInstances
           ? _value.taskInstances
           : taskInstances // ignore: cast_nullable_to_non_nullable
@@ -704,60 +704,60 @@ class _$ProcessInstanceCopyWithImpl<$Res, $Val extends ProcessInstance>
 
   @override
   @pragma('vm:prefer-inline')
-  $ProcessCopyWith<$Res> get process {
-    return $ProcessCopyWith<$Res>(_value.process, (value) {
-      return _then(_value.copyWith(process: value) as $Val);
+  $SessionCopyWith<$Res> get session {
+    return $SessionCopyWith<$Res>(_value.session, (value) {
+      return _then(_value.copyWith(session: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$$ProcessInstanceImplCopyWith<$Res>
-    implements $ProcessInstanceCopyWith<$Res> {
-  factory _$$ProcessInstanceImplCopyWith(_$ProcessInstanceImpl value,
-          $Res Function(_$ProcessInstanceImpl) then) =
-      __$$ProcessInstanceImplCopyWithImpl<$Res>;
+abstract class _$$SessionInstanceImplCopyWith<$Res>
+    implements $SessionInstanceCopyWith<$Res> {
+  factory _$$SessionInstanceImplCopyWith(_$SessionInstanceImpl value,
+          $Res Function(_$SessionInstanceImpl) then) =
+      __$$SessionInstanceImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {String id,
-      Process process,
+      Session session,
       List<TaskInstance> taskInstances,
       bool completed,
       DateTime? start,
       DateTime? end});
 
   @override
-  $ProcessCopyWith<$Res> get process;
+  $SessionCopyWith<$Res> get session;
 }
 
 /// @nodoc
-class __$$ProcessInstanceImplCopyWithImpl<$Res>
-    extends _$ProcessInstanceCopyWithImpl<$Res, _$ProcessInstanceImpl>
-    implements _$$ProcessInstanceImplCopyWith<$Res> {
-  __$$ProcessInstanceImplCopyWithImpl(
-      _$ProcessInstanceImpl _value, $Res Function(_$ProcessInstanceImpl) _then)
+class __$$SessionInstanceImplCopyWithImpl<$Res>
+    extends _$SessionInstanceCopyWithImpl<$Res, _$SessionInstanceImpl>
+    implements _$$SessionInstanceImplCopyWith<$Res> {
+  __$$SessionInstanceImplCopyWithImpl(
+      _$SessionInstanceImpl _value, $Res Function(_$SessionInstanceImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = null,
-    Object? process = null,
+    Object? session = null,
     Object? taskInstances = null,
     Object? completed = null,
     Object? start = freezed,
     Object? end = freezed,
   }) {
-    return _then(_$ProcessInstanceImpl(
+    return _then(_$SessionInstanceImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      process: null == process
-          ? _value.process
-          : process // ignore: cast_nullable_to_non_nullable
-              as Process,
+      session: null == session
+          ? _value.session
+          : session // ignore: cast_nullable_to_non_nullable
+              as Session,
       taskInstances: null == taskInstances
           ? _value._taskInstances
           : taskInstances // ignore: cast_nullable_to_non_nullable
@@ -780,25 +780,25 @@ class __$$ProcessInstanceImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ProcessInstanceImpl
+class _$SessionInstanceImpl
     with DiagnosticableTreeMixin
-    implements _ProcessInstance {
-  _$ProcessInstanceImpl(
+    implements _SessionInstance {
+  _$SessionInstanceImpl(
       {required this.id,
-      required this.process,
+      required this.session,
       final List<TaskInstance> taskInstances = const [],
       this.completed = false,
       this.start,
       this.end})
       : _taskInstances = taskInstances;
 
-  factory _$ProcessInstanceImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ProcessInstanceImplFromJson(json);
+  factory _$SessionInstanceImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SessionInstanceImplFromJson(json);
 
   @override
   final String id;
   @override
-  final Process process;
+  final Session session;
   final List<TaskInstance> _taskInstances;
   @override
   @JsonKey()
@@ -818,16 +818,16 @@ class _$ProcessInstanceImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ProcessInstance(id: $id, process: $process, taskInstances: $taskInstances, completed: $completed, start: $start, end: $end)';
+    return 'SessionInstance(id: $id, session: $session, taskInstances: $taskInstances, completed: $completed, start: $start, end: $end)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ProcessInstance'))
+      ..add(DiagnosticsProperty('type', 'SessionInstance'))
       ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('process', process))
+      ..add(DiagnosticsProperty('session', session))
       ..add(DiagnosticsProperty('taskInstances', taskInstances))
       ..add(DiagnosticsProperty('completed', completed))
       ..add(DiagnosticsProperty('start', start))
@@ -835,12 +835,12 @@ class _$ProcessInstanceImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ProcessInstanceImpl &&
+            other is _$SessionInstanceImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.process, process) || other.process == process) &&
+            (identical(other.session, session) || other.session == session) &&
             const DeepCollectionEquality()
                 .equals(other._taskInstances, _taskInstances) &&
             (identical(other.completed, completed) ||
@@ -854,7 +854,7 @@ class _$ProcessInstanceImpl
   int get hashCode => Object.hash(
       runtimeType,
       id,
-      process,
+      session,
       const DeepCollectionEquality().hash(_taskInstances),
       completed,
       start,
@@ -863,34 +863,34 @@ class _$ProcessInstanceImpl
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ProcessInstanceImplCopyWith<_$ProcessInstanceImpl> get copyWith =>
-      __$$ProcessInstanceImplCopyWithImpl<_$ProcessInstanceImpl>(
+  _$$SessionInstanceImplCopyWith<_$SessionInstanceImpl> get copyWith =>
+      __$$SessionInstanceImplCopyWithImpl<_$SessionInstanceImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ProcessInstanceImplToJson(
+    return _$$SessionInstanceImplToJson(
       this,
     );
   }
 }
 
-abstract class _ProcessInstance implements ProcessInstance {
-  factory _ProcessInstance(
+abstract class _SessionInstance implements SessionInstance {
+  factory _SessionInstance(
       {required final String id,
-      required final Process process,
+      required final Session session,
       final List<TaskInstance> taskInstances,
       final bool completed,
       final DateTime? start,
-      final DateTime? end}) = _$ProcessInstanceImpl;
+      final DateTime? end}) = _$SessionInstanceImpl;
 
-  factory _ProcessInstance.fromJson(Map<String, dynamic> json) =
-      _$ProcessInstanceImpl.fromJson;
+  factory _SessionInstance.fromJson(Map<String, dynamic> json) =
+      _$SessionInstanceImpl.fromJson;
 
   @override
   String get id;
   @override
-  Process get process;
+  Session get session;
   @override
   List<TaskInstance> get taskInstances;
   @override
@@ -901,37 +901,37 @@ abstract class _ProcessInstance implements ProcessInstance {
   DateTime? get end;
   @override
   @JsonKey(ignore: true)
-  _$$ProcessInstanceImplCopyWith<_$ProcessInstanceImpl> get copyWith =>
+  _$$SessionInstanceImplCopyWith<_$SessionInstanceImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-ProcessList _$ProcessListFromJson(Map<String, dynamic> json) {
-  return _ProcessList.fromJson(json);
+SessionList _$SessionListFromJson(Map<String, dynamic> json) {
+  return _SessionList.fromJson(json);
 }
 
 /// @nodoc
-mixin _$ProcessList {
-  List<Process> get processes => throw _privateConstructorUsedError;
+mixin _$SessionList {
+  List<Session> get sessions => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ProcessListCopyWith<ProcessList> get copyWith =>
+  $SessionListCopyWith<SessionList> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ProcessListCopyWith<$Res> {
-  factory $ProcessListCopyWith(
-          ProcessList value, $Res Function(ProcessList) then) =
-      _$ProcessListCopyWithImpl<$Res, ProcessList>;
+abstract class $SessionListCopyWith<$Res> {
+  factory $SessionListCopyWith(
+          SessionList value, $Res Function(SessionList) then) =
+      _$SessionListCopyWithImpl<$Res, SessionList>;
   @useResult
-  $Res call({List<Process> processes});
+  $Res call({List<Session> sessions});
 }
 
 /// @nodoc
-class _$ProcessListCopyWithImpl<$Res, $Val extends ProcessList>
-    implements $ProcessListCopyWith<$Res> {
-  _$ProcessListCopyWithImpl(this._value, this._then);
+class _$SessionListCopyWithImpl<$Res, $Val extends SessionList>
+    implements $SessionListCopyWith<$Res> {
+  _$SessionListCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -941,150 +941,149 @@ class _$ProcessListCopyWithImpl<$Res, $Val extends ProcessList>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? processes = null,
+    Object? sessions = null,
   }) {
     return _then(_value.copyWith(
-      processes: null == processes
-          ? _value.processes
-          : processes // ignore: cast_nullable_to_non_nullable
-              as List<Process>,
+      sessions: null == sessions
+          ? _value.sessions
+          : sessions // ignore: cast_nullable_to_non_nullable
+              as List<Session>,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$ProcessListImplCopyWith<$Res>
-    implements $ProcessListCopyWith<$Res> {
-  factory _$$ProcessListImplCopyWith(
-          _$ProcessListImpl value, $Res Function(_$ProcessListImpl) then) =
-      __$$ProcessListImplCopyWithImpl<$Res>;
+abstract class _$$SessionListImplCopyWith<$Res>
+    implements $SessionListCopyWith<$Res> {
+  factory _$$SessionListImplCopyWith(
+          _$SessionListImpl value, $Res Function(_$SessionListImpl) then) =
+      __$$SessionListImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Process> processes});
+  $Res call({List<Session> sessions});
 }
 
 /// @nodoc
-class __$$ProcessListImplCopyWithImpl<$Res>
-    extends _$ProcessListCopyWithImpl<$Res, _$ProcessListImpl>
-    implements _$$ProcessListImplCopyWith<$Res> {
-  __$$ProcessListImplCopyWithImpl(
-      _$ProcessListImpl _value, $Res Function(_$ProcessListImpl) _then)
+class __$$SessionListImplCopyWithImpl<$Res>
+    extends _$SessionListCopyWithImpl<$Res, _$SessionListImpl>
+    implements _$$SessionListImplCopyWith<$Res> {
+  __$$SessionListImplCopyWithImpl(
+      _$SessionListImpl _value, $Res Function(_$SessionListImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? processes = null,
+    Object? sessions = null,
   }) {
-    return _then(_$ProcessListImpl(
-      processes: null == processes
-          ? _value._processes
-          : processes // ignore: cast_nullable_to_non_nullable
-              as List<Process>,
+    return _then(_$SessionListImpl(
+      sessions: null == sessions
+          ? _value._sessions
+          : sessions // ignore: cast_nullable_to_non_nullable
+              as List<Session>,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$ProcessListImpl with DiagnosticableTreeMixin implements _ProcessList {
-  const _$ProcessListImpl({required final List<Process> processes})
-      : _processes = processes;
+class _$SessionListImpl with DiagnosticableTreeMixin implements _SessionList {
+  const _$SessionListImpl({required final List<Session> sessions})
+      : _sessions = sessions;
 
-  factory _$ProcessListImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ProcessListImplFromJson(json);
+  factory _$SessionListImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SessionListImplFromJson(json);
 
-  final List<Process> _processes;
+  final List<Session> _sessions;
   @override
-  List<Process> get processes {
-    if (_processes is EqualUnmodifiableListView) return _processes;
+  List<Session> get sessions {
+    if (_sessions is EqualUnmodifiableListView) return _sessions;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_processes);
+    return EqualUnmodifiableListView(_sessions);
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ProcessList(processes: $processes)';
+    return 'SessionList(sessions: $sessions)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ProcessList'))
-      ..add(DiagnosticsProperty('processes', processes));
+      ..add(DiagnosticsProperty('type', 'SessionList'))
+      ..add(DiagnosticsProperty('sessions', sessions));
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ProcessListImpl &&
-            const DeepCollectionEquality()
-                .equals(other._processes, _processes));
+            other is _$SessionListImpl &&
+            const DeepCollectionEquality().equals(other._sessions, _sessions));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_processes));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_sessions));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ProcessListImplCopyWith<_$ProcessListImpl> get copyWith =>
-      __$$ProcessListImplCopyWithImpl<_$ProcessListImpl>(this, _$identity);
+  _$$SessionListImplCopyWith<_$SessionListImpl> get copyWith =>
+      __$$SessionListImplCopyWithImpl<_$SessionListImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ProcessListImplToJson(
+    return _$$SessionListImplToJson(
       this,
     );
   }
 }
 
-abstract class _ProcessList implements ProcessList {
-  const factory _ProcessList({required final List<Process> processes}) =
-      _$ProcessListImpl;
+abstract class _SessionList implements SessionList {
+  const factory _SessionList({required final List<Session> sessions}) =
+      _$SessionListImpl;
 
-  factory _ProcessList.fromJson(Map<String, dynamic> json) =
-      _$ProcessListImpl.fromJson;
+  factory _SessionList.fromJson(Map<String, dynamic> json) =
+      _$SessionListImpl.fromJson;
 
   @override
-  List<Process> get processes;
+  List<Session> get sessions;
   @override
   @JsonKey(ignore: true)
-  _$$ProcessListImplCopyWith<_$ProcessListImpl> get copyWith =>
+  _$$SessionListImplCopyWith<_$SessionListImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-ProcessInstanceList _$ProcessInstanceListFromJson(Map<String, dynamic> json) {
-  return _ProcessInstanceList.fromJson(json);
+SessionInstanceList _$SessionInstanceListFromJson(Map<String, dynamic> json) {
+  return _SessionInstanceList.fromJson(json);
 }
 
 /// @nodoc
-mixin _$ProcessInstanceList {
-  List<ProcessInstance> get processes => throw _privateConstructorUsedError;
+mixin _$SessionInstanceList {
+  List<SessionInstance> get sessions => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ProcessInstanceListCopyWith<ProcessInstanceList> get copyWith =>
+  $SessionInstanceListCopyWith<SessionInstanceList> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ProcessInstanceListCopyWith<$Res> {
-  factory $ProcessInstanceListCopyWith(
-          ProcessInstanceList value, $Res Function(ProcessInstanceList) then) =
-      _$ProcessInstanceListCopyWithImpl<$Res, ProcessInstanceList>;
+abstract class $SessionInstanceListCopyWith<$Res> {
+  factory $SessionInstanceListCopyWith(
+          SessionInstanceList value, $Res Function(SessionInstanceList) then) =
+      _$SessionInstanceListCopyWithImpl<$Res, SessionInstanceList>;
   @useResult
-  $Res call({List<ProcessInstance> processes});
+  $Res call({List<SessionInstance> sessions});
 }
 
 /// @nodoc
-class _$ProcessInstanceListCopyWithImpl<$Res, $Val extends ProcessInstanceList>
-    implements $ProcessInstanceListCopyWith<$Res> {
-  _$ProcessInstanceListCopyWithImpl(this._value, this._then);
+class _$SessionInstanceListCopyWithImpl<$Res, $Val extends SessionInstanceList>
+    implements $SessionInstanceListCopyWith<$Res> {
+  _$SessionInstanceListCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -1094,124 +1093,123 @@ class _$ProcessInstanceListCopyWithImpl<$Res, $Val extends ProcessInstanceList>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? processes = null,
+    Object? sessions = null,
   }) {
     return _then(_value.copyWith(
-      processes: null == processes
-          ? _value.processes
-          : processes // ignore: cast_nullable_to_non_nullable
-              as List<ProcessInstance>,
+      sessions: null == sessions
+          ? _value.sessions
+          : sessions // ignore: cast_nullable_to_non_nullable
+              as List<SessionInstance>,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$ProcessInstanceListImplCopyWith<$Res>
-    implements $ProcessInstanceListCopyWith<$Res> {
-  factory _$$ProcessInstanceListImplCopyWith(_$ProcessInstanceListImpl value,
-          $Res Function(_$ProcessInstanceListImpl) then) =
-      __$$ProcessInstanceListImplCopyWithImpl<$Res>;
+abstract class _$$SessionInstanceListImplCopyWith<$Res>
+    implements $SessionInstanceListCopyWith<$Res> {
+  factory _$$SessionInstanceListImplCopyWith(_$SessionInstanceListImpl value,
+          $Res Function(_$SessionInstanceListImpl) then) =
+      __$$SessionInstanceListImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<ProcessInstance> processes});
+  $Res call({List<SessionInstance> sessions});
 }
 
 /// @nodoc
-class __$$ProcessInstanceListImplCopyWithImpl<$Res>
-    extends _$ProcessInstanceListCopyWithImpl<$Res, _$ProcessInstanceListImpl>
-    implements _$$ProcessInstanceListImplCopyWith<$Res> {
-  __$$ProcessInstanceListImplCopyWithImpl(_$ProcessInstanceListImpl _value,
-      $Res Function(_$ProcessInstanceListImpl) _then)
+class __$$SessionInstanceListImplCopyWithImpl<$Res>
+    extends _$SessionInstanceListCopyWithImpl<$Res, _$SessionInstanceListImpl>
+    implements _$$SessionInstanceListImplCopyWith<$Res> {
+  __$$SessionInstanceListImplCopyWithImpl(_$SessionInstanceListImpl _value,
+      $Res Function(_$SessionInstanceListImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? processes = null,
+    Object? sessions = null,
   }) {
-    return _then(_$ProcessInstanceListImpl(
-      processes: null == processes
-          ? _value._processes
-          : processes // ignore: cast_nullable_to_non_nullable
-              as List<ProcessInstance>,
+    return _then(_$SessionInstanceListImpl(
+      sessions: null == sessions
+          ? _value._sessions
+          : sessions // ignore: cast_nullable_to_non_nullable
+              as List<SessionInstance>,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$ProcessInstanceListImpl
+class _$SessionInstanceListImpl
     with DiagnosticableTreeMixin
-    implements _ProcessInstanceList {
-  const _$ProcessInstanceListImpl(
-      {required final List<ProcessInstance> processes})
-      : _processes = processes;
+    implements _SessionInstanceList {
+  const _$SessionInstanceListImpl(
+      {required final List<SessionInstance> sessions})
+      : _sessions = sessions;
 
-  factory _$ProcessInstanceListImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ProcessInstanceListImplFromJson(json);
+  factory _$SessionInstanceListImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SessionInstanceListImplFromJson(json);
 
-  final List<ProcessInstance> _processes;
+  final List<SessionInstance> _sessions;
   @override
-  List<ProcessInstance> get processes {
-    if (_processes is EqualUnmodifiableListView) return _processes;
+  List<SessionInstance> get sessions {
+    if (_sessions is EqualUnmodifiableListView) return _sessions;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_processes);
+    return EqualUnmodifiableListView(_sessions);
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ProcessInstanceList(processes: $processes)';
+    return 'SessionInstanceList(sessions: $sessions)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ProcessInstanceList'))
-      ..add(DiagnosticsProperty('processes', processes));
+      ..add(DiagnosticsProperty('type', 'SessionInstanceList'))
+      ..add(DiagnosticsProperty('sessions', sessions));
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ProcessInstanceListImpl &&
-            const DeepCollectionEquality()
-                .equals(other._processes, _processes));
+            other is _$SessionInstanceListImpl &&
+            const DeepCollectionEquality().equals(other._sessions, _sessions));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_processes));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_sessions));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ProcessInstanceListImplCopyWith<_$ProcessInstanceListImpl> get copyWith =>
-      __$$ProcessInstanceListImplCopyWithImpl<_$ProcessInstanceListImpl>(
+  _$$SessionInstanceListImplCopyWith<_$SessionInstanceListImpl> get copyWith =>
+      __$$SessionInstanceListImplCopyWithImpl<_$SessionInstanceListImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ProcessInstanceListImplToJson(
+    return _$$SessionInstanceListImplToJson(
       this,
     );
   }
 }
 
-abstract class _ProcessInstanceList implements ProcessInstanceList {
-  const factory _ProcessInstanceList(
-          {required final List<ProcessInstance> processes}) =
-      _$ProcessInstanceListImpl;
+abstract class _SessionInstanceList implements SessionInstanceList {
+  const factory _SessionInstanceList(
+          {required final List<SessionInstance> sessions}) =
+      _$SessionInstanceListImpl;
 
-  factory _ProcessInstanceList.fromJson(Map<String, dynamic> json) =
-      _$ProcessInstanceListImpl.fromJson;
+  factory _SessionInstanceList.fromJson(Map<String, dynamic> json) =
+      _$SessionInstanceListImpl.fromJson;
 
   @override
-  List<ProcessInstance> get processes;
+  List<SessionInstance> get sessions;
   @override
   @JsonKey(ignore: true)
-  _$$ProcessInstanceListImplCopyWith<_$ProcessInstanceListImpl> get copyWith =>
+  _$$SessionInstanceListImplCopyWith<_$SessionInstanceListImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

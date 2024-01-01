@@ -5,9 +5,9 @@ import 'package:myprocess/model/providers.dart';
 
 class InProgressTaskChecklistWidget extends ConsumerStatefulWidget {
   const InProgressTaskChecklistWidget(
-      {super.key, required this.processInstance});
+      {super.key, required this.sessionInstance});
 
-  final ProcessInstance processInstance;
+  final SessionInstance sessionInstance;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -19,15 +19,15 @@ class _InProgressTaskChecklistWidgetState
   @override
   Widget build(BuildContext context) {
     final taskInstances =
-        ref.watch(inProgressTaskListProvider(widget.processInstance.id));
+        ref.watch(inProgressTaskListProvider(widget.sessionInstance.id));
     final checkboxes = taskInstances
         .map((t) => CheckboxListTile(
               title: Text(t.title),
               value: t.completed,
               onChanged: (bool? value) {
                 setState(() {
-                  ref.read(processInstanceListProvider.notifier).update(
-                      widget.processInstance.id, t.task.id, value ?? false);
+                  ref.read(sessionInstanceListProvider.notifier).update(
+                      widget.sessionInstance.id, t.task.id, value ?? false);
                 });
               },
             ))

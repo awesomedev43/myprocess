@@ -6,45 +6,44 @@ import 'package:myprocess/util.dart';
 
 import '../model/providers.dart';
 
-class CompletedProcessListTab extends ConsumerStatefulWidget {
-  const CompletedProcessListTab({super.key});
+class CompletedSessionListTab extends ConsumerStatefulWidget {
+  const CompletedSessionListTab({super.key});
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _CompletedProcessListWidgetState();
+      _CompletedSessionListWidgetState();
 }
 
-class _CompletedProcessListWidgetState
-    extends ConsumerState<CompletedProcessListTab> {
+class _CompletedSessionListWidgetState
+    extends ConsumerState<CompletedSessionListTab> {
   @override
   Widget build(BuildContext context) {
-    final completedProcesses =
-        ref.watch(completedProgressProcessListNewProvider);
+    final completedSession = ref.watch(completedProgressSessionListNewProvider);
     return ListView(
-        children: completedProcesses
-            .map((instance) => CompletedProcessCard(processInstance: instance))
+        children: completedSession
+            .map((instance) => CompletedSessionCard(sessionInstance: instance))
             .toList());
   }
 }
 
-class CompletedProcessCard extends ConsumerStatefulWidget {
-  const CompletedProcessCard({super.key, required this.processInstance});
+class CompletedSessionCard extends ConsumerStatefulWidget {
+  const CompletedSessionCard({super.key, required this.sessionInstance});
 
-  final ProcessInstance processInstance;
+  final SessionInstance sessionInstance;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _CompletedProcessCardState();
+      _CompletedSessionCardState();
 }
 
-class _CompletedProcessCardState extends ConsumerState<CompletedProcessCard> {
+class _CompletedSessionCardState extends ConsumerState<CompletedSessionCard> {
   final DateFormat formatter = DateFormat('h:mm:ss a, MMMM d yyyy');
 
   @override
   Widget build(BuildContext context) {
     final allCompleted =
-        widget.processInstance.taskInstances.every((t) => t.completed);
-    final duration = widget.processInstance.end
-        ?.difference(widget.processInstance.start ?? DateTime.now())
+        widget.sessionInstance.taskInstances.every((t) => t.completed);
+    final duration = widget.sessionInstance.end
+        ?.difference(widget.sessionInstance.start ?? DateTime.now())
         .inSeconds;
     final finishedIcon = allCompleted ? Icons.check_circle : Icons.cancel;
     final finishedColor = allCompleted ? Colors.green : Colors.red;
@@ -58,7 +57,7 @@ class _CompletedProcessCardState extends ConsumerState<CompletedProcessCard> {
                 finishedIcon,
                 color: finishedColor,
               ),
-              title: Text(widget.processInstance.process.name),
+              title: Text(widget.sessionInstance.session.name),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20),
@@ -70,7 +69,7 @@ class _CompletedProcessCardState extends ConsumerState<CompletedProcessCard> {
                     color: Colors.green,
                   ),
                   title: Text(formatter
-                      .format(widget.processInstance.start ?? DateTime.now())),
+                      .format(widget.sessionInstance.start ?? DateTime.now())),
                 ),
                 ListTile(
                   dense: true,
@@ -79,7 +78,7 @@ class _CompletedProcessCardState extends ConsumerState<CompletedProcessCard> {
                     color: Colors.red,
                   ),
                   title: Text(formatter
-                      .format(widget.processInstance.end ?? DateTime.now())),
+                      .format(widget.sessionInstance.end ?? DateTime.now())),
                 ),
                 ListTile(
                   dense: true,
@@ -104,8 +103,8 @@ class _CompletedProcessCardState extends ConsumerState<CompletedProcessCard> {
                           IconButton(
                               onPressed: () {
                                 Navigator.pushNamed(
-                                    context, "/completedprocessinfo",
-                                    arguments: widget.processInstance);
+                                    context, "/completedsessioninfo",
+                                    arguments: widget.sessionInstance);
                               },
                               icon: const Icon(
                                 Icons.info,
@@ -114,8 +113,8 @@ class _CompletedProcessCardState extends ConsumerState<CompletedProcessCard> {
                           IconButton(
                               onPressed: () {
                                 ref
-                                    .read(processInstanceListProvider.notifier)
-                                    .remove(widget.processInstance);
+                                    .read(sessionInstanceListProvider.notifier)
+                                    .remove(widget.sessionInstance);
                               },
                               icon: const Icon(
                                 Icons.delete,

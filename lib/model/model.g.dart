@@ -37,8 +37,8 @@ Map<String, dynamic> _$$TaskInstanceImplToJson(_$TaskInstanceImpl instance) =>
       'completed': instance.completed,
     };
 
-_$ProcessImpl _$$ProcessImplFromJson(Map<String, dynamic> json) =>
-    _$ProcessImpl(
+_$SessionImpl _$$SessionImplFromJson(Map<String, dynamic> json) =>
+    _$SessionImpl(
       id: json['id'] as String,
       name: json['name'] as String,
       tasks: (json['tasks'] as List<dynamic>)
@@ -46,18 +46,18 @@ _$ProcessImpl _$$ProcessImplFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$ProcessImplToJson(_$ProcessImpl instance) =>
+Map<String, dynamic> _$$SessionImplToJson(_$SessionImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'tasks': instance.tasks,
     };
 
-_$ProcessInstanceImpl _$$ProcessInstanceImplFromJson(
+_$SessionInstanceImpl _$$SessionInstanceImplFromJson(
         Map<String, dynamic> json) =>
-    _$ProcessInstanceImpl(
+    _$SessionInstanceImpl(
       id: json['id'] as String,
-      process: Process.fromJson(json['process'] as Map<String, dynamic>),
+      session: Session.fromJson(json['session'] as Map<String, dynamic>),
       taskInstances: (json['taskInstances'] as List<dynamic>?)
               ?.map((e) => TaskInstance.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -69,39 +69,39 @@ _$ProcessInstanceImpl _$$ProcessInstanceImplFromJson(
       end: json['end'] == null ? null : DateTime.parse(json['end'] as String),
     );
 
-Map<String, dynamic> _$$ProcessInstanceImplToJson(
-        _$ProcessInstanceImpl instance) =>
+Map<String, dynamic> _$$SessionInstanceImplToJson(
+        _$SessionInstanceImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'process': instance.process,
+      'session': instance.session,
       'taskInstances': instance.taskInstances,
       'completed': instance.completed,
       'start': instance.start?.toIso8601String(),
       'end': instance.end?.toIso8601String(),
     };
 
-_$ProcessListImpl _$$ProcessListImplFromJson(Map<String, dynamic> json) =>
-    _$ProcessListImpl(
-      processes: (json['processes'] as List<dynamic>)
-          .map((e) => Process.fromJson(e as Map<String, dynamic>))
+_$SessionListImpl _$$SessionListImplFromJson(Map<String, dynamic> json) =>
+    _$SessionListImpl(
+      sessions: (json['sessions'] as List<dynamic>)
+          .map((e) => Session.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$ProcessListImplToJson(_$ProcessListImpl instance) =>
+Map<String, dynamic> _$$SessionListImplToJson(_$SessionListImpl instance) =>
     <String, dynamic>{
-      'processes': instance.processes,
+      'sessions': instance.sessions,
     };
 
-_$ProcessInstanceListImpl _$$ProcessInstanceListImplFromJson(
+_$SessionInstanceListImpl _$$SessionInstanceListImplFromJson(
         Map<String, dynamic> json) =>
-    _$ProcessInstanceListImpl(
-      processes: (json['processes'] as List<dynamic>)
-          .map((e) => ProcessInstance.fromJson(e as Map<String, dynamic>))
+    _$SessionInstanceListImpl(
+      sessions: (json['sessions'] as List<dynamic>)
+          .map((e) => SessionInstance.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$ProcessInstanceListImplToJson(
-        _$ProcessInstanceListImpl instance) =>
+Map<String, dynamic> _$$SessionInstanceListImplToJson(
+        _$SessionInstanceListImpl instance) =>
     <String, dynamic>{
-      'processes': instance.processes,
+      'sessions': instance.sessions,
     };

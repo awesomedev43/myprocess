@@ -5,22 +5,22 @@ import 'tabs.dart';
 import '../model/model.dart';
 import '../model/providers.dart';
 
-class ProcessTemplateListTab extends ConsumerStatefulWidget {
-  const ProcessTemplateListTab({super.key, required this.controller});
+class SessionTemplateListTab extends ConsumerStatefulWidget {
+  const SessionTemplateListTab({super.key, required this.controller});
 
   final TabController controller;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _ProcessTemplateListWidgetState();
+      _SessionTemplateListWidgetState();
 }
 
-class _ProcessTemplateListWidgetState
-    extends ConsumerState<ProcessTemplateListTab> {
-  IconButton createInfoButton(BuildContext context, Process process) {
+class _SessionTemplateListWidgetState
+    extends ConsumerState<SessionTemplateListTab> {
+  IconButton createInfoButton(BuildContext context, Session session) {
     return IconButton(
         onPressed: () {
-          _dialogBuilder(context, process);
+          _dialogBuilder(context, session);
         },
         icon: const Icon(
           Icons.info,
@@ -28,11 +28,11 @@ class _ProcessTemplateListWidgetState
         ));
   }
 
-  IconButton createPlayButton(Process process) {
+  IconButton createPlayButton(Session session) {
     return IconButton(
         onPressed: () {
-          ref.read(processInstanceListProvider.notifier).add(process);
-          widget.controller.index = ProcessTab.inprogress.index;
+          ref.read(sessionInstanceListProvider.notifier).add(session);
+          widget.controller.index = SessionTab.inprogress.index;
         },
         icon: const Icon(
           Icons.play_arrow,
@@ -40,10 +40,10 @@ class _ProcessTemplateListWidgetState
         ));
   }
 
-  IconButton createEditButton(BuildContext context, Process process) {
+  IconButton createEditButton(BuildContext context, Session session) {
     return IconButton(
         onPressed: () {
-          Navigator.pushNamed(context, "/addprocess", arguments: process);
+          Navigator.pushNamed(context, "/addsession", arguments: session);
         },
         icon: const Icon(
           Icons.edit,
@@ -51,21 +51,21 @@ class _ProcessTemplateListWidgetState
         ));
   }
 
-  IconButton createRemoveButton(Process process) {
+  IconButton createRemoveButton(Session session) {
     return IconButton(
         onPressed: () {
           showDialog<String>(
             context: context,
             builder: (BuildContext context) => AlertDialog(
-              title: const Text('Delete Process'),
+              title: const Text('Delete Session'),
               content: const Text(
-                  'Are you sure you want to delete the process and its associated data?'),
+                  'Are you sure you want to delete the session and its associated data?'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
                     ref
-                        .read(processTemplateListProvider.notifier)
-                        .remove(process);
+                        .read(sessionTemplateListProvider.notifier)
+                        .remove(session);
                     Navigator.pop(context, 'Cancel');
                   },
                   child: const Text('OK'),
@@ -86,24 +86,24 @@ class _ProcessTemplateListWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final templateList = ref.watch(processTemplateListProvider);
-    final cards = templateList.map((process) {
+    final templateList = ref.watch(sessionTemplateListProvider);
+    final cards = templateList.map((session) {
       return Card(
         child: Column(
           children: [
             ListTile(
               leading: const Icon(Icons.checklist),
-              title: Text(process.name),
+              title: Text(session.name),
             ),
             Align(
               alignment: Alignment.centerRight,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  createInfoButton(context, process),
-                  createRemoveButton(process),
-                  createEditButton(context, process),
-                  createPlayButton(process),
+                  createInfoButton(context, session),
+                  createRemoveButton(session),
+                  createEditButton(context, session),
+                  createPlayButton(session),
                 ],
               ),
             )
@@ -117,24 +117,24 @@ class _ProcessTemplateListWidgetState
     );
   }
 
-  Future<void> _dialogBuilder(BuildContext context, Process process) {
+  Future<void> _dialogBuilder(BuildContext context, Session session) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return ProcessTemplateInfoDialog(process: process);
+        return SessionTemplateInfoDialog(session: session);
       },
     );
   }
 }
 
-class ProcessTemplateInfoDialog extends StatelessWidget {
-  const ProcessTemplateInfoDialog({super.key, required this.process});
+class SessionTemplateInfoDialog extends StatelessWidget {
+  const SessionTemplateInfoDialog({super.key, required this.session});
 
-  final Process process;
+  final Session session;
 
   @override
   Widget build(BuildContext context) {
-    final taskWidget = process.tasks.map((e) {
+    final taskWidget = session.tasks.map((e) {
       return ListTile(
         dense: true,
         title: Text(e.description),
@@ -143,7 +143,7 @@ class ProcessTemplateInfoDialog extends StatelessWidget {
     }).toList();
 
     return SimpleDialog(
-      title: Text(process.name),
+      title: Text(session.name),
       children: [
         ...taskWidget,
         Row(mainAxisAlignment: MainAxisAlignment.end, children: [

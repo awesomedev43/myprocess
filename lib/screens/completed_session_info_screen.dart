@@ -5,15 +5,15 @@ import 'package:myprocess/model/model.dart';
 
 import '../util.dart';
 
-class CompletedProcessInfoScreen extends ConsumerWidget {
-  CompletedProcessInfoScreen({super.key});
+class CompletedSessionInfoScreen extends ConsumerWidget {
+  CompletedSessionInfoScreen({super.key});
 
   final DateFormat formatter = DateFormat('h:mm:ss a, MMMM d yyyy');
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final processInstance =
-        ModalRoute.of(context)!.settings.arguments as ProcessInstance;
+        ModalRoute.of(context)!.settings.arguments as SessionInstance;
 
     final duration = processInstance.end
         ?.difference(processInstance.start ?? DateTime.now())
@@ -21,7 +21,7 @@ class CompletedProcessInfoScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(processInstance.process.name),
+        title: Text(processInstance.session.name),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

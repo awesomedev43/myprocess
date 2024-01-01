@@ -9,14 +9,14 @@ import 'package:collection/collection.dart';
 import 'model.dart';
 
 enum FileStorageObjectType {
-  processlist,
-  processinstancelist,
+  sessionlist,
+  sessioninstancelist,
 }
 
 class PersistantLocalStorage {
   static const Map<FileStorageObjectType, String> sFileName = {
-    FileStorageObjectType.processlist: ".processList.json",
-    FileStorageObjectType.processinstancelist: ".processinstancelist.json",
+    FileStorageObjectType.sessionlist: ".sessionList.json",
+    FileStorageObjectType.sessioninstancelist: ".sessioninstancelist.json",
   };
 
   static Future<String> getLocalPath() async {
@@ -50,75 +50,75 @@ class PersistantLocalStorage {
     return contents;
   }
 
-  static Future<List<Process>> readProcessList(
+  static Future<List<Session>> readsessionList(
       FileStorageObjectType type) async {
     switch (type) {
-      case FileStorageObjectType.processlist:
+      case FileStorageObjectType.sessionlist:
         String contents = await PersistantLocalStorage.readContent(type);
         if (contents.isEmpty) {
           return [];
         }
-        final processList = ProcessList.fromJson(jsonDecode(contents));
-        return processList.processes;
-      case FileStorageObjectType.processinstancelist:
+        final sessionList = SessionList.fromJson(jsonDecode(contents));
+        return sessionList.sessions;
+      case FileStorageObjectType.sessioninstancelist:
         return [];
     }
   }
 
-  static Future<List<ProcessInstance>> readProcessInstanceList(
+  static Future<List<SessionInstance>> readsessionInstanceList(
       FileStorageObjectType type) async {
     switch (type) {
-      case FileStorageObjectType.processlist:
+      case FileStorageObjectType.sessionlist:
         return [];
-      case FileStorageObjectType.processinstancelist:
+      case FileStorageObjectType.sessioninstancelist:
         String contents = await PersistantLocalStorage.readContent(type);
         if (contents.isEmpty) {
           return [];
         }
-        final processList = ProcessInstanceList.fromJson(jsonDecode(contents));
-        return processList.processes;
+        final sessionList = SessionInstanceList.fromJson(jsonDecode(contents));
+        return sessionList.sessions;
     }
   }
 }
 
-class ProcessTemplateList extends StateNotifier<List<Process>> {
-  ProcessTemplateList([List<Process>? initialList]) : super(initialList ?? []);
+class SessionTemplateList extends StateNotifier<List<Session>> {
+  SessionTemplateList([List<Session>? initialList]) : super(initialList ?? []);
 
-  void add(Process process) {
-    final editing = state.any((p) => p.id == process.id);
+  void add(Session session) {
+    final editing = state.any((p) => p.id == session.id);
     state = [
       for (final p in state)
-        if (p.id != process.id) p else process,
-      if (!editing) process,
+        if (p.id != session.id) p else session,
+      if (!editing) session,
     ];
-    final processList = ProcessList(processes: state);
+    final sessionList = SessionList(sessions: state);
     PersistantLocalStorage.writeContent(
-        jsonEncode(processList.toJson()), FileStorageObjectType.processlist);
+        jsonEncode(sessionList.toJson()), FileStorageObjectType.sessionlist);
   }
 
-  void remove(Process process) {
+  void remove(Session session) {
     state = [
       for (final p in state)
-        if (p.id != process.id) p
+        if (p.id != session.id) p
     ];
-    final processList = ProcessList(processes: state);
+    final sessionList = SessionList(sessions: state);
     PersistantLocalStorage.writeContent(
-        jsonEncode(processList.toJson()), FileStorageObjectType.processlist);
+        jsonEncode(sessionList.toJson()), FileStorageObjectType.sessionlist);
   }
 }
 
-final processTemplateListProvider =
-    StateNotifierProvider<ProcessTemplateList, List<Process>>((ref) {
-  return ProcessTemplateList();
+final sessionTemplateListProvider =
+    StateNotifierProvider<SessionTemplateList, List<Session>>((ref) {
+  return SessionTemplateList();
 });
 
-class ProcessInstanceNotifier extends StateNotifier<List<ProcessInstance>> {
-  ProcessInstanceNotifier([List<ProcessInstance>? initialList])
+class SessionInstanceNotifier extends StateNotifier<List<SessionInstance>> {
+  SessionInstanceNotifier([List<SessionInstance>? initialList])
       : super(initialList ?? []);
 
-  void add(Process process) {
+  void add(Session session) {
     final alreadyInstantiated = state.any((element) =>
-        element.process.id == process.id && element.completed == false);
+        element.session.id == session.id && element.completed == false);
 
     if (alreadyInstantiated) {
       return;
@@ -126,12 +126,12 @@ class ProcessInstanceNotifier extends StateNotifier<List<ProcessInstance>> {
 
     state = [
       ...state,
-      ProcessInstance(
+      SessionInstance(
           id: const Uuid().v1(),
-          process: process,
+          session: session,
           start: DateTime.now(),
           completed: false,
-          taskInstances: process.tasks
+          taskInstances: session.tasks
               .map((t) => TaskInstance(
                   task: t,
                   id: const Uuid().v1(),
@@ -141,40 +141,40 @@ class ProcessInstanceNotifier extends StateNotifier<List<ProcessInstance>> {
               .toList())
     ];
 
-    final processList = ProcessInstanceList(processes: state);
-    PersistantLocalStorage.writeContent(jsonEncode(processList.toJson()),
-        FileStorageObjectType.processinstancelist);
+    final sessionList = SessionInstanceList(sessions: state);
+    PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
+        FileStorageObjectType.sessioninstancelist);
   }
 
-  void remove(ProcessInstance processInstance) {
+  void remove(SessionInstance sessionInstance) {
     state = [
       for (final instance in state)
-        if (instance.id != processInstance.id) instance
+        if (instance.id != sessionInstance.id) instance
     ];
 
-    final processList = ProcessInstanceList(processes: state);
-    PersistantLocalStorage.writeContent(jsonEncode(processList.toJson()),
-        FileStorageObjectType.processinstancelist);
+    final sessionList = SessionInstanceList(sessions: state);
+    PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
+        FileStorageObjectType.sessioninstancelist);
   }
 
-  void completed(ProcessInstance processInstance) {
+  void completed(SessionInstance sessionInstance) {
     state = [
       for (final instance in state)
-        if (instance.id != processInstance.id)
+        if (instance.id != sessionInstance.id)
           instance
         else
           instance.copyWith(completed: true, end: DateTime.now())
     ];
 
-    final processList = ProcessInstanceList(processes: state);
-    PersistantLocalStorage.writeContent(jsonEncode(processList.toJson()),
-        FileStorageObjectType.processinstancelist);
+    final sessionList = SessionInstanceList(sessions: state);
+    PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
+        FileStorageObjectType.sessioninstancelist);
   }
 
-  void update(String processInstanceId, String taskId, bool completed) {
-    final processInstance =
-        state.firstWhere((element) => element.id == processInstanceId);
-    final newProcessTasksInstances = processInstance.taskInstances.map((t) {
+  void update(String sessionInstanceId, String taskId, bool completed) {
+    final sessionInstance =
+        state.firstWhere((element) => element.id == sessionInstanceId);
+    final newsessionTasksInstances = sessionInstance.taskInstances.map((t) {
       if (t.task.id == taskId) {
         return t.copyWith(completed: completed);
       } else {
@@ -184,54 +184,54 @@ class ProcessInstanceNotifier extends StateNotifier<List<ProcessInstance>> {
 
     state = [
       for (final instance in state)
-        if (instance.id != processInstance.id)
+        if (instance.id != sessionInstance.id)
           instance
         else
-          ProcessInstance(
+          SessionInstance(
               id: const Uuid().v1(),
-              process: processInstance.process,
-              taskInstances: newProcessTasksInstances,
-              start: processInstance.start,
-              end: processInstance.end)
+              session: sessionInstance.session,
+              taskInstances: newsessionTasksInstances,
+              start: sessionInstance.start,
+              end: sessionInstance.end)
     ];
 
-    final processList = ProcessInstanceList(processes: state);
-    PersistantLocalStorage.writeContent(jsonEncode(processList.toJson()),
-        FileStorageObjectType.processinstancelist);
+    final sessionList = SessionInstanceList(sessions: state);
+    PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
+        FileStorageObjectType.sessioninstancelist);
   }
 }
 
-final processInstanceListProvider =
-    StateNotifierProvider<ProcessInstanceNotifier, List<ProcessInstance>>(
+final sessionInstanceListProvider =
+    StateNotifierProvider<SessionInstanceNotifier, List<SessionInstance>>(
         (ref) {
-  return ProcessInstanceNotifier();
+  return SessionInstanceNotifier();
 });
 
-final inProgressProcessListProvider = Provider<List<ProcessInstance>>(
+final inProgressSessionListProvider = Provider<List<SessionInstance>>(
   (ref) {
-    final processList = ref
-        .watch(processInstanceListProvider)
-        .where((processInstance) => processInstance.completed == false);
-    return processList.toList();
+    final sessionList = ref
+        .watch(sessionInstanceListProvider)
+        .where((sessionInstance) => sessionInstance.completed == false);
+    return sessionList.toList();
   },
 );
 
-final completedProgressProcessListNewProvider = Provider<List<ProcessInstance>>(
+final completedProgressSessionListNewProvider = Provider<List<SessionInstance>>(
   (ref) {
-    final processList = ref
-        .watch(processInstanceListProvider)
-        .where((processInstance) => processInstance.completed == true)
+    final sessionList = ref
+        .watch(sessionInstanceListProvider)
+        .where((sessionInstance) => sessionInstance.completed == true)
         .sorted((a, b) => -1 * a.end!.compareTo(b.end!));
-    return processList.toList();
+    return sessionList.toList();
   },
 );
 
 final inProgressTaskListProvider = Provider.family<List<TaskInstance>, String>(
-  (ref, processInstanceId) {
-    final processInstance = ref
-        .watch(processInstanceListProvider)
-        .firstWhereOrNull((instance) => instance.id == processInstanceId);
+  (ref, sessionInstanceId) {
+    final sessionInstance = ref
+        .watch(sessionInstanceListProvider)
+        .firstWhereOrNull((instance) => instance.id == sessionInstanceId);
 
-    return processInstance?.taskInstances ?? [];
+    return sessionInstance?.taskInstances ?? [];
   },
 );

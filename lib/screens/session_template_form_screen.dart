@@ -10,8 +10,8 @@ import '../widgets/add_task_dialog.dart';
 // import '../widgets/add_task_dialog.dart';
 // import '../model/providers.dart';
 
-class ProcessTemplateFormScreen extends StatefulHookConsumerWidget {
-  const ProcessTemplateFormScreen({super.key});
+class SessionTemplateFormScreen extends StatefulHookConsumerWidget {
+  const SessionTemplateFormScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -19,10 +19,10 @@ class ProcessTemplateFormScreen extends StatefulHookConsumerWidget {
 }
 
 class _ProcessTemplateFormState
-    extends ConsumerState<ProcessTemplateFormScreen> {
+    extends ConsumerState<SessionTemplateFormScreen> {
   final nameController = TextEditingController();
   final taskController = TextEditingController();
-  late Process? editingProcess;
+  late Session? editingProcess;
   bool initialized = false;
 
   @override
@@ -35,7 +35,7 @@ class _ProcessTemplateFormState
 
   @override
   Widget build(BuildContext context) {
-    editingProcess = ModalRoute.of(context)!.settings.arguments as Process?;
+    editingProcess = ModalRoute.of(context)!.settings.arguments as Session?;
     final tasks = useState<List<Task>>(editingProcess?.tasks ?? []);
 
     if (!initialized) {
@@ -45,16 +45,16 @@ class _ProcessTemplateFormState
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add New Process"),
+        title: const Text("Add New Session"),
         actions: [
           IconButton(
               onPressed: () {
-                final process = Process(
+                final process = Session(
                     id: editingProcess?.id ?? const Uuid().v1(),
                     name: nameController.text,
                     tasks: tasks.value);
 
-                ref.read(processTemplateListProvider.notifier).add(process);
+                ref.read(sessionTemplateListProvider.notifier).add(process);
                 Navigator.pop(context);
               },
               icon: const Icon(Icons.save))
@@ -69,7 +69,7 @@ class _ProcessTemplateFormState
               child: RichText(
                 textAlign: TextAlign.left,
                 text: const TextSpan(
-                    text: 'Process Properties ',
+                    text: 'Session Properties ',
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -93,7 +93,7 @@ class _ProcessTemplateFormState
                 child: RichText(
                   textAlign: TextAlign.left,
                   text: const TextSpan(
-                      text: 'Process Tasks ',
+                      text: 'Session Tasks ',
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,

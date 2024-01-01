@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myprocess/screens/completed_process_info_screen.dart';
-import 'package:myprocess/screens/process_template_form_screen.dart';
-import 'package:myprocess/tabs/process_template_list_tab.dart';
+import 'package:myprocess/screens/completed_session_info_screen.dart';
+import 'package:myprocess/screens/session_template_form_screen.dart';
+import 'package:myprocess/tabs/session_template_list_tab.dart';
 
-import 'tabs/completed_process_list_tab.dart';
-import 'tabs/in_progress_process_list_tab.dart';
+import 'tabs/completed_session_list_tab.dart';
+import 'tabs/in_progress_session_list_tab.dart';
 import 'model/providers.dart';
 import 'tabs/tabs.dart';
 
@@ -18,12 +18,12 @@ void main() async {
     UncontrolledProviderScope(
       container: container,
       child: MaterialApp(
-        title: 'Process Your Life',
+        title: 'Sessions',
         initialRoute: '/',
         routes: {
           '/': (context) => const MainApp(),
-          '/addprocess': (context) => const ProcessTemplateFormScreen(),
-          '/completedprocessinfo': (context) => CompletedProcessInfoScreen(),
+          '/addsession': (context) => const SessionTemplateFormScreen(),
+          '/completedsessioninfo': (context) => CompletedSessionInfoScreen(),
         },
       ),
     ),
@@ -32,17 +32,13 @@ void main() async {
 
 Future<ProviderContainer> initializeState() async {
   final container = ProviderContainer();
-  container.read(processTemplateListProvider).addAll(
-      await PersistantLocalStorage.readProcessList(
-          FileStorageObjectType.processlist));
+  container.read(sessionTemplateListProvider).addAll(
+      await PersistantLocalStorage.readsessionList(
+          FileStorageObjectType.sessionlist));
 
-  container.read(processInstanceListProvider).addAll(
-      await PersistantLocalStorage.readProcessInstanceList(
-          FileStorageObjectType.processinstancelist));
-
-  // container.read(completedProcessListProvider).addAll(
-  //     await PersistantLocalStorage.readProcessInstanceList(
-  //         FileStorageObjectType.completedlist));
+  container.read(sessionInstanceListProvider).addAll(
+      await PersistantLocalStorage.readsessionInstanceList(
+          FileStorageObjectType.sessioninstancelist));
 
   return container;
 }
@@ -73,42 +69,42 @@ class _MainAppState extends State<MainApp> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        bottom: TabBar(controller: _tabController, tabs: sProcessTabs),
-        title: const Text("Process Your Life"),
+        bottom: TabBar(controller: _tabController, tabs: sSessionTabs),
+        title: const Text("Sessions"),
       ),
       body: TabBarView(controller: _tabController, children: [
-        ProcessTemplateListTab(controller: _tabController),
-        InProgressProcessListTab(tabController: _tabController),
-        const CompletedProcessListTab(),
+        SessionTemplateListTab(controller: _tabController),
+        InProgressSessionListTab(tabController: _tabController),
+        const CompletedSessionListTab(),
       ]),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/addprocess');
+          Navigator.pushNamed(context, '/addsession');
         },
-        tooltip: "Add New Process Template",
+        tooltip: "Add New Session Template",
         child: const Icon(Icons.add),
       ),
     );
   }
 }
 
-class ProcessTemplateList extends StatefulHookConsumerWidget {
-  const ProcessTemplateList({super.key});
+class SessionTemplateList extends StatefulHookConsumerWidget {
+  const SessionTemplateList({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _ProcessTemplateListState();
+      _SessionTemplateListState();
 }
 
-class _ProcessTemplateListState extends ConsumerState<ProcessTemplateList> {
+class _SessionTemplateListState extends ConsumerState<SessionTemplateList> {
   @override
   Widget build(BuildContext context) {
-    final templateList = ref.watch(processTemplateListProvider);
+    final templateList = ref.watch(sessionTemplateListProvider);
     final cards = templateList
-        .map((process) => Card(
+        .map((session) => Card(
               child: ListTile(
                 leading: const Icon(Icons.card_travel),
-                title: Text(process.name),
+                title: Text(session.name),
               ),
             ))
         .toList();

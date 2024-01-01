@@ -5,28 +5,28 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/model.dart';
 import 'package:myprocess/util.dart';
 
-import '../widgets/in_progress_process_checklist_widget.dart';
+import '../widgets/in_progress_checklist_widget.dart';
 import '../model/providers.dart';
 import 'tabs.dart';
 
-class InProgressProcessListTab extends ConsumerStatefulWidget {
-  const InProgressProcessListTab({super.key, required this.tabController});
+class InProgressSessionListTab extends ConsumerStatefulWidget {
+  const InProgressSessionListTab({super.key, required this.tabController});
 
   final TabController tabController;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _InProgressProcessListWidgetState();
+      _InProgressSessionListWidgetState();
 }
 
-class _InProgressProcessListWidgetState
-    extends ConsumerState<InProgressProcessListTab> {
+class _InProgressSessionListWidgetState
+    extends ConsumerState<InProgressSessionListTab> {
   @override
   Widget build(BuildContext context) {
-    final inProgressProcesses = ref.watch(inProgressProcessListProvider);
-    final children = inProgressProcesses
-        .map((instance) => InProgressProcessCard(
-              processInstance: instance,
+    final inProgressSessions = ref.watch(inProgressSessionListProvider);
+    final children = inProgressSessions
+        .map((instance) => InProgressSessionCard(
+              sessionInstance: instance,
               ref: ref,
               tabController: widget.tabController,
             ))
@@ -40,22 +40,22 @@ class _InProgressProcessListWidgetState
   }
 }
 
-class InProgressProcessCard extends StatefulWidget {
-  const InProgressProcessCard(
+class InProgressSessionCard extends StatefulWidget {
+  const InProgressSessionCard(
       {super.key,
-      required this.processInstance,
+      required this.sessionInstance,
       required this.ref,
       required this.tabController});
 
-  final ProcessInstance processInstance;
+  final SessionInstance sessionInstance;
   final WidgetRef ref;
   final TabController tabController;
 
   @override
-  State<InProgressProcessCard> createState() => _InProgressProcessCardState();
+  State<InProgressSessionCard> createState() => _InProgressSessionCardState();
 }
 
-class _InProgressProcessCardState extends State<InProgressProcessCard> {
+class _InProgressSessionCardState extends State<InProgressSessionCard> {
   int timeElapsed = 0;
   // int _index = 0;
   late Timer timer;
@@ -66,7 +66,7 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         timeElapsed = DateTime.now()
-            .difference(widget.processInstance.start ?? DateTime.now())
+            .difference(widget.sessionInstance.start ?? DateTime.now())
             .inSeconds;
       });
     });
@@ -114,9 +114,9 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
 
   void completeTask() {
     widget.ref
-        .read(processInstanceListProvider.notifier)
-        .completed(widget.processInstance);
-    widget.tabController.index = ProcessTab.completed.index;
+        .read(sessionInstanceListProvider.notifier)
+        .completed(widget.sessionInstance);
+    widget.tabController.index = SessionTab.completed.index;
   }
 
   void displayIncompleteTasksAlert(BuildContext context) {
@@ -143,7 +143,7 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
   @override
   Widget build(BuildContext context) {
     final taskInstances =
-        widget.ref.watch(inProgressTaskListProvider(widget.processInstance.id));
+        widget.ref.watch(inProgressTaskListProvider(widget.sessionInstance.id));
 
     return Center(
       child: Card(
@@ -153,13 +153,13 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
             ListTile(
               leading: const Icon(Icons.checklist),
               title: Text(
-                widget.processInstance.process.name,
+                widget.sessionInstance.session.name,
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-            if (widget.processInstance.process.tasks.isNotEmpty)
+            if (widget.sessionInstance.session.tasks.isNotEmpty)
               InProgressTaskChecklistWidget(
-                processInstance: widget.processInstance,
+                sessionInstance: widget.sessionInstance,
               ),
             const Padding(padding: EdgeInsets.only(bottom: 20)),
             Row(
@@ -175,7 +175,7 @@ class _InProgressProcessCardState extends State<InProgressProcessCard> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 IconButton(
-                  tooltip: "Complete Process",
+                  tooltip: "Complete Session",
                   onPressed: () {
                     if (taskInstances
                         .any((element) => element.completed != true)) {

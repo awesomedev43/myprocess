@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-enum ProcessTab { processtemplate, inprogress, completed }
+enum SessionTab { sessiontemplate, inprogress, completed }
 
-const sProcessTabs = [
-  Tab(text: "Processes"),
+const sSessionTabs = [
+  Tab(text: "Template"),
   Tab(text: "In Progress"),
   Tab(text: "Completed"),
 ];
