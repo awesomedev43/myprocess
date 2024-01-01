@@ -17,7 +17,8 @@ class _CompletedSessionListWidgetState
     extends ConsumerState<CompletedSessionListTab> {
   @override
   Widget build(BuildContext context) {
-    final completedSession = ref.watch(completedProgressSessionListNewProvider);
+    final completedSession =
+        ref.watch(getCompletedSessionListProvider).value ?? [];
     return ListView(
         children: completedSession
             .map((instance) => CompletedSessionCard(sessionInstance: instance))
@@ -113,7 +114,8 @@ class _CompletedSessionCardState extends ConsumerState<CompletedSessionCard> {
                           IconButton(
                               onPressed: () {
                                 ref
-                                    .read(sessionInstanceListProvider.notifier)
+                                    .read(sessionInstanceListNotifierProvider
+                                        .notifier)
                                     .remove(widget.sessionInstance);
                               },
                               icon: const Icon(

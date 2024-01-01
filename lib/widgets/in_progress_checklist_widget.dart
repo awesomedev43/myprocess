@@ -18,16 +18,20 @@ class _InProgressTaskChecklistWidgetState
     extends ConsumerState<InProgressTaskChecklistWidget> {
   @override
   Widget build(BuildContext context) {
-    final taskInstances =
-        ref.watch(inProgressTaskListProvider(widget.sessionInstance.id));
+    final taskInstances = ref
+            .watch(getInProgressTaskListProvider(widget.sessionInstance.id))
+            .value ??
+        [];
     final checkboxes = taskInstances
         .map((t) => CheckboxListTile(
               title: Text(t.title),
               value: t.completed,
               onChanged: (bool? value) {
                 setState(() {
-                  ref.read(sessionInstanceListProvider.notifier).update(
-                      widget.sessionInstance.id, t.task.id, value ?? false);
+                  ref
+                      .read(sessionInstanceListNotifierProvider.notifier)
+                      .updateTask(
+                          widget.sessionInstance.id, t.task.id, value ?? false);
                 });
               },
             ))

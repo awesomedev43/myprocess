@@ -32,11 +32,6 @@ void main() async {
 
 Future<ProviderContainer> initializeState() async {
   final container = ProviderContainer();
-
-  container.read(sessionInstanceListProvider).addAll(
-      await PersistantLocalStorage.readsessionInstanceList(
-          FileStorageObjectType.sessioninstancelist));
-
   return container;
 }
 

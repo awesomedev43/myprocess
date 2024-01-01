@@ -23,7 +23,8 @@ class _InProgressSessionListWidgetState
     extends ConsumerState<InProgressSessionListTab> {
   @override
   Widget build(BuildContext context) {
-    final inProgressSessions = ref.watch(inProgressSessionListProvider);
+    final inProgressSessions =
+        ref.watch(getInProgressSessionListProvider).value ?? [];
     final children = inProgressSessions
         .map((instance) => InProgressSessionCard(
               sessionInstance: instance,
@@ -80,7 +81,7 @@ class _InProgressSessionCardState extends State<InProgressSessionCard> {
 
   void completeTask() {
     widget.ref
-        .read(sessionInstanceListProvider.notifier)
+        .read(sessionInstanceListNotifierProvider.notifier)
         .completed(widget.sessionInstance);
     widget.tabController.index = SessionTab.completed.index;
   }
@@ -108,8 +109,10 @@ class _InProgressSessionCardState extends State<InProgressSessionCard> {
 
   @override
   Widget build(BuildContext context) {
-    final taskInstances =
-        widget.ref.watch(inProgressTaskListProvider(widget.sessionInstance.id));
+    final taskInstances = widget.ref
+            .watch(getInProgressTaskListProvider(widget.sessionInstance.id))
+            .value ??
+        [];
 
     return Center(
       child: Card(

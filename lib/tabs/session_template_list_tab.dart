@@ -31,7 +31,7 @@ class _SessionTemplateListWidgetState
   IconButton createPlayButton(Session session) {
     return IconButton(
         onPressed: () {
-          ref.read(sessionInstanceListProvider.notifier).add(session);
+          ref.read(sessionInstanceListNotifierProvider.notifier).add(session);
           widget.controller.index = SessionTab.inprogress.index;
         },
         icon: const Icon(
@@ -86,7 +86,8 @@ class _SessionTemplateListWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final templateList = ref.watch(sessionTemplateListNotifierProvider).value!;
+    final templateList =
+        ref.watch(sessionTemplateListNotifierProvider).value ?? [];
     final cards = templateList.map((session) {
       return Card(
         child: Column(

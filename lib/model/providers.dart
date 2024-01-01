@@ -215,31 +215,135 @@ final sessionInstanceListProvider =
   return SessionInstanceNotifier();
 });
 
-final inProgressSessionListProvider = Provider<List<SessionInstance>>(
-  (ref) {
-    final sessionList = ref
-        .watch(sessionInstanceListProvider)
-        .where((sessionInstance) => sessionInstance.completed == false);
-    return sessionList.toList();
-  },
-);
+@riverpod
+class SessionInstanceListNotifier extends _$SessionInstanceListNotifier {
+  @override
+  Future<List<SessionInstance>> build() async {
+    return await PersistantLocalStorage.readsessionInstanceList(
+        FileStorageObjectType.sessioninstancelist);
+  }
 
-final completedProgressSessionListNewProvider = Provider<List<SessionInstance>>(
-  (ref) {
-    final sessionList = ref
-        .watch(sessionInstanceListProvider)
-        .where((sessionInstance) => sessionInstance.completed == true)
-        .sorted((a, b) => -1 * a.end!.compareTo(b.end!));
-    return sessionList.toList();
-  },
-);
+  Future<void> add(Session session) async {
+    final previousState = await future;
 
-final inProgressTaskListProvider = Provider.family<List<TaskInstance>, String>(
-  (ref, sessionInstanceId) {
-    final sessionInstance = ref
-        .watch(sessionInstanceListProvider)
-        .firstWhereOrNull((instance) => instance.id == sessionInstanceId);
+    final alreadyInstantiated = previousState.any((element) =>
+        element.session.id == session.id && element.completed == false);
 
-    return sessionInstance?.taskInstances ?? [];
-  },
-);
+    if (alreadyInstantiated) {
+      return;
+    }
+
+    state = AsyncData([
+      ...previousState,
+      SessionInstance(
+          id: const Uuid().v1(),
+          session: session,
+          start: DateTime.now(),
+          completed: false,
+          taskInstances: session.tasks
+              .map((t) => TaskInstance(
+                  task: t,
+                  id: const Uuid().v1(),
+                  title: t.title,
+                  completed: false,
+                  description: t.description))
+              .toList())
+    ]);
+
+    final sessionList = SessionInstanceList(sessions: state.value!);
+    PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
+        FileStorageObjectType.sessioninstancelist);
+  }
+
+  Future<void> remove(SessionInstance sessionInstance) async {
+    final previousState = await future;
+
+    state = AsyncData([
+      for (final instance in previousState)
+        if (instance.id != sessionInstance.id) instance
+    ]);
+
+    final sessionList = SessionInstanceList(sessions: state.value!);
+    PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
+        FileStorageObjectType.sessioninstancelist);
+  }
+
+  Future<void> completed(SessionInstance sessionInstance) async {
+    final previousState = await future;
+
+    state = AsyncData([
+      for (final instance in previousState)
+        if (instance.id != sessionInstance.id)
+          instance
+        else
+          instance.copyWith(completed: true, end: DateTime.now())
+    ]);
+
+    final sessionList = SessionInstanceList(sessions: state.value!);
+    PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
+        FileStorageObjectType.sessioninstancelist);
+  }
+
+  Future<void> updateTask(
+      String sessionInstanceId, String taskId, bool completed) async {
+    final previousState = await future;
+
+    final sessionInstance =
+        previousState.firstWhere((element) => element.id == sessionInstanceId);
+    final newsessionTasksInstances = sessionInstance.taskInstances.map((t) {
+      if (t.task.id == taskId) {
+        return t.copyWith(completed: completed);
+      } else {
+        return t;
+      }
+    }).toList();
+
+    state = AsyncData([
+      for (final instance in previousState)
+        if (instance.id != sessionInstance.id)
+          instance
+        else
+          SessionInstance(
+              id: const Uuid().v1(),
+              session: sessionInstance.session,
+              taskInstances: newsessionTasksInstances,
+              start: sessionInstance.start,
+              end: sessionInstance.end)
+    ]);
+
+    final sessionList = SessionInstanceList(sessions: state.value!);
+    PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
+        FileStorageObjectType.sessioninstancelist);
+  }
+}
+
+@riverpod
+Future<List<SessionInstance>> getInProgressSessionList(
+    GetInProgressSessionListRef ref) async {
+  final sessionList =
+      (ref.watch(sessionInstanceListNotifierProvider).value ?? [])
+          .where((sessionInstance) => sessionInstance.completed == false);
+
+  return sessionList.toList();
+}
+
+@riverpod
+Future<List<SessionInstance>> getCompletedSessionList(
+    GetCompletedSessionListRef ref) async {
+  final sessionList =
+      (ref.watch(sessionInstanceListNotifierProvider).value ?? [])
+          .where((sessionInstance) => sessionInstance.completed == true)
+          .sorted((a, b) => -1 * a.end!.compareTo(b.end!));
+
+  return sessionList.toList();
+}
+
+@riverpod
+Future<List<TaskInstance>> getInProgressTaskList(
+    GetInProgressTaskListRef ref, String sessionInstanceId) async {
+  final sessionInstance =
+      (ref.watch(sessionInstanceListNotifierProvider).value ?? [])
+          .firstWhereOrNull((instance) => instance.id == sessionInstanceId);
+
+  return sessionInstance?.taskInstances ?? [];
+}
