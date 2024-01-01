@@ -54,7 +54,9 @@ class _ProcessTemplateFormState
                     name: nameController.text,
                     tasks: tasks.value);
 
-                ref.read(sessionTemplateListProvider.notifier).add(process);
+                ref
+                    .read(sessionTemplateListNotifierNewProvider.notifier)
+                    .add(process);
                 Navigator.pop(context);
               },
               icon: const Icon(Icons.save))

@@ -32,9 +32,6 @@ void main() async {
 
 Future<ProviderContainer> initializeState() async {
   final container = ProviderContainer();
-  container.read(sessionTemplateListProvider).addAll(
-      await PersistantLocalStorage.readsessionList(
-          FileStorageObjectType.sessionlist));
 
   container.read(sessionInstanceListProvider).addAll(
       await PersistantLocalStorage.readsessionInstanceList(
@@ -99,7 +96,8 @@ class SessionTemplateList extends StatefulHookConsumerWidget {
 class _SessionTemplateListState extends ConsumerState<SessionTemplateList> {
   @override
   Widget build(BuildContext context) {
-    final templateList = ref.watch(sessionTemplateListProvider);
+    final templateList =
+        ref.watch(sessionTemplateListNotifierNewProvider).value!;
     final cards = templateList
         .map((session) => Card(
               child: ListTile(

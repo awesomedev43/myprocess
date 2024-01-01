@@ -5,8 +5,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:collection/collection.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'model.dart';
+
+part 'providers.g.dart';
 
 enum FileStorageObjectType {
   sessionlist,
@@ -81,36 +84,41 @@ class PersistantLocalStorage {
   }
 }
 
-class SessionTemplateList extends StateNotifier<List<Session>> {
-  SessionTemplateList([List<Session>? initialList]) : super(initialList ?? []);
+@riverpod
+class SessionTemplateListNotifierNew extends _$SessionTemplateListNotifierNew {
+  @override
+  Future<List<Session>> build() async {
+    return await PersistantLocalStorage.readsessionList(
+        FileStorageObjectType.sessionlist);
+  }
 
-  void add(Session session) {
-    final editing = state.any((p) => p.id == session.id);
-    state = [
-      for (final p in state)
+  Future<void> add(Session session) async {
+    final previousState = await future;
+
+    final editing = previousState.any((p) => p.id == session.id);
+    state = AsyncData([
+      for (final p in previousState)
         if (p.id != session.id) p else session,
       if (!editing) session,
-    ];
-    final sessionList = SessionList(sessions: state);
+    ]);
+    final sessionList = SessionList(sessions: state.value!);
     PersistantLocalStorage.writeContent(
         jsonEncode(sessionList.toJson()), FileStorageObjectType.sessionlist);
   }
 
-  void remove(Session session) {
-    state = [
-      for (final p in state)
+  Future<void> remove(Session session) async {
+    final previousState = await future;
+
+    state = AsyncData([
+      for (final p in previousState)
         if (p.id != session.id) p
-    ];
-    final sessionList = SessionList(sessions: state);
+    ]);
+
+    final sessionList = SessionList(sessions: state.value!);
     PersistantLocalStorage.writeContent(
         jsonEncode(sessionList.toJson()), FileStorageObjectType.sessionlist);
   }
 }
-
-final sessionTemplateListProvider =
-    StateNotifierProvider<SessionTemplateList, List<Session>>((ref) {
-  return SessionTemplateList();
-});
 
 class SessionInstanceNotifier extends StateNotifier<List<SessionInstance>> {
   SessionInstanceNotifier([List<SessionInstance>? initialList])

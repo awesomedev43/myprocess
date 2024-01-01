@@ -64,7 +64,7 @@ class _SessionTemplateListWidgetState
                 TextButton(
                   onPressed: () {
                     ref
-                        .read(sessionTemplateListProvider.notifier)
+                        .read(sessionTemplateListNotifierNewProvider.notifier)
                         .remove(session);
                     Navigator.pop(context, 'Cancel');
                   },
@@ -86,7 +86,8 @@ class _SessionTemplateListWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final templateList = ref.watch(sessionTemplateListProvider);
+    final templateList =
+        ref.watch(sessionTemplateListNotifierNewProvider).value!;
     final cards = templateList.map((session) {
       return Card(
         child: Column(
