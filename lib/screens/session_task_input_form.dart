@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -15,7 +16,9 @@ class SessionTaskInputForm extends StatefulHookConsumerWidget {
 class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
   late dynamic _taskType;
   final _formKey = GlobalKey<FormState>();
-  final titleTextController = TextEditingController();
+  final _titleTextController = TextEditingController();
+  final _descriptionTextController = TextEditingController();
+  final _incrementController = TextEditingController();
 
   Widget buildSectionTitle(String text) {
     return Padding(
@@ -45,6 +48,50 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
             _taskType.value = value;
           },
         ));
+  }
+
+  Widget buildTextField(String text, TextEditingController titleTextController,
+      String? Function(String?)? validator) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 18.0, right: 30.0),
+      child: TextFormField(
+        validator: validator,
+        controller: titleTextController,
+        decoration: InputDecoration(
+          border: const UnderlineInputBorder(),
+          labelText: text,
+        ),
+      ),
+    );
+  }
+
+  Widget buildCounterIncrementField() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 18.0, right: 30.0),
+      child: TextFormField(
+        validator: nullCheckValidator,
+        controller: _incrementController,
+        keyboardType: TextInputType.number,
+        inputFormatters: <TextInputFormatter>[
+          FilteringTextInputFormatter.digitsOnly
+        ],
+        decoration: const InputDecoration(
+          border: UnderlineInputBorder(),
+          labelText: "Increment",
+        ),
+      ),
+    );
+  }
+
+  String? nullCheckValidator(value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a valid value';
+    }
+    return null;
+  }
+
+  String? noOpValidator(value) {
+    return null;
   }
 
   @override
@@ -77,24 +124,12 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
               ],
             ),
             buildSectionTitle("Properties"),
-            Padding(
-              padding: const EdgeInsets.only(left: 18.0, right: 30.0),
-              child: TextFormField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a valid title';
-                  }
-                  return null;
-                },
-                controller: titleTextController,
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Title',
-                ),
-              ),
-            ),
-            if (_taskType.value == TaskType.counter) ...[],
-            if (_taskType.value == TaskType.todo) ...[],
+            buildTextField("Title", _titleTextController, nullCheckValidator),
+            buildTextField(
+                "Description", _descriptionTextController, noOpValidator),
+            if (_taskType.value == TaskType.counter) ...[
+              buildCounterIncrementField()
+            ],
           ],
         )),
       ),
