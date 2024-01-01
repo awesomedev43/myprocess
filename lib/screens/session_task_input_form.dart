@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myprocess/model/model.dart';
+import 'package:uuid/uuid.dart';
 
 enum TaskType { todo, counter }
 
@@ -38,6 +40,7 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
     );
   }
 
+  /// Build radio tiles for task type
   ListTile buildRadioTile(TaskType taskType, String text) {
     return ListTile(
         title: Text(text),
@@ -50,6 +53,7 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
         ));
   }
 
+  /// Build text field for title and description
   Widget buildTextField(String text, TextEditingController titleTextController,
       String? Function(String?)? validator) {
     return Padding(
@@ -65,6 +69,7 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
     );
   }
 
+  /// Build numeric increment field for counter type
   Widget buildCounterIncrementField() {
     return Padding(
       padding: const EdgeInsets.only(left: 18.0, right: 30.0),
@@ -105,7 +110,15 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
           IconButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  Navigator.pop(context);
+                  if (_taskType.value == TaskType.todo) {
+                    Navigator.pop(
+                        context,
+                        Task(
+                            id: const Uuid().v1(),
+                            title: _titleTextController.text.trim(),
+                            description:
+                                _descriptionTextController.text.trim()));
+                  }
                 }
               },
               icon: const Icon(Icons.save))

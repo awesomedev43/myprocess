@@ -138,7 +138,7 @@ class SessionTemplateInfoDialog extends StatelessWidget {
     final taskWidget = session.tasks.map((e) {
       return ListTile(
         dense: true,
-        title: Text(e.description),
+        title: Text(e.title),
         leading: const Icon(Icons.check),
       );
     }).toList();

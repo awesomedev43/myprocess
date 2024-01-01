@@ -118,9 +118,12 @@ class _SessionTemplateFormState
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
           // _dialogBuilder(context, tasks);
-          Navigator.pushNamed(context, "/addtask");
+          final task = await Navigator.pushNamed(context, "/addtask");
+          if (task is Task) {
+            tasks.value = [...tasks.value, task];
+          }
         },
         tooltip: "Add Task",
         child: const Icon(Icons.add_box_outlined),
@@ -152,7 +155,7 @@ class TaskListWidget extends StatelessWidget {
         .map((e) => Card(
                 child: ListTile(
               leading: const Icon(Icons.add_task),
-              title: Text(e.description),
+              title: Text(e.title),
               trailing: IconButton(
                 color: Colors.red,
                 icon: const Icon(Icons.delete),
