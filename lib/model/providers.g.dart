@@ -6,23 +6,22 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$sessionTemplateListNotifierNewHash() =>
-    r'31be5aa073bbf45f68860fd54b7fd4d235eb4e24';
+String _$sessionTemplateListNotifierHash() =>
+    r'9a9a835008d9e3881563b6d1ab879f26f0a816ca';
 
-/// See also [SessionTemplateListNotifierNew].
-@ProviderFor(SessionTemplateListNotifierNew)
-final sessionTemplateListNotifierNewProvider = AutoDisposeAsyncNotifierProvider<
-    SessionTemplateListNotifierNew, List<Session>>.internal(
-  SessionTemplateListNotifierNew.new,
-  name: r'sessionTemplateListNotifierNewProvider',
+/// See also [SessionTemplateListNotifier].
+@ProviderFor(SessionTemplateListNotifier)
+final sessionTemplateListNotifierProvider = AutoDisposeAsyncNotifierProvider<
+    SessionTemplateListNotifier, List<Session>>.internal(
+  SessionTemplateListNotifier.new,
+  name: r'sessionTemplateListNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$sessionTemplateListNotifierNewHash,
+      : _$sessionTemplateListNotifierHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$SessionTemplateListNotifierNew
-    = AutoDisposeAsyncNotifier<List<Session>>;
+typedef _$SessionTemplateListNotifier = AutoDisposeAsyncNotifier<List<Session>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

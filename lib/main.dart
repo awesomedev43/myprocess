@@ -96,8 +96,7 @@ class SessionTemplateList extends StatefulHookConsumerWidget {
 class _SessionTemplateListState extends ConsumerState<SessionTemplateList> {
   @override
   Widget build(BuildContext context) {
-    final templateList =
-        ref.watch(sessionTemplateListNotifierNewProvider).value!;
+    final templateList = ref.watch(sessionTemplateListNotifierProvider).value!;
     final cards = templateList
         .map((session) => Card(
               child: ListTile(

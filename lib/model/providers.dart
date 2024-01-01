@@ -85,7 +85,7 @@ class PersistantLocalStorage {
 }
 
 @riverpod
-class SessionTemplateListNotifierNew extends _$SessionTemplateListNotifierNew {
+class SessionTemplateListNotifier extends _$SessionTemplateListNotifier {
   @override
   Future<List<Session>> build() async {
     return await PersistantLocalStorage.readsessionList(

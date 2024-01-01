@@ -7,18 +7,15 @@ import 'package:uuid/uuid.dart';
 import '../model/providers.dart';
 import '../widgets/add_task_dialog.dart';
 
-// import '../widgets/add_task_dialog.dart';
-// import '../model/providers.dart';
-
 class SessionTemplateFormScreen extends StatefulHookConsumerWidget {
   const SessionTemplateFormScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _ProcessTemplateFormState();
+      _SessionTemplateFormState();
 }
 
-class _ProcessTemplateFormState
+class _SessionTemplateFormState
     extends ConsumerState<SessionTemplateFormScreen> {
   final nameController = TextEditingController();
   final taskController = TextEditingController();
@@ -45,7 +42,7 @@ class _ProcessTemplateFormState
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add New Session"),
+        title: const Text("Add New Session Template"),
         actions: [
           IconButton(
               onPressed: () {
@@ -55,7 +52,7 @@ class _ProcessTemplateFormState
                     tasks: tasks.value);
 
                 ref
-                    .read(sessionTemplateListNotifierNewProvider.notifier)
+                    .read(sessionTemplateListNotifierProvider.notifier)
                     .add(process);
                 Navigator.pop(context);
               },
