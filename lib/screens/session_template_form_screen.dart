@@ -5,8 +5,6 @@ import 'package:myprocess/model/model.dart';
 import 'package:myprocess/widgets/util.dart';
 import 'package:uuid/uuid.dart';
 
-import '../model/providers.dart';
-
 class SessionTemplateFormScreen extends StatefulHookConsumerWidget {
   const SessionTemplateFormScreen({super.key});
 
@@ -51,11 +49,44 @@ class _SessionTemplateFormState
       });
     }
 
+    todoEditFunction(taskToEdit) async {
+      final editedTask =
+          await Navigator.pushNamed(context, "/addtask", arguments: taskToEdit)
+              as Task?;
+
+      if (editedTask == null) {
+        return;
+      }
+
+      setState(() {
+        tasks.value = [
+          for (final t in tasks.value)
+            if (t.id != editedTask.id) t else editedTask
+        ];
+      });
+    }
+
     counterDeleteFunction(counterToDelete) {
       setState(() {
         counterTasks.value = [
           for (final t in counterTasks.value)
             if (t.id != counterToDelete.id) t
+        ];
+      });
+    }
+
+    counterEditFunction(counterToEdit) async {
+      final editedCounter = await Navigator.pushNamed(context, "/addtask",
+          arguments: counterToEdit) as CounterTask?;
+
+      if (editedCounter == null) {
+        return;
+      }
+
+      setState(() {
+        counterTasks.value = [
+          for (final t in counterTasks.value)
+            if (t.id != editedCounter.id) t else editedCounter
         ];
       });
     }
@@ -96,6 +127,7 @@ class _SessionTemplateFormState
               TodoTaskListWidget(
                 tasks: tasks.value,
                 deleteTask: todoDeleteFunction,
+                editTask: todoEditFunction,
               )
             ],
             if (counterTasks.value.isNotEmpty) ...[
@@ -104,6 +136,7 @@ class _SessionTemplateFormState
               CounterTaskListWidget(
                 tasks: counterTasks.value,
                 deleteTask: counterDeleteFunction,
+                editTask: counterEditFunction,
               )
             ],
           ],
@@ -111,7 +144,6 @@ class _SessionTemplateFormState
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          // _dialogBuilder(context, tasks);
           final task = await Navigator.pushNamed(context, "/addtask");
           if (task is Task) {
             tasks.value = [...tasks.value, task];
@@ -121,7 +153,7 @@ class _SessionTemplateFormState
           }
         },
         tooltip: "Add Task",
-        child: const Icon(Icons.add_box_outlined),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -129,10 +161,14 @@ class _SessionTemplateFormState
 
 class TodoTaskListWidget extends StatelessWidget {
   const TodoTaskListWidget(
-      {super.key, required this.tasks, required this.deleteTask});
+      {super.key,
+      required this.tasks,
+      required this.deleteTask,
+      required this.editTask});
 
   final List<Task> tasks;
   final Function deleteTask;
+  final Function editTask;
 
   @override
   Widget build(BuildContext context) {
@@ -141,10 +177,20 @@ class TodoTaskListWidget extends StatelessWidget {
                 child: ListTile(
               leading: const Icon(Icons.add_task),
               title: Text(e.title),
-              trailing: IconButton(
-                color: Colors.red,
-                icon: const Icon(Icons.delete),
-                onPressed: () => deleteTask(e),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    color: Colors.black,
+                    icon: const Icon(Icons.edit),
+                    onPressed: () => editTask(e),
+                  ),
+                  IconButton(
+                    color: Colors.red,
+                    icon: const Icon(Icons.delete),
+                    onPressed: () => deleteTask(e),
+                  ),
+                ],
               ),
             )))
         .toList();
@@ -159,10 +205,14 @@ class TodoTaskListWidget extends StatelessWidget {
 
 class CounterTaskListWidget extends StatelessWidget {
   const CounterTaskListWidget(
-      {super.key, required this.tasks, required this.deleteTask});
+      {super.key,
+      required this.tasks,
+      required this.deleteTask,
+      required this.editTask});
 
   final List<CounterTask> tasks;
   final Function deleteTask;
+  final Function editTask;
 
   @override
   Widget build(BuildContext context) {
@@ -170,11 +220,21 @@ class CounterTaskListWidget extends StatelessWidget {
         .map((e) => Card(
                 child: ListTile(
               leading: const Icon(Icons.plus_one),
-              title: Text(e.title),
-              trailing: IconButton(
-                color: Colors.red,
-                icon: const Icon(Icons.delete),
-                onPressed: () => deleteTask(e),
+              title: Text("${e.title} (Increment: ${e.increment})"),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    color: Colors.black,
+                    icon: const Icon(Icons.edit),
+                    onPressed: () => editTask(e),
+                  ),
+                  IconButton(
+                    color: Colors.red,
+                    icon: const Icon(Icons.delete),
+                    onPressed: () => deleteTask(e),
+                  ),
+                ],
               ),
             )))
         .toList();

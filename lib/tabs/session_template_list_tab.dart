@@ -46,9 +46,11 @@ class _SessionTemplateListWidgetState
           final modifiedSession = await Navigator.pushNamed(
               context, "/addsession",
               arguments: session);
-          ref
-              .read(sessionTemplateListNotifierProvider.notifier)
-              .add(modifiedSession as Session);
+          if (modifiedSession != null) {
+            ref
+                .read(sessionTemplateListNotifierProvider.notifier)
+                .add(modifiedSession as Session);
+          }
         },
         icon: const Icon(
           Icons.edit,

@@ -22,6 +22,9 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
   final _titleTextController = TextEditingController();
   final _descriptionTextController = TextEditingController();
   final _incrementController = TextEditingController();
+  Task? editingTodoTask;
+  CounterTask? editingCounterTask;
+  bool editing = false;
 
   /// Build radio tiles for task type
   ListTile buildRadioTile(TaskType taskType, String text) {
@@ -84,7 +87,24 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
 
   @override
   Widget build(BuildContext context) {
+    final incoming = ModalRoute.of(context)!.settings.arguments;
     _taskType = useState<TaskType?>(TaskType.todo);
+
+    if (incoming is Task) {
+      editingTodoTask = incoming;
+      _taskType = useState<TaskType?>(TaskType.todo);
+      _titleTextController.text = editingTodoTask!.title;
+      _descriptionTextController.text = editingTodoTask!.description;
+      editing = true;
+    }
+    if (incoming is CounterTask) {
+      editingCounterTask = incoming;
+      _taskType = useState<TaskType?>(TaskType.counter);
+      _titleTextController.text = editingCounterTask!.title;
+      _descriptionTextController.text = editingCounterTask!.description;
+      _incrementController.text = "${editingCounterTask!.increment}";
+      editing = true;
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -97,20 +117,21 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
                     Navigator.pop(
                         context,
                         Task(
-                            id: const Uuid().v1(),
+                            id: editingTodoTask?.id ?? const Uuid().v1(),
                             title: _titleTextController.text.trim(),
                             description:
                                 _descriptionTextController.text.trim()));
                   }
                   if (_taskType.value == TaskType.counter) {
                     Navigator.pop(
-                      context,
-                      CounterTask(
-                          increment: int.parse(_incrementController.text),
-                          id: const Uuid().v1(),
-                          title: _titleTextController.text.trim(),
-                          description: _descriptionTextController.text.trim()),
-                    );
+                        context,
+                        CounterTask(
+                            increment:
+                                int.parse(_incrementController.text.trim()),
+                            id: editingCounterTask?.id ?? const Uuid().v1(),
+                            title: _titleTextController.text.trim(),
+                            description:
+                                _descriptionTextController.text.trim()));
                   }
                 }
               },
@@ -124,13 +145,15 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
           child: Center(
               child: Column(
             children: [
-              WidgetUtils.buildSectionTitle("Task Type"),
-              Column(
-                children: [
-                  buildRadioTile(TaskType.todo, "Todo"),
-                  buildRadioTile(TaskType.counter, "Counter")
-                ],
-              ),
+              if (!editing) ...[
+                WidgetUtils.buildSectionTitle("Task Type"),
+                Column(
+                  children: [
+                    buildRadioTile(TaskType.todo, "Todo"),
+                    buildRadioTile(TaskType.counter, "Counter")
+                  ],
+                )
+              ],
               WidgetUtils.buildSectionTitle("Properties"),
               buildTextField("Title", _titleTextController, nullCheckValidator),
               buildTextField(
