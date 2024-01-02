@@ -42,8 +42,13 @@ class _SessionTemplateListWidgetState
 
   IconButton createEditButton(BuildContext context, Session session) {
     return IconButton(
-        onPressed: () {
-          Navigator.pushNamed(context, "/addsession", arguments: session);
+        onPressed: () async {
+          final modifiedSession = await Navigator.pushNamed(
+              context, "/addsession",
+              arguments: session);
+          ref
+              .read(sessionTemplateListNotifierProvider.notifier)
+              .add(modifiedSession as Session);
         },
         icon: const Icon(
           Icons.edit,

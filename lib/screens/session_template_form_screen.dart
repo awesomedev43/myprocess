@@ -66,16 +66,12 @@ class _SessionTemplateFormState
         actions: [
           IconButton(
               onPressed: () {
-                final process = Session(
+                final session = Session(
                     id: editingProcess?.id ?? const Uuid().v1(),
                     name: nameController.text,
                     tasks: tasks.value,
                     counters: counterTasks.value);
-
-                ref
-                    .read(sessionTemplateListNotifierProvider.notifier)
-                    .add(process);
-                Navigator.pop(context);
+                Navigator.pop(context, session);
               },
               icon: const Icon(Icons.save))
         ],
