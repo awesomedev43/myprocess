@@ -20,6 +20,7 @@ class CounterTask with _$CounterTask {
 @freezed
 class CounterTaskInstance with _$CounterTaskInstance {
   const factory CounterTaskInstance({
+    required CounterTask counterTask,
     required String id,
     required String title,
     required String description,
@@ -72,6 +73,7 @@ class SessionInstance with _$SessionInstance {
       {required String id,
       required Session session,
       @Default([]) List<TaskInstance> taskInstances,
+      @Default([]) List<CounterTaskInstance> counterInstances,
       @Default(false) bool completed,
       DateTime? start,
       DateTime? end}) = _SessionInstance;

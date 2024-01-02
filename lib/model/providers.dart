@@ -147,12 +147,22 @@ class SessionInstanceListNotifier extends _$SessionInstanceListNotifier {
           start: DateTime.now(),
           completed: false,
           taskInstances: session.tasks
-              .map((t) => TaskInstance(
-                  task: t,
+              .map(
+                (t) => TaskInstance(
+                    task: t,
+                    id: const Uuid().v1(),
+                    title: t.title,
+                    completed: false,
+                    description: t.description),
+              )
+              .toList(),
+          counterInstances: session.counters
+              .map((t) => CounterTaskInstance(
+                  counterTask: t,
                   id: const Uuid().v1(),
                   title: t.title,
-                  completed: false,
-                  description: t.description))
+                  description: t.description,
+                  increment: t.increment))
               .toList())
     ];
 
@@ -218,6 +228,7 @@ class SessionInstanceListNotifier extends _$SessionInstanceListNotifier {
               id: const Uuid().v1(),
               session: sessionInstance.session,
               taskInstances: newsessionTasksInstances,
+              counterInstances: sessionInstance.counterInstances,
               start: sessionInstance.start,
               end: sessionInstance.end)
     ];
@@ -262,4 +273,16 @@ Future<List<TaskInstance>> getInProgressTaskList(
       .firstWhereOrNull((instance) => instance.id == sessionInstanceId);
 
   return sessionInstance?.taskInstances ?? [];
+}
+
+@riverpod
+Future<List<CounterTaskInstance>> getInProgressCounterTaskList(
+    GetInProgressCounterTaskListRef ref, String sessionInstanceId) async {
+  final sessionInstances =
+      await ref.watch(sessionInstanceListNotifierProvider.future);
+
+  final sessionInstance = sessionInstances
+      .firstWhereOrNull((instance) => instance.id == sessionInstanceId);
+
+  return sessionInstance?.counterInstances ?? [];
 }

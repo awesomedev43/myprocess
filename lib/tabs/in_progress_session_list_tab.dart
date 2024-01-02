@@ -1,9 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/model.dart';
-import 'package:myprocess/util.dart';
+import 'package:myprocess/widgets/animating_timer_widget.dart';
+import 'package:myprocess/widgets/in_progress_counter_widget.dart';
 
 import '../widgets/in_progress_checklist_widget.dart';
 import '../model/providers.dart';
@@ -41,7 +41,7 @@ class _InProgressSessionListWidgetState
   }
 }
 
-class InProgressSessionCard extends StatefulWidget {
+class InProgressSessionCard extends StatefulHookWidget {
   const InProgressSessionCard(
       {super.key,
       required this.sessionInstance,
@@ -57,26 +57,10 @@ class InProgressSessionCard extends StatefulWidget {
 }
 
 class _InProgressSessionCardState extends State<InProgressSessionCard> {
-  int timeElapsed = 0;
-  // int _index = 0;
-  late Timer timer;
-
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        timeElapsed = DateTime.now()
-            .difference(widget.sessionInstance.start ?? DateTime.now())
-            .inSeconds;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    timer.cancel();
+  int getTimeElapsed() {
+    return DateTime.now()
+        .difference(widget.sessionInstance.start ?? DateTime.now())
+        .inSeconds;
   }
 
   void completeTask() {
@@ -130,16 +114,9 @@ class _InProgressSessionCardState extends State<InProgressSessionCard> {
               InProgressTaskChecklistWidget(
                 sessionInstance: widget.sessionInstance,
               ),
+            InProgressCounterWidget(sessionInstance: widget.sessionInstance),
             const Padding(padding: EdgeInsets.only(bottom: 20)),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const Padding(padding: EdgeInsets.only(left: 10)),
-                const Icon(Icons.timer_outlined),
-                const Padding(padding: EdgeInsets.only(left: 10)),
-                Text(TimeUtil.formatTime(timeElapsed)),
-              ],
-            ),
+            AnimatingTimerWidget(start: widget.sessionInstance.start),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[

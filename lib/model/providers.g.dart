@@ -7,7 +7,7 @@ part of 'providers.dart';
 // **************************************************************************
 
 String _$getInProgressSessionListHash() =>
-    r'b1c9b88c765d38f739ed4c4c22adaec90ab31ae3';
+    r'3c94986105ce02f24b2d6176df1bd4309eb2e054';
 
 /// See also [getInProgressSessionList].
 @ProviderFor(getInProgressSessionList)
@@ -25,7 +25,7 @@ final getInProgressSessionListProvider =
 typedef GetInProgressSessionListRef
     = AutoDisposeFutureProviderRef<List<SessionInstance>>;
 String _$getCompletedSessionListHash() =>
-    r'1336f092fb247eadab8e07b40ab96d93b3c1c154';
+    r'0e43069b7671db918b1f58c06ad6be910133db5f';
 
 /// See also [getCompletedSessionList].
 @ProviderFor(getCompletedSessionList)
@@ -43,7 +43,7 @@ final getCompletedSessionListProvider =
 typedef GetCompletedSessionListRef
     = AutoDisposeFutureProviderRef<List<SessionInstance>>;
 String _$getInProgressTaskListHash() =>
-    r'773bb10b7de538ffb58968f1ee12aa5ea56d627b';
+    r'56bdc7542d1448277778e8d2a894e1ab3c136a14';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -199,8 +199,146 @@ class _GetInProgressTaskListProviderElement
       (origin as GetInProgressTaskListProvider).sessionInstanceId;
 }
 
+String _$getInProgressCounterTaskListHash() =>
+    r'75f81298dd133476574f9854c9f3fb5c132899d3';
+
+/// See also [getInProgressCounterTaskList].
+@ProviderFor(getInProgressCounterTaskList)
+const getInProgressCounterTaskListProvider =
+    GetInProgressCounterTaskListFamily();
+
+/// See also [getInProgressCounterTaskList].
+class GetInProgressCounterTaskListFamily
+    extends Family<AsyncValue<List<CounterTaskInstance>>> {
+  /// See also [getInProgressCounterTaskList].
+  const GetInProgressCounterTaskListFamily();
+
+  /// See also [getInProgressCounterTaskList].
+  GetInProgressCounterTaskListProvider call(
+    String sessionInstanceId,
+  ) {
+    return GetInProgressCounterTaskListProvider(
+      sessionInstanceId,
+    );
+  }
+
+  @override
+  GetInProgressCounterTaskListProvider getProviderOverride(
+    covariant GetInProgressCounterTaskListProvider provider,
+  ) {
+    return call(
+      provider.sessionInstanceId,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'getInProgressCounterTaskListProvider';
+}
+
+/// See also [getInProgressCounterTaskList].
+class GetInProgressCounterTaskListProvider
+    extends AutoDisposeFutureProvider<List<CounterTaskInstance>> {
+  /// See also [getInProgressCounterTaskList].
+  GetInProgressCounterTaskListProvider(
+    String sessionInstanceId,
+  ) : this._internal(
+          (ref) => getInProgressCounterTaskList(
+            ref as GetInProgressCounterTaskListRef,
+            sessionInstanceId,
+          ),
+          from: getInProgressCounterTaskListProvider,
+          name: r'getInProgressCounterTaskListProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$getInProgressCounterTaskListHash,
+          dependencies: GetInProgressCounterTaskListFamily._dependencies,
+          allTransitiveDependencies:
+              GetInProgressCounterTaskListFamily._allTransitiveDependencies,
+          sessionInstanceId: sessionInstanceId,
+        );
+
+  GetInProgressCounterTaskListProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.sessionInstanceId,
+  }) : super.internal();
+
+  final String sessionInstanceId;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<CounterTaskInstance>> Function(
+            GetInProgressCounterTaskListRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: GetInProgressCounterTaskListProvider._internal(
+        (ref) => create(ref as GetInProgressCounterTaskListRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        sessionInstanceId: sessionInstanceId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<CounterTaskInstance>> createElement() {
+    return _GetInProgressCounterTaskListProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is GetInProgressCounterTaskListProvider &&
+        other.sessionInstanceId == sessionInstanceId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, sessionInstanceId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin GetInProgressCounterTaskListRef
+    on AutoDisposeFutureProviderRef<List<CounterTaskInstance>> {
+  /// The parameter `sessionInstanceId` of this provider.
+  String get sessionInstanceId;
+}
+
+class _GetInProgressCounterTaskListProviderElement
+    extends AutoDisposeFutureProviderElement<List<CounterTaskInstance>>
+    with GetInProgressCounterTaskListRef {
+  _GetInProgressCounterTaskListProviderElement(super.provider);
+
+  @override
+  String get sessionInstanceId =>
+      (origin as GetInProgressCounterTaskListProvider).sessionInstanceId;
+}
+
 String _$sessionTemplateListNotifierHash() =>
-    r'6876be6a17dc1f31b2f49f732415235c9b09de9c';
+    r'9722ba36a0c47e2700af994ffe026739a92feb7b';
 
 /// See also [SessionTemplateListNotifier].
 @ProviderFor(SessionTemplateListNotifier)
@@ -217,7 +355,7 @@ final sessionTemplateListNotifierProvider = AutoDisposeAsyncNotifierProvider<
 
 typedef _$SessionTemplateListNotifier = AutoDisposeAsyncNotifier<List<Session>>;
 String _$sessionInstanceListNotifierHash() =>
-    r'e7f3f79573e8ce656e217f86f1f1714091f87050';
+    r'0478eb893aace3b99564b22d84eef119fa414306';
 
 /// See also [SessionInstanceListNotifier].
 @ProviderFor(SessionInstanceListNotifier)

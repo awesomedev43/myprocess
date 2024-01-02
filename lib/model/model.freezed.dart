@@ -227,6 +227,7 @@ CounterTaskInstance _$CounterTaskInstanceFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CounterTaskInstance {
+  CounterTask get counterTask => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
@@ -246,7 +247,14 @@ abstract class $CounterTaskInstanceCopyWith<$Res> {
       _$CounterTaskInstanceCopyWithImpl<$Res, CounterTaskInstance>;
   @useResult
   $Res call(
-      {String id, String title, String description, int increment, int count});
+      {CounterTask counterTask,
+      String id,
+      String title,
+      String description,
+      int increment,
+      int count});
+
+  $CounterTaskCopyWith<$Res> get counterTask;
 }
 
 /// @nodoc
@@ -262,6 +270,7 @@ class _$CounterTaskInstanceCopyWithImpl<$Res, $Val extends CounterTaskInstance>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? counterTask = null,
     Object? id = null,
     Object? title = null,
     Object? description = null,
@@ -269,6 +278,10 @@ class _$CounterTaskInstanceCopyWithImpl<$Res, $Val extends CounterTaskInstance>
     Object? count = null,
   }) {
     return _then(_value.copyWith(
+      counterTask: null == counterTask
+          ? _value.counterTask
+          : counterTask // ignore: cast_nullable_to_non_nullable
+              as CounterTask,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -291,6 +304,14 @@ class _$CounterTaskInstanceCopyWithImpl<$Res, $Val extends CounterTaskInstance>
               as int,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CounterTaskCopyWith<$Res> get counterTask {
+    return $CounterTaskCopyWith<$Res>(_value.counterTask, (value) {
+      return _then(_value.copyWith(counterTask: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -302,7 +323,15 @@ abstract class _$$CounterTaskInstanceImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id, String title, String description, int increment, int count});
+      {CounterTask counterTask,
+      String id,
+      String title,
+      String description,
+      int increment,
+      int count});
+
+  @override
+  $CounterTaskCopyWith<$Res> get counterTask;
 }
 
 /// @nodoc
@@ -316,6 +345,7 @@ class __$$CounterTaskInstanceImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? counterTask = null,
     Object? id = null,
     Object? title = null,
     Object? description = null,
@@ -323,6 +353,10 @@ class __$$CounterTaskInstanceImplCopyWithImpl<$Res>
     Object? count = null,
   }) {
     return _then(_$CounterTaskInstanceImpl(
+      counterTask: null == counterTask
+          ? _value.counterTask
+          : counterTask // ignore: cast_nullable_to_non_nullable
+              as CounterTask,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -353,7 +387,8 @@ class _$CounterTaskInstanceImpl
     with DiagnosticableTreeMixin
     implements _CounterTaskInstance {
   const _$CounterTaskInstanceImpl(
-      {required this.id,
+      {required this.counterTask,
+      required this.id,
       required this.title,
       required this.description,
       required this.increment,
@@ -362,6 +397,8 @@ class _$CounterTaskInstanceImpl
   factory _$CounterTaskInstanceImpl.fromJson(Map<String, dynamic> json) =>
       _$$CounterTaskInstanceImplFromJson(json);
 
+  @override
+  final CounterTask counterTask;
   @override
   final String id;
   @override
@@ -376,7 +413,7 @@ class _$CounterTaskInstanceImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CounterTaskInstance(id: $id, title: $title, description: $description, increment: $increment, count: $count)';
+    return 'CounterTaskInstance(counterTask: $counterTask, id: $id, title: $title, description: $description, increment: $increment, count: $count)';
   }
 
   @override
@@ -384,6 +421,7 @@ class _$CounterTaskInstanceImpl
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'CounterTaskInstance'))
+      ..add(DiagnosticsProperty('counterTask', counterTask))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('title', title))
       ..add(DiagnosticsProperty('description', description))
@@ -396,6 +434,8 @@ class _$CounterTaskInstanceImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CounterTaskInstanceImpl &&
+            (identical(other.counterTask, counterTask) ||
+                other.counterTask == counterTask) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
@@ -407,8 +447,8 @@ class _$CounterTaskInstanceImpl
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, title, description, increment, count);
+  int get hashCode => Object.hash(
+      runtimeType, counterTask, id, title, description, increment, count);
 
   @JsonKey(ignore: true)
   @override
@@ -427,7 +467,8 @@ class _$CounterTaskInstanceImpl
 
 abstract class _CounterTaskInstance implements CounterTaskInstance {
   const factory _CounterTaskInstance(
-      {required final String id,
+      {required final CounterTask counterTask,
+      required final String id,
       required final String title,
       required final String description,
       required final int increment,
@@ -436,6 +477,8 @@ abstract class _CounterTaskInstance implements CounterTaskInstance {
   factory _CounterTaskInstance.fromJson(Map<String, dynamic> json) =
       _$CounterTaskInstanceImpl.fromJson;
 
+  @override
+  CounterTask get counterTask;
   @override
   String get id;
   @override
@@ -1100,6 +1143,8 @@ mixin _$SessionInstance {
   String get id => throw _privateConstructorUsedError;
   Session get session => throw _privateConstructorUsedError;
   List<TaskInstance> get taskInstances => throw _privateConstructorUsedError;
+  List<CounterTaskInstance> get counterInstances =>
+      throw _privateConstructorUsedError;
   bool get completed => throw _privateConstructorUsedError;
   DateTime? get start => throw _privateConstructorUsedError;
   DateTime? get end => throw _privateConstructorUsedError;
@@ -1120,6 +1165,7 @@ abstract class $SessionInstanceCopyWith<$Res> {
       {String id,
       Session session,
       List<TaskInstance> taskInstances,
+      List<CounterTaskInstance> counterInstances,
       bool completed,
       DateTime? start,
       DateTime? end});
@@ -1143,6 +1189,7 @@ class _$SessionInstanceCopyWithImpl<$Res, $Val extends SessionInstance>
     Object? id = null,
     Object? session = null,
     Object? taskInstances = null,
+    Object? counterInstances = null,
     Object? completed = null,
     Object? start = freezed,
     Object? end = freezed,
@@ -1160,6 +1207,10 @@ class _$SessionInstanceCopyWithImpl<$Res, $Val extends SessionInstance>
           ? _value.taskInstances
           : taskInstances // ignore: cast_nullable_to_non_nullable
               as List<TaskInstance>,
+      counterInstances: null == counterInstances
+          ? _value.counterInstances
+          : counterInstances // ignore: cast_nullable_to_non_nullable
+              as List<CounterTaskInstance>,
       completed: null == completed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
@@ -1196,6 +1247,7 @@ abstract class _$$SessionInstanceImplCopyWith<$Res>
       {String id,
       Session session,
       List<TaskInstance> taskInstances,
+      List<CounterTaskInstance> counterInstances,
       bool completed,
       DateTime? start,
       DateTime? end});
@@ -1218,6 +1270,7 @@ class __$$SessionInstanceImplCopyWithImpl<$Res>
     Object? id = null,
     Object? session = null,
     Object? taskInstances = null,
+    Object? counterInstances = null,
     Object? completed = null,
     Object? start = freezed,
     Object? end = freezed,
@@ -1235,6 +1288,10 @@ class __$$SessionInstanceImplCopyWithImpl<$Res>
           ? _value._taskInstances
           : taskInstances // ignore: cast_nullable_to_non_nullable
               as List<TaskInstance>,
+      counterInstances: null == counterInstances
+          ? _value._counterInstances
+          : counterInstances // ignore: cast_nullable_to_non_nullable
+              as List<CounterTaskInstance>,
       completed: null == completed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
@@ -1260,10 +1317,12 @@ class _$SessionInstanceImpl
       {required this.id,
       required this.session,
       final List<TaskInstance> taskInstances = const [],
+      final List<CounterTaskInstance> counterInstances = const [],
       this.completed = false,
       this.start,
       this.end})
-      : _taskInstances = taskInstances;
+      : _taskInstances = taskInstances,
+        _counterInstances = counterInstances;
 
   factory _$SessionInstanceImpl.fromJson(Map<String, dynamic> json) =>
       _$$SessionInstanceImplFromJson(json);
@@ -1281,6 +1340,16 @@ class _$SessionInstanceImpl
     return EqualUnmodifiableListView(_taskInstances);
   }
 
+  final List<CounterTaskInstance> _counterInstances;
+  @override
+  @JsonKey()
+  List<CounterTaskInstance> get counterInstances {
+    if (_counterInstances is EqualUnmodifiableListView)
+      return _counterInstances;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_counterInstances);
+  }
+
   @override
   @JsonKey()
   final bool completed;
@@ -1291,7 +1360,7 @@ class _$SessionInstanceImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SessionInstance(id: $id, session: $session, taskInstances: $taskInstances, completed: $completed, start: $start, end: $end)';
+    return 'SessionInstance(id: $id, session: $session, taskInstances: $taskInstances, counterInstances: $counterInstances, completed: $completed, start: $start, end: $end)';
   }
 
   @override
@@ -1302,6 +1371,7 @@ class _$SessionInstanceImpl
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('session', session))
       ..add(DiagnosticsProperty('taskInstances', taskInstances))
+      ..add(DiagnosticsProperty('counterInstances', counterInstances))
       ..add(DiagnosticsProperty('completed', completed))
       ..add(DiagnosticsProperty('start', start))
       ..add(DiagnosticsProperty('end', end));
@@ -1316,6 +1386,8 @@ class _$SessionInstanceImpl
             (identical(other.session, session) || other.session == session) &&
             const DeepCollectionEquality()
                 .equals(other._taskInstances, _taskInstances) &&
+            const DeepCollectionEquality()
+                .equals(other._counterInstances, _counterInstances) &&
             (identical(other.completed, completed) ||
                 other.completed == completed) &&
             (identical(other.start, start) || other.start == start) &&
@@ -1329,6 +1401,7 @@ class _$SessionInstanceImpl
       id,
       session,
       const DeepCollectionEquality().hash(_taskInstances),
+      const DeepCollectionEquality().hash(_counterInstances),
       completed,
       start,
       end);
@@ -1353,6 +1426,7 @@ abstract class _SessionInstance implements SessionInstance {
       {required final String id,
       required final Session session,
       final List<TaskInstance> taskInstances,
+      final List<CounterTaskInstance> counterInstances,
       final bool completed,
       final DateTime? start,
       final DateTime? end}) = _$SessionInstanceImpl;
@@ -1366,6 +1440,8 @@ abstract class _SessionInstance implements SessionInstance {
   Session get session;
   @override
   List<TaskInstance> get taskInstances;
+  @override
+  List<CounterTaskInstance> get counterInstances;
   @override
   bool get completed;
   @override

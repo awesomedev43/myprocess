@@ -25,6 +25,8 @@ Map<String, dynamic> _$$CounterTaskImplToJson(_$CounterTaskImpl instance) =>
 _$CounterTaskInstanceImpl _$$CounterTaskInstanceImplFromJson(
         Map<String, dynamic> json) =>
     _$CounterTaskInstanceImpl(
+      counterTask:
+          CounterTask.fromJson(json['counterTask'] as Map<String, dynamic>),
       id: json['id'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
@@ -35,6 +37,7 @@ _$CounterTaskInstanceImpl _$$CounterTaskInstanceImplFromJson(
 Map<String, dynamic> _$$CounterTaskInstanceImplToJson(
         _$CounterTaskInstanceImpl instance) =>
     <String, dynamic>{
+      'counterTask': instance.counterTask,
       'id': instance.id,
       'title': instance.title,
       'description': instance.description,
@@ -103,6 +106,11 @@ _$SessionInstanceImpl _$$SessionInstanceImplFromJson(
               ?.map((e) => TaskInstance.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      counterInstances: (json['counterInstances'] as List<dynamic>?)
+              ?.map((e) =>
+                  CounterTaskInstance.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
       completed: json['completed'] as bool? ?? false,
       start: json['start'] == null
           ? null
@@ -116,6 +124,7 @@ Map<String, dynamic> _$$SessionInstanceImplToJson(
       'id': instance.id,
       'session': instance.session,
       'taskInstances': instance.taskInstances,
+      'counterInstances': instance.counterInstances,
       'completed': instance.completed,
       'start': instance.start?.toIso8601String(),
       'end': instance.end?.toIso8601String(),
