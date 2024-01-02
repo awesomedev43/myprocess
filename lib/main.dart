@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myprocess/model/model.dart';
 import 'package:myprocess/screens/completed_session_info_screen.dart';
 import 'package:myprocess/screens/session_task_input_form.dart';
 import 'package:myprocess/screens/session_template_form_screen.dart';
@@ -37,14 +38,15 @@ Future<ProviderContainer> initializeState() async {
   return container;
 }
 
-class MainApp extends StatefulWidget {
+class MainApp extends ConsumerStatefulWidget {
   const MainApp({super.key});
 
   @override
-  State<MainApp> createState() => _MainAppState();
+  ConsumerState<MainApp> createState() => _MainAppState();
 }
 
-class _MainAppState extends State<MainApp> with SingleTickerProviderStateMixin {
+class _MainAppState extends ConsumerState<MainApp>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -72,8 +74,13 @@ class _MainAppState extends State<MainApp> with SingleTickerProviderStateMixin {
         const CompletedSessionListTab(),
       ]),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/addsession');
+        onPressed: () async {
+          final newSession = await Navigator.pushNamed(context, '/addsession');
+          if (newSession != null) {
+            ref
+                .read(sessionTemplateListNotifierProvider.notifier)
+                .add(newSession as Session);
+          }
         },
         tooltip: "Add New Session Template",
         child: const Icon(Icons.add),
