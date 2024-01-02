@@ -85,6 +85,28 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
     return null;
   }
 
+  void onAddTaskPress() {
+    if (_formKey.currentState!.validate()) {
+      if (_taskType.value == TaskType.todo) {
+        Navigator.pop(
+            context,
+            Task(
+                id: editingTodoTask?.id ?? const Uuid().v1(),
+                title: _titleTextController.text.trim(),
+                description: _descriptionTextController.text.trim()));
+      }
+      if (_taskType.value == TaskType.counter) {
+        Navigator.pop(
+            context,
+            CounterTask(
+                increment: int.parse(_incrementController.text.trim()),
+                id: editingCounterTask?.id ?? const Uuid().v1(),
+                title: _titleTextController.text.trim(),
+                description: _descriptionTextController.text.trim()));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final incoming = ModalRoute.of(context)!.settings.arguments;
@@ -110,32 +132,7 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
       appBar: AppBar(
         title: const Text('Add Task for Session'),
         actions: [
-          IconButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  if (_taskType.value == TaskType.todo) {
-                    Navigator.pop(
-                        context,
-                        Task(
-                            id: editingTodoTask?.id ?? const Uuid().v1(),
-                            title: _titleTextController.text.trim(),
-                            description:
-                                _descriptionTextController.text.trim()));
-                  }
-                  if (_taskType.value == TaskType.counter) {
-                    Navigator.pop(
-                        context,
-                        CounterTask(
-                            increment:
-                                int.parse(_incrementController.text.trim()),
-                            id: editingCounterTask?.id ?? const Uuid().v1(),
-                            title: _titleTextController.text.trim(),
-                            description:
-                                _descriptionTextController.text.trim()));
-                  }
-                }
-              },
-              icon: const Icon(Icons.save))
+          IconButton(onPressed: onAddTaskPress, icon: const Icon(Icons.save))
         ],
       ),
       body: Form(

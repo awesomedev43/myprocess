@@ -111,7 +111,7 @@ class _SessionTemplateFormState
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            WidgetUtils.buildSectionTitle("Session Properties"),
+            WidgetUtils.buildSectionTitle("Properties"),
             Align(
                 alignment: Alignment.centerLeft,
                 child: SizedBox(
@@ -122,7 +122,7 @@ class _SessionTemplateFormState
                       controller: nameController,
                     ))),
             if (tasks.value.isNotEmpty) ...[
-              WidgetUtils.buildSectionTitle("Session Todos"),
+              WidgetUtils.buildSectionTitle("Tasks"),
               const Padding(padding: EdgeInsets.only(bottom: 10.0)),
               TodoTaskListWidget(
                 tasks: tasks.value,
@@ -131,7 +131,7 @@ class _SessionTemplateFormState
               )
             ],
             if (counterTasks.value.isNotEmpty) ...[
-              WidgetUtils.buildSectionTitle("Session Counters"),
+              WidgetUtils.buildSectionTitle("Counters"),
               const Padding(padding: EdgeInsets.only(bottom: 10.0)),
               CounterTaskListWidget(
                 tasks: counterTasks.value,

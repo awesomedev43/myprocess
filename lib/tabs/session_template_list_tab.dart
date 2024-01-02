@@ -153,7 +153,7 @@ class SessionTemplateInfoDialog extends StatelessWidget {
     taskWidget.addAll(session.counters.map((e) {
       return ListTile(
           dense: true,
-          title: Text(e.title),
+          title: Text("${e.title} (Increment: ${e.increment})"),
           leading: const Icon(Icons.arrow_upward));
     }));
 
