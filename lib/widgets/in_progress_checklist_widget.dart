@@ -31,7 +31,7 @@ class _InProgressTaskChecklistWidgetState
                   ref
                       .read(sessionInstanceListNotifierProvider.notifier)
                       .updateTask(
-                          widget.sessionInstance.id, t.task.id, value ?? false);
+                          widget.sessionInstance.id, t.id, value ?? false);
                 });
               },
             ))

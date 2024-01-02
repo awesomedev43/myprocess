@@ -16,6 +16,12 @@ class InProgressCounterWidget extends ConsumerStatefulWidget {
 
 class _InProgressCounterWidgetState
     extends ConsumerState<InProgressCounterWidget> {
+  void onTextFieldUpdate(String value, String id) {
+    ref
+        .read(sessionInstanceListNotifierProvider.notifier)
+        .updateCounterTask(widget.sessionInstance.id, id, int.parse(value));
+  }
+
   @override
   Widget build(BuildContext context) {
     final counterTaskInstances = ref
@@ -38,26 +44,30 @@ class _InProgressCounterWidgetState
             Row(
               children: [
                 IconButton(
-                    onPressed: () => {
-                          inputController.text =
-                              (int.parse(inputController.text) - t.increment)
-                                  .toString()
-                        },
+                    onPressed: () {
+                      inputController.text =
+                          (int.parse(inputController.text) - t.increment)
+                              .toString();
+                      onTextFieldUpdate(inputController.text, t.id);
+                    },
                     icon: const Icon(Icons.remove)),
                 SizedBox(
                   width: 40.0,
                   child: TextField(
+                    onEditingComplete: () =>
+                        onTextFieldUpdate(inputController.text, t.id),
                     textAlign: TextAlign.center,
                     controller: inputController,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   ),
                 ),
                 IconButton(
-                    onPressed: () => {
-                          inputController.text =
-                              (int.parse(inputController.text) + t.increment)
-                                  .toString()
-                        },
+                    onPressed: () {
+                      inputController.text =
+                          (int.parse(inputController.text) + t.increment)
+                              .toString();
+                      onTextFieldUpdate(inputController.text, t.id);
+                    },
                     icon: const Icon(Icons.add)),
               ],
             )

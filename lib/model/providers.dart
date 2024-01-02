@@ -212,7 +212,7 @@ class SessionInstanceListNotifier extends _$SessionInstanceListNotifier {
     final sessionInstance =
         previousState.firstWhere((element) => element.id == sessionInstanceId);
     final newsessionTasksInstances = sessionInstance.taskInstances.map((t) {
-      if (t.task.id == taskId) {
+      if (t.id == taskId) {
         return t.copyWith(completed: completed);
       } else {
         return t;
@@ -225,6 +225,35 @@ class SessionInstanceListNotifier extends _$SessionInstanceListNotifier {
           instance
         else
           instance.copyWith(taskInstances: newsessionTasksInstances)
+    ];
+
+    state = AsyncData(newState);
+
+    final sessionList = SessionInstanceList(sessions: newState);
+    await PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
+        FileStorageObjectType.sessioninstancelist);
+  }
+
+  Future<void> updateCounterTask(
+      String sessionInstanceId, String counterTaskId, int count) async {
+    final previousState = await future;
+
+    final sessionInstance =
+        previousState.firstWhere((element) => element.id == sessionInstanceId);
+    final newCounterTaskInstances = sessionInstance.counterInstances.map((t) {
+      if (t.id == counterTaskId) {
+        return t.copyWith(count: count);
+      } else {
+        return t;
+      }
+    }).toList();
+
+    final newState = [
+      for (final instance in previousState)
+        if (instance.id != sessionInstance.id)
+          instance
+        else
+          instance.copyWith(counterInstances: newCounterTaskInstances)
     ];
 
     state = AsyncData(newState);
