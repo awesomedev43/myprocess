@@ -224,13 +224,7 @@ class SessionInstanceListNotifier extends _$SessionInstanceListNotifier {
         if (instance.id != sessionInstance.id)
           instance
         else
-          SessionInstance(
-              id: const Uuid().v1(),
-              session: sessionInstance.session,
-              taskInstances: newsessionTasksInstances,
-              counterInstances: sessionInstance.counterInstances,
-              start: sessionInstance.start,
-              end: sessionInstance.end)
+          instance.copyWith(taskInstances: newsessionTasksInstances)
     ];
 
     state = AsyncData(newState);

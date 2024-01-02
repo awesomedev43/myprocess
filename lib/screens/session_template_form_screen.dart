@@ -6,7 +6,6 @@ import 'package:myprocess/widgets/util.dart';
 import 'package:uuid/uuid.dart';
 
 import '../model/providers.dart';
-import '../widgets/add_task_dialog.dart';
 
 class SessionTemplateFormScreen extends StatefulHookConsumerWidget {
   const SessionTemplateFormScreen({super.key});
@@ -124,16 +123,6 @@ class _SessionTemplateFormState
         tooltip: "Add Task",
         child: const Icon(Icons.add_box_outlined),
       ),
-    );
-  }
-
-  Future<void> _dialogBuilder(
-      BuildContext context, ValueNotifier<List<Task>> tasks) {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AddTaskDialog(tasks: tasks);
-      },
     );
   }
 }
