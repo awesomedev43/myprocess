@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/model.dart';
+import 'package:myprocess/widgets/util.dart';
 import 'package:uuid/uuid.dart';
 
 enum TaskType { todo, counter }
@@ -21,24 +22,6 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
   final _titleTextController = TextEditingController();
   final _descriptionTextController = TextEditingController();
   final _incrementController = TextEditingController();
-
-  Widget buildSectionTitle(String text) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 18.0, bottom: 10.0, top: 10.0),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: RichText(
-          textAlign: TextAlign.left,
-          text: TextSpan(
-              text: text,
-              style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold)),
-        ),
-      ),
-    );
-  }
 
   /// Build radio tiles for task type
   ListTile buildRadioTile(TaskType taskType, String text) {
@@ -119,6 +102,16 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
                             description:
                                 _descriptionTextController.text.trim()));
                   }
+                  if (_taskType.value == TaskType.counter) {
+                    Navigator.pop(
+                      context,
+                      CounterTask(
+                          increment: int.parse(_incrementController.text),
+                          id: const Uuid().v1(),
+                          title: _titleTextController.text.trim(),
+                          description: _descriptionTextController.text.trim()),
+                    );
+                  }
                 }
               },
               icon: const Icon(Icons.save))
@@ -126,25 +119,28 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
       ),
       body: Form(
         key: _formKey,
-        child: Center(
-            child: Column(
-          children: [
-            buildSectionTitle("Task Type"),
-            Column(
-              children: [
-                buildRadioTile(TaskType.todo, "Todo"),
-                buildRadioTile(TaskType.counter, "Counter")
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Center(
+              child: Column(
+            children: [
+              WidgetUtils.buildSectionTitle("Task Type"),
+              Column(
+                children: [
+                  buildRadioTile(TaskType.todo, "Todo"),
+                  buildRadioTile(TaskType.counter, "Counter")
+                ],
+              ),
+              WidgetUtils.buildSectionTitle("Properties"),
+              buildTextField("Title", _titleTextController, nullCheckValidator),
+              buildTextField(
+                  "Description", _descriptionTextController, noOpValidator),
+              if (_taskType.value == TaskType.counter) ...[
+                buildCounterIncrementField()
               ],
-            ),
-            buildSectionTitle("Properties"),
-            buildTextField("Title", _titleTextController, nullCheckValidator),
-            buildTextField(
-                "Description", _descriptionTextController, noOpValidator),
-            if (_taskType.value == TaskType.counter) ...[
-              buildCounterIncrementField()
             ],
-          ],
-        )),
+          )),
+        ),
       ),
     );
   }
