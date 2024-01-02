@@ -94,18 +94,22 @@ class _SessionTemplateFormState
                       decoration: const InputDecoration(hintText: "Name"),
                       controller: nameController,
                     ))),
-            WidgetUtils.buildSectionTitle("Session Todos"),
-            const Padding(padding: EdgeInsets.only(bottom: 10.0)),
-            TodoTaskListWidget(
-              tasks: tasks.value,
-              deleteTask: todoDeleteFunction,
-            ),
-            WidgetUtils.buildSectionTitle("Session Counters"),
-            const Padding(padding: EdgeInsets.only(bottom: 10.0)),
-            CounterTaskListWidget(
-              tasks: counterTasks.value,
-              deleteTask: counterDeleteFunction,
-            ),
+            if (tasks.value.isNotEmpty) ...[
+              WidgetUtils.buildSectionTitle("Session Todos"),
+              const Padding(padding: EdgeInsets.only(bottom: 10.0)),
+              TodoTaskListWidget(
+                tasks: tasks.value,
+                deleteTask: todoDeleteFunction,
+              )
+            ],
+            if (counterTasks.value.isNotEmpty) ...[
+              WidgetUtils.buildSectionTitle("Session Counters"),
+              const Padding(padding: EdgeInsets.only(bottom: 10.0)),
+              CounterTaskListWidget(
+                tasks: counterTasks.value,
+                deleteTask: counterDeleteFunction,
+              )
+            ],
           ],
         ),
       ),
