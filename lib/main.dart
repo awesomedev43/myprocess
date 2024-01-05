@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/model.dart';
 import 'package:myprocess/screens/completed_session_info_screen.dart';
+import 'package:myprocess/screens/session_stats_screen.dart';
 import 'package:myprocess/screens/session_task_input_form.dart';
 import 'package:myprocess/screens/session_template_form_screen.dart';
 import 'package:myprocess/tabs/session_template_list_tab.dart';
@@ -27,6 +28,7 @@ void main() async {
           '/addsession': (context) => const SessionTemplateFormScreen(),
           '/addtask': (context) => const SessionTaskInputForm(),
           '/completedsessioninfo': (context) => CompletedSessionInfoScreen(),
+          '/sessionstats': (context) => const SessionStatsScreen(),
         },
       ),
     ),

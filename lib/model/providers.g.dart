@@ -42,8 +42,8 @@ final getCompletedSessionListProvider =
 
 typedef GetCompletedSessionListRef
     = AutoDisposeFutureProviderRef<List<SessionInstance>>;
-String _$getInProgressTaskListHash() =>
-    r'56bdc7542d1448277778e8d2a894e1ab3c136a14';
+String _$getCompletedSessionInstancesForSessionHash() =>
+    r'74142dbc308d527e4d47b3773a3f98afc147f290';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -65,6 +65,146 @@ class _SystemHash {
     return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
   }
 }
+
+/// See also [getCompletedSessionInstancesForSession].
+@ProviderFor(getCompletedSessionInstancesForSession)
+const getCompletedSessionInstancesForSessionProvider =
+    GetCompletedSessionInstancesForSessionFamily();
+
+/// See also [getCompletedSessionInstancesForSession].
+class GetCompletedSessionInstancesForSessionFamily
+    extends Family<AsyncValue<List<SessionInstance>>> {
+  /// See also [getCompletedSessionInstancesForSession].
+  const GetCompletedSessionInstancesForSessionFamily();
+
+  /// See also [getCompletedSessionInstancesForSession].
+  GetCompletedSessionInstancesForSessionProvider call(
+    Session session,
+  ) {
+    return GetCompletedSessionInstancesForSessionProvider(
+      session,
+    );
+  }
+
+  @override
+  GetCompletedSessionInstancesForSessionProvider getProviderOverride(
+    covariant GetCompletedSessionInstancesForSessionProvider provider,
+  ) {
+    return call(
+      provider.session,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'getCompletedSessionInstancesForSessionProvider';
+}
+
+/// See also [getCompletedSessionInstancesForSession].
+class GetCompletedSessionInstancesForSessionProvider
+    extends AutoDisposeFutureProvider<List<SessionInstance>> {
+  /// See also [getCompletedSessionInstancesForSession].
+  GetCompletedSessionInstancesForSessionProvider(
+    Session session,
+  ) : this._internal(
+          (ref) => getCompletedSessionInstancesForSession(
+            ref as GetCompletedSessionInstancesForSessionRef,
+            session,
+          ),
+          from: getCompletedSessionInstancesForSessionProvider,
+          name: r'getCompletedSessionInstancesForSessionProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$getCompletedSessionInstancesForSessionHash,
+          dependencies:
+              GetCompletedSessionInstancesForSessionFamily._dependencies,
+          allTransitiveDependencies:
+              GetCompletedSessionInstancesForSessionFamily
+                  ._allTransitiveDependencies,
+          session: session,
+        );
+
+  GetCompletedSessionInstancesForSessionProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.session,
+  }) : super.internal();
+
+  final Session session;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<SessionInstance>> Function(
+            GetCompletedSessionInstancesForSessionRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: GetCompletedSessionInstancesForSessionProvider._internal(
+        (ref) => create(ref as GetCompletedSessionInstancesForSessionRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        session: session,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<SessionInstance>> createElement() {
+    return _GetCompletedSessionInstancesForSessionProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is GetCompletedSessionInstancesForSessionProvider &&
+        other.session == session;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, session.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin GetCompletedSessionInstancesForSessionRef
+    on AutoDisposeFutureProviderRef<List<SessionInstance>> {
+  /// The parameter `session` of this provider.
+  Session get session;
+}
+
+class _GetCompletedSessionInstancesForSessionProviderElement
+    extends AutoDisposeFutureProviderElement<List<SessionInstance>>
+    with GetCompletedSessionInstancesForSessionRef {
+  _GetCompletedSessionInstancesForSessionProviderElement(super.provider);
+
+  @override
+  Session get session =>
+      (origin as GetCompletedSessionInstancesForSessionProvider).session;
+}
+
+String _$getInProgressTaskListHash() =>
+    r'56bdc7542d1448277778e8d2a894e1ab3c136a14';
 
 /// See also [getInProgressTaskList].
 @ProviderFor(getInProgressTaskList)

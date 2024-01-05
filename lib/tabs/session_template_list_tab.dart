@@ -28,6 +28,17 @@ class _SessionTemplateListWidgetState
         ));
   }
 
+  IconButton createStatsButton(BuildContext context, Session session) {
+    return IconButton(
+        onPressed: () {
+          Navigator.pushNamed(context, "/sessionstats", arguments: session);
+        },
+        icon: const Icon(
+          Icons.query_stats,
+          color: Colors.blue,
+        ));
+  }
+
   IconButton createPlayButton(Session session) {
     return IconButton(
         onPressed: () {
@@ -109,6 +120,7 @@ class _SessionTemplateListWidgetState
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   createInfoButton(context, session),
+                  createStatsButton(context, session),
                   createRemoveButton(session),
                   createEditButton(context, session),
                   createPlayButton(session),

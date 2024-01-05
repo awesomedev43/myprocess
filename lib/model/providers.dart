@@ -287,6 +287,18 @@ Future<List<SessionInstance>> getCompletedSessionList(
 }
 
 @riverpod
+Future<List<SessionInstance>> getCompletedSessionInstancesForSession(
+    GetCompletedSessionListRef ref, Session session) async {
+  final sessionList =
+      await ref.watch(sessionInstanceListNotifierProvider.future);
+
+  return sessionList
+      .where((sessionInstance) => (sessionInstance.completed == true &&
+          sessionInstance.session.id == session.id))
+      .sorted((a, b) => -1 * a.end!.compareTo(b.end!));
+}
+
+@riverpod
 Future<List<TaskInstance>> getInProgressTaskList(
     GetInProgressTaskListRef ref, String sessionInstanceId) async {
   final sessionInstances =
