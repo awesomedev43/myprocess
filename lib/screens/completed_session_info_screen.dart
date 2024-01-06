@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -63,11 +65,38 @@ class CompletedSessionInfoScreen extends ConsumerWidget {
                   final finishedColor =
                       instance.completed ? Colors.green : Colors.red;
                   return ListTile(
-                    leading: Icon(finishedIcon, color: finishedColor),
-                    title: Text(instance.title),
+                    // leading: Icon(finishedIcon, color: finishedColor),
+                    title: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(finishedIcon, color: finishedColor),
+                            const Padding(padding: EdgeInsets.all(10.0)),
+                            Text(instance.title),
+                          ],
+                        ),
+                        if (instance.photoVerificationPath != null) ...[
+                          const Padding(padding: EdgeInsets.all(5.0)),
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Colors.black,
+                                shape: BoxShape.rectangle,
+                                border: Border.all(
+                                    color: Colors.black, // Set border color
+                                    width: 1.0)),
+                            child: SizedBox(
+                                width: 200.0,
+                                child: Image.file(
+                                    File(instance.photoVerificationPath!))),
+                          ),
+                        ]
+                      ],
+                    ),
                   );
                 },
-              )
+              ),
             ],
             if (processInstance.counterInstances.isNotEmpty) ...[
               WidgetUtils.buildSectionTitle("Counters"),

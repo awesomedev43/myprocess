@@ -33,8 +33,8 @@ class _TaskVerificationPhotoScreenState
   }
 
   @override
-  void dispose() {
-    _controller.dispose();
+  void dispose() async {
+    // _controller.dispose();
     super.dispose();
   }
 
@@ -63,6 +63,7 @@ class _TaskVerificationPhotoScreenState
             final image = await _controller.takePicture();
 
             if (!mounted) return;
+
             Navigator.pop(context, image.path);
           } catch (e) {
             log("Exception: ${e.toString()}");

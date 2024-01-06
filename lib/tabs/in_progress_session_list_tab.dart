@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/model.dart';
 import 'package:myprocess/widgets/animating_timer_widget.dart';
@@ -41,7 +40,7 @@ class _InProgressSessionListWidgetState
   }
 }
 
-class InProgressSessionCard extends StatefulHookWidget {
+class InProgressSessionCard extends StatefulHookConsumerWidget {
   const InProgressSessionCard(
       {super.key,
       required this.sessionInstance,
@@ -53,10 +52,11 @@ class InProgressSessionCard extends StatefulHookWidget {
   final TabController tabController;
 
   @override
-  State<InProgressSessionCard> createState() => _InProgressSessionCardState();
+  ConsumerState<InProgressSessionCard> createState() =>
+      _InProgressSessionCardState();
 }
 
-class _InProgressSessionCardState extends State<InProgressSessionCard> {
+class _InProgressSessionCardState extends ConsumerState<InProgressSessionCard> {
   int getTimeElapsed() {
     return DateTime.now()
         .difference(widget.sessionInstance.start ?? DateTime.now())
@@ -70,7 +70,7 @@ class _InProgressSessionCardState extends State<InProgressSessionCard> {
     widget.tabController.index = SessionTab.completed.index;
   }
 
-  void takeVerificationPhotos(
+  Future<void> takeVerificationPhotos(
       BuildContext context, List<TaskInstance> taskInstances) async {
     for (final taskInstance in taskInstances) {
       if (taskInstance.task.photoVerify) {
@@ -78,7 +78,10 @@ class _InProgressSessionCardState extends State<InProgressSessionCard> {
                 context, "/taskverificationphoto", arguments: taskInstance.task)
             as String?;
 
-        print("Found Path: ${path}");
+        await widget.ref
+            .read(sessionInstanceListNotifierProvider.notifier)
+            .updateTaskWithPhotoVerification(
+                widget.sessionInstance.id, taskInstance.id, path);
       }
     }
   }
@@ -136,7 +139,7 @@ class _InProgressSessionCardState extends State<InProgressSessionCard> {
                 IconButton(
                   tooltip: "Complete Session",
                   onPressed: () async {
-                    takeVerificationPhotos(context, taskInstances);
+                    await takeVerificationPhotos(context, taskInstances);
                     if (taskInstances
                         .any((element) => element.completed != true)) {
                       if (context.mounted) {

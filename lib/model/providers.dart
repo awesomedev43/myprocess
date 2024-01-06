@@ -234,6 +234,37 @@ class SessionInstanceListNotifier extends _$SessionInstanceListNotifier {
         FileStorageObjectType.sessioninstancelist);
   }
 
+  Future<void> updateTaskWithPhotoVerification(String sessionInstanceId,
+      String taskId, String? photoVerificationPath) async {
+    final previousState = await future;
+
+    final sessionInstance =
+        previousState.firstWhere((element) => element.id == sessionInstanceId);
+    final newsessionTasksInstances = sessionInstance.taskInstances.map((t) {
+      if (t.id == taskId) {
+        return t.copyWith(
+            photoVerificationPath:
+                photoVerificationPath?.replaceAll('"', '\\"'));
+      } else {
+        return t;
+      }
+    }).toList();
+
+    final newState = [
+      for (final instance in previousState)
+        if (instance.id != sessionInstance.id)
+          instance
+        else
+          instance.copyWith(taskInstances: newsessionTasksInstances)
+    ];
+
+    state = AsyncData(newState);
+
+    final sessionList = SessionInstanceList(sessions: newState);
+    await PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
+        FileStorageObjectType.sessioninstancelist);
+  }
+
   Future<void> updateCounterTask(
       String sessionInstanceId, String counterTaskId, int count) async {
     final previousState = await future;

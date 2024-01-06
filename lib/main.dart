@@ -10,7 +10,6 @@ import 'package:myprocess/screens/session_task_input_form.dart';
 import 'package:myprocess/screens/session_template_form_screen.dart';
 import 'package:myprocess/screens/task_verification_photo_screen.dart';
 import 'package:myprocess/tabs/session_template_list_tab.dart';
-import 'package:path/path.dart';
 
 import 'tabs/completed_session_list_tab.dart';
 import 'tabs/in_progress_session_list_tab.dart';
