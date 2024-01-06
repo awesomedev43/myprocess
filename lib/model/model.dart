@@ -38,7 +38,7 @@ class Task with _$Task {
       {required String id,
       required String title,
       required String description,
-      @Default(true) photoVerify}) = _Task;
+      @Default(false) photoVerify}) = _Task;
 
   factory Task.fromJson(Map<String, Object?> json) => _$TaskFromJson(json);
 }

@@ -49,7 +49,7 @@ _$TaskImpl _$$TaskImplFromJson(Map<String, dynamic> json) => _$TaskImpl(
       id: json['id'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
-      photoVerify: json['photoVerify'] ?? true,
+      photoVerify: json['photoVerify'] ?? false,
     );
 
 Map<String, dynamic> _$$TaskImplToJson(_$TaskImpl instance) =>

@@ -24,7 +24,7 @@ class _SessionStatsScreenState extends ConsumerState<SessionStatsScreen> {
         domainFn: (SessionInstance instance, _) => instance.start!,
         measureFn: (SessionInstance instance, _) =>
             instance.end!.difference(instance.start!).inSeconds,
-        data: data.value!,
+        data: data.value ?? [],
       )
     ];
   }

@@ -68,7 +68,8 @@ class _TaskVerificationPhotoScreenState
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text("Take Verification Photo"),
         onPressed: () async {
           try {
             await _initializeControllerFuture;
@@ -82,7 +83,7 @@ class _TaskVerificationPhotoScreenState
             log("Exception: ${e.toString()}");
           }
         },
-        child: const Icon(Icons.camera_alt),
+        icon: const Icon(Icons.camera_alt),
       ),
     );
   }

@@ -25,6 +25,7 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
   Task? editingTodoTask;
   CounterTask? editingCounterTask;
   bool editing = false;
+  bool? _photoVerifyTask;
 
   /// Build radio tiles for task type
   ListTile buildRadioTile(TaskType taskType, String text) {
@@ -93,7 +94,8 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
             Task(
                 id: editingTodoTask?.id ?? const Uuid().v1(),
                 title: _titleTextController.text.trim(),
-                description: _descriptionTextController.text.trim()));
+                description: _descriptionTextController.text.trim(),
+                photoVerify: _photoVerifyTask));
       }
       if (_taskType.value == TaskType.counter) {
         Navigator.pop(
@@ -118,6 +120,9 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
       _titleTextController.text = editingTodoTask!.title;
       _descriptionTextController.text = editingTodoTask!.description;
       editing = true;
+      setState(() {
+        _photoVerifyTask ??= incoming.photoVerify ?? false;
+      });
     }
     if (incoming is CounterTask) {
       editingCounterTask = incoming;
@@ -147,7 +152,7 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
                 Column(
                   children: [
                     buildRadioTile(TaskType.todo, "Todo"),
-                    buildRadioTile(TaskType.counter, "Counter")
+                    buildRadioTile(TaskType.counter, "Counter"),
                   ],
                 )
               ],
@@ -155,6 +160,17 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
               buildTextField("Title", _titleTextController, nullCheckValidator),
               buildTextField(
                   "Description", _descriptionTextController, noOpValidator),
+              if (_taskType.value == TaskType.todo) ...[
+                SwitchListTile(
+                    secondary: const Icon(Icons.check),
+                    value: _photoVerifyTask ?? false,
+                    title: const Text("Photo Verify Task"),
+                    onChanged: ((value) {
+                      setState(() {
+                        _photoVerifyTask = value;
+                      });
+                    }))
+              ],
               if (_taskType.value == TaskType.counter) ...[
                 buildCounterIncrementField()
               ],

@@ -608,7 +608,7 @@ class _$TaskImpl with DiagnosticableTreeMixin implements _Task {
       {required this.id,
       required this.title,
       required this.description,
-      this.photoVerify = true});
+      this.photoVerify = false});
 
   factory _$TaskImpl.fromJson(Map<String, dynamic> json) =>
       _$$TaskImplFromJson(json);

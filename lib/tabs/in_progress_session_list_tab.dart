@@ -143,13 +143,13 @@ class _InProgressSessionCardState extends ConsumerState<InProgressSessionCard> {
                 IconButton(
                   tooltip: "Complete Session",
                   onPressed: () async {
-                    await takeVerificationPhotos(context, taskInstances);
                     if (taskInstances
                         .any((element) => element.completed != true)) {
                       if (context.mounted) {
                         displayIncompleteTasksAlert(context);
                       }
                     } else {
+                      await takeVerificationPhotos(context, taskInstances);
                       completeSession();
                     }
                   },
