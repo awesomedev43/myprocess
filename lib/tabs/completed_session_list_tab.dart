@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myprocess/model/model.dart';
 import 'package:intl/intl.dart';
+import 'package:myprocess/model/model.dart';
 import 'package:myprocess/util.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../model/providers.dart';
 
 class CompletedSessionListTab extends ConsumerStatefulWidget {
   const CompletedSessionListTab({super.key});
+
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
       _CompletedSessionListWidgetState();
@@ -103,6 +105,16 @@ class _CompletedSessionCardState extends ConsumerState<CompletedSessionCard> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
+                          IconButton(
+                              onPressed: () {
+                                Share.share(
+                                    "Session completed: ${widget.sessionInstance.session.name}",
+                                    subject: "Session completed at ${widget.sessionInstance.end.toString()}");
+                              },
+                              icon: const Icon(
+                                Icons.share,
+                                color: Colors.blue,
+                              )),
                           IconButton(
                               onPressed: () {
                                 Navigator.pushNamed(

@@ -60,6 +60,7 @@ class _TaskVerificationPhotoScreenState
       });
 
       final taskInstance = args.taskInstances.elementAt(_currentIndex);
+      await _controller.setFlashMode(FlashMode.off);
       final image = await _controller.takePicture();
 
       if (!mounted) {
