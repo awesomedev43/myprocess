@@ -4,13 +4,20 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/model.dart';
+import 'package:myprocess/model/providers.dart';
+
+class TaskVerificationPhotoScreenArgs {
+  TaskVerificationPhotoScreenArgs(
+      {required this.sessionInstanceId, required this.taskInstances});
+
+  final String sessionInstanceId;
+  final List<TaskInstance> taskInstances;
+}
 
 class TaskVerificationPhotoScreen extends ConsumerStatefulWidget {
-  const TaskVerificationPhotoScreen(
-      {super.key, required this.camera, required this.dispose});
+  const TaskVerificationPhotoScreen({super.key, required this.camera});
 
   final CameraDescription? camera;
-  final bool dispose;
 
   @override
   ConsumerState<TaskVerificationPhotoScreen> createState() =>
@@ -21,6 +28,8 @@ class _TaskVerificationPhotoScreenState
     extends ConsumerState<TaskVerificationPhotoScreen> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
+  late int _currentIndex;
+  late bool _inProgress;
 
   @override
   void initState() {
@@ -32,31 +41,64 @@ class _TaskVerificationPhotoScreenState
     );
 
     _initializeControllerFuture = _controller.initialize();
+    _currentIndex = 0;
+    _inProgress = false;
   }
 
   @override
   void dispose() async {
-    if (widget.dispose) {
-      _controller.dispose();
-    }
+    _controller.dispose();
     super.dispose();
+  }
+
+  void onTakeVerificationPhoto(TaskVerificationPhotoScreenArgs args) async {
+    try {
+      await _initializeControllerFuture;
+
+      if (_inProgress) {
+        return;
+      }
+
+      setState(() {
+        _inProgress = true;
+      });
+
+      final taskInstance = args.taskInstances.elementAt(_currentIndex);
+      final image = await _controller.takePicture();
+
+      if (!mounted) {
+        return;
+      }
+
+      await ref
+          .read(sessionInstanceListNotifierProvider.notifier)
+          .updateTaskWithPhotoVerification(
+              args.sessionInstanceId, taskInstance.id, image.path);
+
+      if (mounted && _currentIndex + 1 >= args.taskInstances.length) {
+        Navigator.pop(context);
+        return;
+      }
+
+      setState(() {
+        _currentIndex++;
+        _inProgress = false;
+      });
+    } catch (e) {
+      log("Exception: ${e.toString()}");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.dispose) {
-      return FutureBuilder(
-          future: _initializeControllerFuture,
-          builder: (context, snapshot) {
-            Future.microtask(() => Navigator.pop(context));
-            return Container();
-          });
-    }
+    final args = ModalRoute.of(context)!.settings.arguments
+        as TaskVerificationPhotoScreenArgs;
 
-    final task = ModalRoute.of(context)!.settings.arguments as Task;
+    final taskInstance = args.taskInstances.elementAt(_currentIndex);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Verify ${task.title}'),
+        title: Text('Verify ${taskInstance.title}'),
       ),
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
@@ -70,19 +112,7 @@ class _TaskVerificationPhotoScreenState
       ),
       floatingActionButton: FloatingActionButton.extended(
         label: const Text("Take Verification Photo"),
-        onPressed: () async {
-          try {
-            await _initializeControllerFuture;
-
-            final image = await _controller.takePicture();
-
-            if (!mounted) return;
-
-            Navigator.pop(context, image.path);
-          } catch (e) {
-            log("Exception: ${e.toString()}");
-          }
-        },
+        onPressed: () => onTakeVerificationPhoto(args),
         icon: const Icon(Icons.camera_alt),
       ),
     );

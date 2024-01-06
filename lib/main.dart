@@ -39,10 +39,8 @@ void main() async {
           '/addtask': (context) => const SessionTaskInputForm(),
           '/completedsessioninfo': (context) => CompletedSessionInfoScreen(),
           '/sessionstats': (context) => const SessionStatsScreen(),
-          '/taskverificationphotodispose': (context) =>
-              TaskVerificationPhotoScreen(camera: firstCamera, dispose: true),
           '/taskverificationphoto': (context) =>
-              TaskVerificationPhotoScreen(camera: firstCamera, dispose: false)
+              TaskVerificationPhotoScreen(camera: firstCamera),
         },
       ),
     ),

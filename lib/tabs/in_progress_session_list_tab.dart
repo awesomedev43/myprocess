@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/model.dart';
+import 'package:myprocess/screens/task_verification_photo_screen.dart';
 import 'package:myprocess/widgets/animating_timer_widget.dart';
 import 'package:myprocess/widgets/in_progress_counter_widget.dart';
 
@@ -78,23 +79,17 @@ class _InProgressSessionCardState extends ConsumerState<InProgressSessionCard> {
       return;
     }
 
-    bool initializedCamera = false;
-    for (final taskInstance in taskInstances) {
-      if (taskInstance.task.photoVerify) {
-        initializedCamera = true;
-        final path = await Navigator.pushNamed(
-                context, "/taskverificationphoto", arguments: taskInstance.task)
-            as String?;
+    /// Filter out task instances that need verification
+    final instancesForVerification = taskInstances.where((taskInstance) {
+      return taskInstance.task.photoVerify;
+    }).toList();
 
-        await widget.ref
-            .read(sessionInstanceListNotifierProvider.notifier)
-            .updateTaskWithPhotoVerification(
-                widget.sessionInstance.id, taskInstance.id, path);
-      }
-    }
-
-    if (mounted && initializedCamera) {
-      await Navigator.pushNamed(context, "/taskverificationphotodispose");
+    /// Bring up verification screen only if there are elements in the list
+    if (instancesForVerification.isNotEmpty) {
+      await Navigator.pushNamed(context, "/taskverificationphoto",
+          arguments: TaskVerificationPhotoScreenArgs(
+              taskInstances: instancesForVerification,
+              sessionInstanceId: widget.sessionInstance.id));
     }
   }
 
