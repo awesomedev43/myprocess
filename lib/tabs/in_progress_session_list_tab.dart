@@ -72,8 +72,10 @@ class _InProgressSessionCardState extends ConsumerState<InProgressSessionCard> {
 
   Future<void> takeVerificationPhotos(
       BuildContext context, List<TaskInstance> taskInstances) async {
+    bool initializedCamera = false;
     for (final taskInstance in taskInstances) {
       if (taskInstance.task.photoVerify) {
+        initializedCamera = true;
         final path = await Navigator.pushNamed(
                 context, "/taskverificationphoto", arguments: taskInstance.task)
             as String?;
@@ -85,7 +87,7 @@ class _InProgressSessionCardState extends ConsumerState<InProgressSessionCard> {
       }
     }
 
-    if (mounted) {
+    if (mounted && initializedCamera) {
       await Navigator.pushNamed(context, "/taskverificationphotodispose");
     }
   }
