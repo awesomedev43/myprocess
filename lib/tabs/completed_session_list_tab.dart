@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -107,9 +109,24 @@ class _CompletedSessionCardState extends ConsumerState<CompletedSessionCard> {
                         children: [
                           IconButton(
                               onPressed: () {
-                                Share.share(
-                                    "Session completed: ${widget.sessionInstance.session.name}",
-                                    subject: "Session completed at ${widget.sessionInstance.end.toString()}");
+                                final images =
+                                    widget.sessionInstance.taskInstances
+                                        .map((instance) {
+                                          return instance.photoVerificationPath;
+                                        })
+                                        .whereType<String>()
+                                        .toList()
+                                        .map((p) => XFile(p))
+                                        .toList();
+
+                                var spaces = ' ' * 4;
+                                var encoder = JsonEncoder.withIndent(spaces);
+
+                                Share.shareXFiles(images,
+                                    text: encoder.convert(
+                                        widget.sessionInstance.toJson()),
+                                    subject:
+                                        "Session ${widget.sessionInstance.session.name} completed at ${widget.sessionInstance.end.toString()}");
                               },
                               icon: const Icon(
                                 Icons.share,
