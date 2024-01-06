@@ -166,7 +166,7 @@ class SessionTemplateInfoDialog extends StatelessWidget {
       return ListTile(
           dense: true,
           title: Text("${e.title} (Increment: ${e.increment})"),
-          leading: const Icon(Icons.arrow_upward));
+          leading: const Icon(Icons.plus_one));
     }));
 
     return SimpleDialog(

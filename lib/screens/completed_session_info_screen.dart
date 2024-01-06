@@ -109,7 +109,7 @@ class CompletedSessionInfoScreen extends ConsumerWidget {
                 (instance) {
                   return Card(
                     child: ListTile(
-                      leading: const Icon(Icons.arrow_upward),
+                      leading: const Icon(Icons.plus_one),
                       title: Text(
                         instance.title,
                         style: const TextStyle(
