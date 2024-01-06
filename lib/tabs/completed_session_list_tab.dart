@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:myprocess/model/model.dart';
 import 'package:myprocess/util.dart';
 import 'package:share_plus/share_plus.dart';
@@ -43,7 +40,27 @@ class CompletedSessionCard extends ConsumerStatefulWidget {
 }
 
 class _CompletedSessionCardState extends ConsumerState<CompletedSessionCard> {
-  final DateFormat formatter = DateFormat('h:mm:ss a, MMMM d yyyy');
+  void onSharePress() {
+    final images = widget.sessionInstance.taskInstances
+        .map((instance) {
+          return instance.photoVerificationPath;
+        })
+        .whereType<String>()
+        .toList()
+        .map((p) => XFile(p))
+        .toList();
+
+    final sessionName = widget.sessionInstance.session.name;
+    final endTime = TimeUtil.formatDateTime(widget.sessionInstance.end!);
+    var subject = "Session $sessionName completed at $endTime";
+
+    if (images.isNotEmpty) {
+      Share.shareXFiles(images,
+          text: StringUtil.format(widget.sessionInstance), subject: subject);
+    } else {
+      Share.share(StringUtil.format(widget.sessionInstance), subject: subject);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +92,8 @@ class _CompletedSessionCardState extends ConsumerState<CompletedSessionCard> {
                     Icons.play_arrow,
                     color: Colors.green,
                   ),
-                  title: Text(formatter
-                      .format(widget.sessionInstance.start ?? DateTime.now())),
+                  title: Text(TimeUtil.formatDateTime(
+                      widget.sessionInstance.start ?? DateTime.now())),
                 ),
                 ListTile(
                   dense: true,
@@ -84,8 +101,8 @@ class _CompletedSessionCardState extends ConsumerState<CompletedSessionCard> {
                     Icons.stop,
                     color: Colors.red,
                   ),
-                  title: Text(formatter
-                      .format(widget.sessionInstance.end ?? DateTime.now())),
+                  title: Text(TimeUtil.formatDateTime(
+                      widget.sessionInstance.end ?? DateTime.now())),
                 ),
                 ListTile(
                   dense: true,
@@ -108,26 +125,7 @@ class _CompletedSessionCardState extends ConsumerState<CompletedSessionCard> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           IconButton(
-                              onPressed: () {
-                                final images =
-                                    widget.sessionInstance.taskInstances
-                                        .map((instance) {
-                                          return instance.photoVerificationPath;
-                                        })
-                                        .whereType<String>()
-                                        .toList()
-                                        .map((p) => XFile(p))
-                                        .toList();
-
-                                var spaces = ' ' * 4;
-                                var encoder = JsonEncoder.withIndent(spaces);
-
-                                Share.shareXFiles(images,
-                                    text: encoder.convert(
-                                        widget.sessionInstance.toJson()),
-                                    subject:
-                                        "Session ${widget.sessionInstance.session.name} completed at ${widget.sessionInstance.end.toString()}");
-                              },
+                              onPressed: onSharePress,
                               icon: const Icon(
                                 Icons.share,
                                 color: Colors.blue,
