@@ -55,10 +55,6 @@ class _TaskVerificationPhotoScreenState
     try {
       await _initializeControllerFuture;
 
-      if (_inProgress) {
-        return;
-      }
-
       setState(() {
         _inProgress = true;
       });
@@ -110,10 +106,13 @@ class _TaskVerificationPhotoScreenState
           }
         },
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        label: const Text("Take Verification Photo"),
-        onPressed: () => onTakeVerificationPhoto(args),
-        icon: const Icon(Icons.camera_alt),
+      floatingActionButton: Visibility(
+        visible: !_inProgress,
+        child: FloatingActionButton.extended(
+          label: const Text("Take Verification Photo"),
+          onPressed: () => onTakeVerificationPhoto(args),
+          icon: const Icon(Icons.camera_alt),
+        ),
       ),
     );
   }
