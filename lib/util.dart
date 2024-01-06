@@ -31,7 +31,7 @@ class StringUtil {
         final file =
             taskInstance.photoVerificationPath?.split('/').toList().last;
         result +=
-            "- ${taskInstance.task.title} (completed: ${taskInstance.completed}, file: $file";
+            "- ${taskInstance.task.title} (completed: ${taskInstance.completed}, file: $file)";
       } else {
         result +=
             "- ${taskInstance.task.title} (completed: ${taskInstance.completed})";
