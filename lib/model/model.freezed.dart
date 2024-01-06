@@ -504,6 +504,7 @@ mixin _$Task {
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
+  dynamic get photoVerify => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -515,7 +516,7 @@ abstract class $TaskCopyWith<$Res> {
   factory $TaskCopyWith(Task value, $Res Function(Task) then) =
       _$TaskCopyWithImpl<$Res, Task>;
   @useResult
-  $Res call({String id, String title, String description});
+  $Res call({String id, String title, String description, dynamic photoVerify});
 }
 
 /// @nodoc
@@ -534,6 +535,7 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
     Object? id = null,
     Object? title = null,
     Object? description = null,
+    Object? photoVerify = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -548,6 +550,10 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      photoVerify: freezed == photoVerify
+          ? _value.photoVerify
+          : photoVerify // ignore: cast_nullable_to_non_nullable
+              as dynamic,
     ) as $Val);
   }
 }
@@ -559,7 +565,7 @@ abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
       __$$TaskImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String title, String description});
+  $Res call({String id, String title, String description, dynamic photoVerify});
 }
 
 /// @nodoc
@@ -575,6 +581,7 @@ class __$$TaskImplCopyWithImpl<$Res>
     Object? id = null,
     Object? title = null,
     Object? description = null,
+    Object? photoVerify = freezed,
   }) {
     return _then(_$TaskImpl(
       id: null == id
@@ -589,6 +596,7 @@ class __$$TaskImplCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      photoVerify: freezed == photoVerify ? _value.photoVerify! : photoVerify,
     ));
   }
 }
@@ -597,7 +605,10 @@ class __$$TaskImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TaskImpl with DiagnosticableTreeMixin implements _Task {
   const _$TaskImpl(
-      {required this.id, required this.title, required this.description});
+      {required this.id,
+      required this.title,
+      required this.description,
+      this.photoVerify = true});
 
   factory _$TaskImpl.fromJson(Map<String, dynamic> json) =>
       _$$TaskImplFromJson(json);
@@ -608,10 +619,13 @@ class _$TaskImpl with DiagnosticableTreeMixin implements _Task {
   final String title;
   @override
   final String description;
+  @override
+  @JsonKey()
+  final dynamic photoVerify;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Task(id: $id, title: $title, description: $description)';
+    return 'Task(id: $id, title: $title, description: $description, photoVerify: $photoVerify)';
   }
 
   @override
@@ -621,7 +635,8 @@ class _$TaskImpl with DiagnosticableTreeMixin implements _Task {
       ..add(DiagnosticsProperty('type', 'Task'))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('title', title))
-      ..add(DiagnosticsProperty('description', description));
+      ..add(DiagnosticsProperty('description', description))
+      ..add(DiagnosticsProperty('photoVerify', photoVerify));
   }
 
   @override
@@ -632,12 +647,15 @@ class _$TaskImpl with DiagnosticableTreeMixin implements _Task {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            const DeepCollectionEquality()
+                .equals(other.photoVerify, photoVerify));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, description);
+  int get hashCode => Object.hash(runtimeType, id, title, description,
+      const DeepCollectionEquality().hash(photoVerify));
 
   @JsonKey(ignore: true)
   @override
@@ -657,7 +675,8 @@ abstract class _Task implements Task {
   const factory _Task(
       {required final String id,
       required final String title,
-      required final String description}) = _$TaskImpl;
+      required final String description,
+      final dynamic photoVerify}) = _$TaskImpl;
 
   factory _Task.fromJson(Map<String, dynamic> json) = _$TaskImpl.fromJson;
 
@@ -667,6 +686,8 @@ abstract class _Task implements Task {
   String get title;
   @override
   String get description;
+  @override
+  dynamic get photoVerify;
   @override
   @JsonKey(ignore: true)
   _$$TaskImplCopyWith<_$TaskImpl> get copyWith =>
@@ -684,6 +705,7 @@ mixin _$TaskInstance {
   String get title => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   bool get completed => throw _privateConstructorUsedError;
+  String? get photoVerificationPath => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -698,7 +720,12 @@ abstract class $TaskInstanceCopyWith<$Res> {
       _$TaskInstanceCopyWithImpl<$Res, TaskInstance>;
   @useResult
   $Res call(
-      {Task task, String id, String title, String description, bool completed});
+      {Task task,
+      String id,
+      String title,
+      String description,
+      bool completed,
+      String? photoVerificationPath});
 
   $TaskCopyWith<$Res> get task;
 }
@@ -721,6 +748,7 @@ class _$TaskInstanceCopyWithImpl<$Res, $Val extends TaskInstance>
     Object? title = null,
     Object? description = null,
     Object? completed = null,
+    Object? photoVerificationPath = freezed,
   }) {
     return _then(_value.copyWith(
       task: null == task
@@ -743,6 +771,10 @@ class _$TaskInstanceCopyWithImpl<$Res, $Val extends TaskInstance>
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
               as bool,
+      photoVerificationPath: freezed == photoVerificationPath
+          ? _value.photoVerificationPath
+          : photoVerificationPath // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -764,7 +796,12 @@ abstract class _$$TaskInstanceImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {Task task, String id, String title, String description, bool completed});
+      {Task task,
+      String id,
+      String title,
+      String description,
+      bool completed,
+      String? photoVerificationPath});
 
   @override
   $TaskCopyWith<$Res> get task;
@@ -786,6 +823,7 @@ class __$$TaskInstanceImplCopyWithImpl<$Res>
     Object? title = null,
     Object? description = null,
     Object? completed = null,
+    Object? photoVerificationPath = freezed,
   }) {
     return _then(_$TaskInstanceImpl(
       task: null == task
@@ -808,6 +846,10 @@ class __$$TaskInstanceImplCopyWithImpl<$Res>
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
               as bool,
+      photoVerificationPath: freezed == photoVerificationPath
+          ? _value.photoVerificationPath
+          : photoVerificationPath // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -820,7 +862,8 @@ class _$TaskInstanceImpl with DiagnosticableTreeMixin implements _TaskInstance {
       required this.id,
       required this.title,
       required this.description,
-      this.completed = false});
+      this.completed = false,
+      this.photoVerificationPath});
 
   factory _$TaskInstanceImpl.fromJson(Map<String, dynamic> json) =>
       _$$TaskInstanceImplFromJson(json);
@@ -836,10 +879,12 @@ class _$TaskInstanceImpl with DiagnosticableTreeMixin implements _TaskInstance {
   @override
   @JsonKey()
   final bool completed;
+  @override
+  final String? photoVerificationPath;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TaskInstance(task: $task, id: $id, title: $title, description: $description, completed: $completed)';
+    return 'TaskInstance(task: $task, id: $id, title: $title, description: $description, completed: $completed, photoVerificationPath: $photoVerificationPath)';
   }
 
   @override
@@ -851,7 +896,9 @@ class _$TaskInstanceImpl with DiagnosticableTreeMixin implements _TaskInstance {
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('title', title))
       ..add(DiagnosticsProperty('description', description))
-      ..add(DiagnosticsProperty('completed', completed));
+      ..add(DiagnosticsProperty('completed', completed))
+      ..add(
+          DiagnosticsProperty('photoVerificationPath', photoVerificationPath));
   }
 
   @override
@@ -865,13 +912,15 @@ class _$TaskInstanceImpl with DiagnosticableTreeMixin implements _TaskInstance {
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.completed, completed) ||
-                other.completed == completed));
+                other.completed == completed) &&
+            (identical(other.photoVerificationPath, photoVerificationPath) ||
+                other.photoVerificationPath == photoVerificationPath));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, task, id, title, description, completed);
+  int get hashCode => Object.hash(runtimeType, task, id, title, description,
+      completed, photoVerificationPath);
 
   @JsonKey(ignore: true)
   @override
@@ -893,7 +942,8 @@ abstract class _TaskInstance implements TaskInstance {
       required final String id,
       required final String title,
       required final String description,
-      final bool completed}) = _$TaskInstanceImpl;
+      final bool completed,
+      final String? photoVerificationPath}) = _$TaskInstanceImpl;
 
   factory _TaskInstance.fromJson(Map<String, dynamic> json) =
       _$TaskInstanceImpl.fromJson;
@@ -908,6 +958,8 @@ abstract class _TaskInstance implements TaskInstance {
   String get description;
   @override
   bool get completed;
+  @override
+  String? get photoVerificationPath;
   @override
   @JsonKey(ignore: true)
   _$$TaskInstanceImplCopyWith<_$TaskInstanceImpl> get copyWith =>

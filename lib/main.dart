@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/model.dart';
@@ -16,6 +19,12 @@ void main() async {
   // Only initialize state at the start
   WidgetsFlutterBinding.ensureInitialized();
   final container = await initializeState();
+  CameraDescription? firstCamera;
+
+  if (Platform.isAndroid) {
+    final cameras = await availableCameras();
+    firstCamera = cameras.first;
+  }
 
   runApp(
     UncontrolledProviderScope(
@@ -75,7 +84,8 @@ class _MainAppState extends ConsumerState<MainApp>
         InProgressSessionListTab(tabController: _tabController),
         const CompletedSessionListTab(),
       ]),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text("New Template"),
         onPressed: () async {
           final newSession = await Navigator.pushNamed(context, '/addsession');
           if (newSession != null) {
@@ -85,7 +95,8 @@ class _MainAppState extends ConsumerState<MainApp>
           }
         },
         tooltip: "Add New Session Template",
-        child: const Icon(Icons.add),
+        isExtended: true,
+        icon: const Icon(Icons.add),
       ),
     );
   }

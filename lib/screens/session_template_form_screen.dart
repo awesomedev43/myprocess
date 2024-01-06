@@ -142,7 +142,7 @@ class _SessionTemplateFormState
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
           final task = await Navigator.pushNamed(context, "/addtask");
           if (task is Task) {
@@ -153,7 +153,8 @@ class _SessionTemplateFormState
           }
         },
         tooltip: "Add Task",
-        child: const Icon(Icons.add),
+        icon: const Icon(Icons.add),
+        label: const Text("Add Task"),
       ),
     );
   }

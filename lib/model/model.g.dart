@@ -49,6 +49,7 @@ _$TaskImpl _$$TaskImplFromJson(Map<String, dynamic> json) => _$TaskImpl(
       id: json['id'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
+      photoVerify: json['photoVerify'] ?? true,
     );
 
 Map<String, dynamic> _$$TaskImplToJson(_$TaskImpl instance) =>
@@ -56,6 +57,7 @@ Map<String, dynamic> _$$TaskImplToJson(_$TaskImpl instance) =>
       'id': instance.id,
       'title': instance.title,
       'description': instance.description,
+      'photoVerify': instance.photoVerify,
     };
 
 _$TaskInstanceImpl _$$TaskInstanceImplFromJson(Map<String, dynamic> json) =>
@@ -65,6 +67,7 @@ _$TaskInstanceImpl _$$TaskInstanceImplFromJson(Map<String, dynamic> json) =>
       title: json['title'] as String,
       description: json['description'] as String,
       completed: json['completed'] as bool? ?? false,
+      photoVerificationPath: json['photoVerificationPath'] as String?,
     );
 
 Map<String, dynamic> _$$TaskInstanceImplToJson(_$TaskInstanceImpl instance) =>
@@ -74,6 +77,7 @@ Map<String, dynamic> _$$TaskInstanceImplToJson(_$TaskInstanceImpl instance) =>
       'title': instance.title,
       'description': instance.description,
       'completed': instance.completed,
+      'photoVerificationPath': instance.photoVerificationPath,
     };
 
 _$SessionImpl _$$SessionImplFromJson(Map<String, dynamic> json) =>

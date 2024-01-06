@@ -37,7 +37,8 @@ class Task with _$Task {
   const factory Task(
       {required String id,
       required String title,
-      required String description}) = _Task;
+      required String description,
+      @Default(true) photoVerify}) = _Task;
 
   factory Task.fromJson(Map<String, Object?> json) => _$TaskFromJson(json);
 }
@@ -49,7 +50,8 @@ class TaskInstance with _$TaskInstance {
       required String id,
       required String title,
       required String description,
-      @Default(false) bool completed}) = _TaskInstance;
+      @Default(false) bool completed,
+      String? photoVerificationPath}) = _TaskInstance;
 
   factory TaskInstance.fromJson(Map<String, dynamic> json) =>
       _$TaskInstanceFromJson(json);
