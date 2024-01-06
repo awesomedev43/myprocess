@@ -34,7 +34,7 @@ class _SessionTemplateListWidgetState
           Navigator.pushNamed(context, "/sessionstats", arguments: session);
         },
         icon: const Icon(
-          Icons.query_stats,
+          Icons.show_chart,
           color: Colors.blue,
         ));
   }
