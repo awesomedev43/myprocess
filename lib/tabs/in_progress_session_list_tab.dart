@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/model.dart';
@@ -72,6 +74,10 @@ class _InProgressSessionCardState extends ConsumerState<InProgressSessionCard> {
 
   Future<void> takeVerificationPhotos(
       BuildContext context, List<TaskInstance> taskInstances) async {
+    if (!Platform.isAndroid) {
+      return;
+    }
+
     bool initializedCamera = false;
     for (final taskInstance in taskInstances) {
       if (taskInstance.task.photoVerify) {
