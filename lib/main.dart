@@ -62,11 +62,13 @@ class MainApp extends ConsumerStatefulWidget {
 class _MainAppState extends ConsumerState<MainApp>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  late bool _floatingButtonVisble;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 3);
+    _floatingButtonVisble = true;
   }
 
   @override
@@ -77,6 +79,15 @@ class _MainAppState extends ConsumerState<MainApp>
 
   @override
   Widget build(BuildContext context) {
+    _tabController.addListener(
+      () {
+        setState(() {
+          _floatingButtonVisble =
+              (_tabController.index == SessionTab.sessiontemplate.index);
+        });
+      },
+    );
+
     return Scaffold(
       appBar: AppBar(
         bottom: TabBar(controller: _tabController, tabs: sSessionTabs),
@@ -87,19 +98,23 @@ class _MainAppState extends ConsumerState<MainApp>
         InProgressSessionListTab(tabController: _tabController),
         const CompletedSessionListTab(),
       ]),
-      floatingActionButton: FloatingActionButton.extended(
-        label: const Text("New Template"),
-        onPressed: () async {
-          final newSession = await Navigator.pushNamed(context, '/addsession');
-          if (newSession != null) {
-            ref
-                .read(sessionTemplateListNotifierProvider.notifier)
-                .add(newSession as Session);
-          }
-        },
-        tooltip: "Add New Session Template",
-        isExtended: true,
-        icon: const Icon(Icons.add),
+      floatingActionButton: Visibility(
+        visible: _floatingButtonVisble,
+        child: FloatingActionButton.extended(
+          label: const Text("New Template"),
+          onPressed: () async {
+            final newSession =
+                await Navigator.pushNamed(context, '/addsession');
+            if (newSession != null) {
+              ref
+                  .read(sessionTemplateListNotifierProvider.notifier)
+                  .add(newSession as Session);
+            }
+          },
+          tooltip: "Add New Session Template",
+          isExtended: true,
+          icon: const Icon(Icons.add),
+        ),
       ),
     );
   }
