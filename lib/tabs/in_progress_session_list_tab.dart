@@ -70,6 +70,19 @@ class _InProgressSessionCardState extends State<InProgressSessionCard> {
     widget.tabController.index = SessionTab.completed.index;
   }
 
+  void takeVerificationPhotos(
+      BuildContext context, List<TaskInstance> taskInstances) async {
+    for (final taskInstance in taskInstances) {
+      if (taskInstance.task.photoVerify) {
+        final path = await Navigator.pushNamed(
+                context, "/taskverificationphoto", arguments: taskInstance.task)
+            as String?;
+
+        print("Found Path: ${path}");
+      }
+    }
+  }
+
   void displayIncompleteTasksAlert(BuildContext context) {
     showDialog(
         context: context,
@@ -123,6 +136,7 @@ class _InProgressSessionCardState extends State<InProgressSessionCard> {
                 IconButton(
                   tooltip: "Complete Session",
                   onPressed: () async {
+                    takeVerificationPhotos(context, taskInstances);
                     if (taskInstances
                         .any((element) => element.completed != true)) {
                       if (context.mounted) {

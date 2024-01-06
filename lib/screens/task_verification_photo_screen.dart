@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myprocess/model/model.dart';
 
 class TaskVerificationPhotoScreen extends ConsumerStatefulWidget {
   const TaskVerificationPhotoScreen({super.key, required this.camera});
@@ -39,9 +40,10 @@ class _TaskVerificationPhotoScreenState
 
   @override
   Widget build(BuildContext context) {
+    final task = ModalRoute.of(context)!.settings.arguments as Task;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Take a verification picture'),
+        title: Text('Verify ${task.title}'),
       ),
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
