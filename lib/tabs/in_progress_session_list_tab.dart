@@ -63,7 +63,7 @@ class _InProgressSessionCardState extends State<InProgressSessionCard> {
         .inSeconds;
   }
 
-  void completeTask() {
+  void completeSession() {
     widget.ref
         .read(sessionInstanceListNotifierProvider.notifier)
         .completed(widget.sessionInstance);
@@ -82,7 +82,7 @@ class _InProgressSessionCardState extends State<InProgressSessionCard> {
                   child: const Text("Remain")),
               TextButton(
                   onPressed: () {
-                    completeTask();
+                    completeSession();
                     Navigator.pop(context);
                   },
                   child: const Text("Proceed"))
@@ -122,12 +122,14 @@ class _InProgressSessionCardState extends State<InProgressSessionCard> {
               children: <Widget>[
                 IconButton(
                   tooltip: "Complete Session",
-                  onPressed: () {
+                  onPressed: () async {
                     if (taskInstances
                         .any((element) => element.completed != true)) {
-                      displayIncompleteTasksAlert(context);
+                      if (context.mounted) {
+                        displayIncompleteTasksAlert(context);
+                      }
                     } else {
-                      completeTask();
+                      completeSession();
                     }
                   },
                   iconSize: 30,
