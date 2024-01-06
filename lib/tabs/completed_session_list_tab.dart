@@ -19,10 +19,12 @@ class _CompletedSessionListWidgetState
   Widget build(BuildContext context) {
     final completedSession =
         ref.watch(getCompletedSessionListProvider).value ?? [];
-    return ListView(
-        children: completedSession
-            .map((instance) => CompletedSessionCard(sessionInstance: instance))
-            .toList());
+    return ListView(children: [
+      ...completedSession
+          .map((instance) => CompletedSessionCard(sessionInstance: instance))
+          .toList(),
+      const Padding(padding: EdgeInsets.only(bottom: 80))
+    ]);
   }
 }
 

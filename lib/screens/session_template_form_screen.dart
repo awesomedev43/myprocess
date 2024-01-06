@@ -139,6 +139,7 @@ class _SessionTemplateFormState
                 editTask: counterEditFunction,
               )
             ],
+            const Padding(padding: EdgeInsets.only(bottom: 60))
           ],
         ),
       ),
@@ -244,7 +245,6 @@ class CounterTaskListWidget extends StatelessWidget {
       child: ListView(
         children: [
           ...cards,
-          const Padding(padding: EdgeInsets.only(bottom: 56))
         ],
       ),
     );

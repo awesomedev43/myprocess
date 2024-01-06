@@ -36,7 +36,7 @@ class _InProgressSessionListWidgetState
     return ListView(children: [
       ...children,
       const SizedBox(
-        height: 100,
+        height: 80,
       )
     ]);
   }
