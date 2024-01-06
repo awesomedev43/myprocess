@@ -185,6 +185,13 @@ class SessionInstanceListNotifier extends _$SessionInstanceListNotifier {
     final sessionList = SessionInstanceList(sessions: newState);
     await PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
         FileStorageObjectType.sessioninstancelist);
+
+    /// Delete all the images related to task instances
+    for (var taskInstance in sessionInstance.taskInstances) {
+      if (taskInstance.photoVerificationPath != null) {
+        await File(taskInstance.photoVerificationPath!).delete();
+      }
+    }
   }
 
   Future<void> completed(SessionInstance sessionInstance) async {
