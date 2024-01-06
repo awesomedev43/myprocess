@@ -84,6 +84,10 @@ class _InProgressSessionCardState extends ConsumerState<InProgressSessionCard> {
                 widget.sessionInstance.id, taskInstance.id, path);
       }
     }
+
+    if (mounted) {
+      await Navigator.pushNamed(context, "/taskverificationphotodispose");
+    }
   }
 
   void displayIncompleteTasksAlert(BuildContext context) {

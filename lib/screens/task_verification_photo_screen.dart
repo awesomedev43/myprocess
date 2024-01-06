@@ -6,9 +6,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/model.dart';
 
 class TaskVerificationPhotoScreen extends ConsumerStatefulWidget {
-  const TaskVerificationPhotoScreen({super.key, required this.camera});
+  const TaskVerificationPhotoScreen(
+      {super.key, required this.camera, required this.dispose});
 
   final CameraDescription? camera;
+  final bool dispose;
 
   @override
   ConsumerState<TaskVerificationPhotoScreen> createState() =>
@@ -34,12 +36,23 @@ class _TaskVerificationPhotoScreenState
 
   @override
   void dispose() async {
-    // _controller.dispose();
+    if (widget.dispose) {
+      _controller.dispose();
+    }
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (widget.dispose) {
+      return FutureBuilder(
+          future: _initializeControllerFuture,
+          builder: (context, snapshot) {
+            Future.microtask(() => Navigator.pop(context));
+            return Container();
+          });
+    }
+
     final task = ModalRoute.of(context)!.settings.arguments as Task;
     return Scaffold(
       appBar: AppBar(
