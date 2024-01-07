@@ -495,7 +495,7 @@ final sessionTemplateListNotifierProvider = AutoDisposeAsyncNotifierProvider<
 
 typedef _$SessionTemplateListNotifier = AutoDisposeAsyncNotifier<List<Session>>;
 String _$sessionInstanceListNotifierHash() =>
-    r'329d4b5613386c416c4ede0d429606f26ef1ba8c';
+    r'4be39c5c9b154a0ebf502ebeb1c22c714bd84310';
 
 /// See also [SessionInstanceListNotifier].
 @ProviderFor(SessionInstanceListNotifier)

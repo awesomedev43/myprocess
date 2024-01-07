@@ -247,8 +247,13 @@ class SessionInstanceListNotifier extends _$SessionInstanceListNotifier {
 
     final sessionInstance =
         previousState.firstWhere((element) => element.id == sessionInstanceId);
+    var filesToDelete = List<String>.from([]);
     final newsessionTasksInstances = sessionInstance.taskInstances.map((t) {
       if (t.id == taskId) {
+        /// Delete previous file
+        if (t.photoVerificationPath != null) {
+          filesToDelete.add(t.photoVerificationPath!);
+        }
         return t.copyWith(
             photoVerificationPath:
                 photoVerificationPath?.replaceAll('"', '\\"'));
@@ -256,6 +261,10 @@ class SessionInstanceListNotifier extends _$SessionInstanceListNotifier {
         return t;
       }
     }).toList();
+
+    for (final file in filesToDelete) {
+      await File(file).delete();
+    }
 
     final newState = [
       for (final instance in previousState)

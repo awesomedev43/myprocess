@@ -152,7 +152,6 @@ class _InProgressSessionCardState extends ConsumerState<InProgressSessionCard> {
                         displayIncompleteTasksAlert(context);
                       }
                     } else {
-                      await takeVerificationPhotos(context, taskInstances);
                       completeSession();
                     }
                   },
