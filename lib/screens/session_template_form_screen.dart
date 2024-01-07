@@ -177,8 +177,13 @@ class TodoTaskListWidget extends StatelessWidget {
     List<Card> cards = tasks
         .map((e) => Card(
                 child: ListTile(
-              leading: const Icon(Icons.add_task),
+              leading: Visibility(
+                visible: e.photoVerify ?? false,
+                replacement: const Icon(Icons.add_task),
+                child: const Icon(Icons.camera_alt),
+              ),
               title: Text(e.title),
+              subtitle: (e.description.isEmpty) ? null : Text(e.description),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -223,6 +228,7 @@ class CounterTaskListWidget extends StatelessWidget {
                 child: ListTile(
               leading: const Icon(Icons.plus_one),
               title: Text("${e.title} (Increment: ${e.increment})"),
+              subtitle: (e.description.isEmpty) ? null : Text(e.description),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
