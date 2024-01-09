@@ -10,6 +10,7 @@ import 'package:myprocess/screens/session_task_input_form.dart';
 import 'package:myprocess/screens/session_template_form_screen.dart';
 import 'package:myprocess/screens/task_verification_photo_screen.dart';
 import 'package:myprocess/tabs/session_template_list_tab.dart';
+import 'package:myprocess/widgets/settings_popup_widget.dart';
 
 import 'tabs/completed_session_list_tab.dart';
 import 'tabs/in_progress_session_list_tab.dart';
@@ -31,6 +32,7 @@ void main() async {
     UncontrolledProviderScope(
       container: container,
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Sessions',
         initialRoute: '/',
         routes: {
@@ -92,6 +94,7 @@ class _MainAppState extends ConsumerState<MainApp>
       appBar: AppBar(
         bottom: TabBar(controller: _tabController, tabs: sSessionTabs),
         title: const Text("Sessions"),
+        actions: const [SettingsPopupWidget()],
       ),
       body: TabBarView(controller: _tabController, children: [
         SessionTemplateListTab(controller: _tabController),
