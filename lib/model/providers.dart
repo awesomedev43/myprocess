@@ -52,19 +52,14 @@ class PersistantLocalStorage {
     return contents;
   }
 
-  static Future<List<Session>> readsessionList(
-      FileStorageObjectType type) async {
-    switch (type) {
-      case FileStorageObjectType.sessionlist:
-        String contents = await PersistantLocalStorage.readContent(type);
-        if (contents.isEmpty) {
-          return [];
-        }
-        final sessionList = SessionList.fromJson(jsonDecode(contents));
-        return sessionList.sessions;
-      case FileStorageObjectType.sessioninstancelist:
-        return [];
+  static Future<List<Session>> readSessionList() async {
+    String contents = await PersistantLocalStorage.readContent(
+        FileStorageObjectType.sessionlist);
+    if (contents.isEmpty) {
+      return [];
     }
+    final sessionList = SessionList.fromJson(jsonDecode(contents));
+    return sessionList.sessions;
   }
 
   static Future<List<Session>> readSessionListFromFile(String filepath) async {
@@ -101,8 +96,7 @@ class PersistantLocalStorage {
 class SessionTemplateListNotifier extends _$SessionTemplateListNotifier {
   @override
   Future<List<Session>> build() async {
-    return await PersistantLocalStorage.readsessionList(
-        FileStorageObjectType.sessionlist);
+    return await PersistantLocalStorage.readSessionList();
   }
 
   Future<void> add(Session session) async {
