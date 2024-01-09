@@ -53,6 +53,9 @@ class _TaskVerificationPhotoScreenState
 
   void onTakeVerificationPhoto(TaskVerificationPhotoScreenArgs args) async {
     try {
+      final snackBarController = ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Saving Verification Photo ...")));
+
       await _initializeControllerFuture;
 
       setState(() {
@@ -73,6 +76,7 @@ class _TaskVerificationPhotoScreenState
               args.sessionInstanceId, taskInstance.id, image.path);
 
       if (mounted && _currentIndex + 1 >= args.taskInstances.length) {
+        snackBarController.close();
         Navigator.pop(context);
         return;
       }
