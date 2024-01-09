@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/providers.dart';
@@ -24,6 +27,17 @@ class _SettingsPopupWidgetState extends ConsumerState<SettingsPopupWidget> {
             final sessionListFile = await PersistantLocalStorage.getLocalFile(
                 FileStorageObjectType.sessionlist);
             Share.shareXFiles([XFile(sessionListFile.path)]);
+            break;
+          case SettingsMenuItem.loadTemplates:
+            FilePickerResult? result = await FilePicker.platform.pickFiles();
+            if (result != null) {
+              File file = File(result.files.single.path!);
+              ref
+                  .read(sessionTemplateListNotifierProvider.notifier)
+                  .loadFromFile(file.path);
+            } else {
+              // User canceled the picker
+            }
             break;
           default:
         }

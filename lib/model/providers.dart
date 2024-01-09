@@ -67,6 +67,20 @@ class PersistantLocalStorage {
     }
   }
 
+  static Future<List<Session>> readSessionListFromFile(String filepath) async {
+    final file = File(filepath);
+    if (!await file.exists()) {
+      return [];
+    }
+    final content = await file.readAsString();
+    if (content.isEmpty) {
+      return [];
+    }
+    final sessionList = SessionList.fromJson(jsonDecode(content));
+
+    return sessionList.sessions;
+  }
+
   static Future<List<SessionInstance>> readsessionInstanceList(
       FileStorageObjectType type) async {
     switch (type) {
@@ -113,6 +127,23 @@ class SessionTemplateListNotifier extends _$SessionTemplateListNotifier {
       for (final p in previousState)
         if (p.id != session.id) p
     ];
+    state = AsyncData(newState);
+
+    final sessionList = SessionList(sessions: newState);
+    await PersistantLocalStorage.writeContent(
+        jsonEncode(sessionList.toJson()), FileStorageObjectType.sessionlist);
+  }
+
+  Future<void> loadFromFile(String filepath) async {
+    final previousState = await future;
+
+    final incomingSessions =
+        await PersistantLocalStorage.readSessionListFromFile(filepath);
+
+    final newState = [...previousState, ...incomingSessions];
+    final ids = <String>{};
+    newState.retainWhere((x) => ids.add(x.id));
+
     state = AsyncData(newState);
 
     final sessionList = SessionList(sessions: newState);
