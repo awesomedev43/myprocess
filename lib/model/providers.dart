@@ -52,42 +52,52 @@ class PersistantLocalStorage {
     return contents;
   }
 
-  static Future<List<Session>> readSessionList() async {
-    String contents = await PersistantLocalStorage.readContent(
-        FileStorageObjectType.sessionlist);
-    if (contents.isEmpty) {
-      return [];
+  static Future<List<Session>> readSessionList({String filepath = ""}) async {
+    var content = "";
+    if (filepath.isEmpty) {
+      content = await PersistantLocalStorage.readContent(
+          FileStorageObjectType.sessionlist);
+    } else {
+      final file = File(filepath);
+      if (!await file.exists()) {
+        return [];
+      }
+      content = await file.readAsString();
     }
-    final sessionList = SessionList.fromJson(jsonDecode(contents));
-    return sessionList.sessions;
-  }
 
-  static Future<List<Session>> readSessionListFromFile(String filepath) async {
-    final file = File(filepath);
-    if (!await file.exists()) {
-      return [];
-    }
-    final content = await file.readAsString();
     if (content.isEmpty) {
       return [];
     }
-    final sessionList = SessionList.fromJson(jsonDecode(content));
-
-    return sessionList.sessions;
+    try {
+      final sessionList = SessionList.fromJson(jsonDecode(content));
+      return sessionList.sessions;
+    } catch (e) {
+      return [];
+    }
   }
 
-  static Future<List<SessionInstance>> readsessionInstanceList(
-      FileStorageObjectType type) async {
-    switch (type) {
-      case FileStorageObjectType.sessionlist:
+  static Future<List<SessionInstance>> readSessionInstanceList(
+      {String filepath = ""}) async {
+    var content = "";
+    if (filepath.isEmpty) {
+      content = await PersistantLocalStorage.readContent(
+          FileStorageObjectType.sessioninstancelist);
+    } else {
+      final file = File(filepath);
+      if (!await file.exists()) {
         return [];
-      case FileStorageObjectType.sessioninstancelist:
-        String contents = await PersistantLocalStorage.readContent(type);
-        if (contents.isEmpty) {
-          return [];
-        }
-        final sessionList = SessionInstanceList.fromJson(jsonDecode(contents));
-        return sessionList.sessions;
+      }
+      content = await file.readAsString();
+    }
+    if (content.isEmpty) {
+      return [];
+    }
+    try {
+      final sessionInstanceList =
+          SessionInstanceList.fromJson(jsonDecode(content));
+      return sessionInstanceList.sessions;
+    } catch (e) {
+      return [];
     }
   }
 }
@@ -128,11 +138,15 @@ class SessionTemplateListNotifier extends _$SessionTemplateListNotifier {
         jsonEncode(sessionList.toJson()), FileStorageObjectType.sessionlist);
   }
 
-  Future<void> loadFromFile(String filepath) async {
+  Future<bool> loadFromFile(String filepath) async {
     final previousState = await future;
 
     final incomingSessions =
-        await PersistantLocalStorage.readSessionListFromFile(filepath);
+        await PersistantLocalStorage.readSessionList(filepath: filepath);
+
+    if (incomingSessions.isEmpty) {
+      return false;
+    }
 
     final newState = [...previousState, ...incomingSessions];
     final ids = <String>{};
@@ -143,6 +157,7 @@ class SessionTemplateListNotifier extends _$SessionTemplateListNotifier {
     final sessionList = SessionList(sessions: newState);
     await PersistantLocalStorage.writeContent(
         jsonEncode(sessionList.toJson()), FileStorageObjectType.sessionlist);
+    return true;
   }
 }
 
@@ -150,8 +165,7 @@ class SessionTemplateListNotifier extends _$SessionTemplateListNotifier {
 class SessionInstanceListNotifier extends _$SessionInstanceListNotifier {
   @override
   Future<List<SessionInstance>> build() async {
-    return await PersistantLocalStorage.readsessionInstanceList(
-        FileStorageObjectType.sessioninstancelist);
+    return await PersistantLocalStorage.readSessionInstanceList();
   }
 
   Future<void> add(Session session) async {
@@ -198,6 +212,37 @@ class SessionInstanceListNotifier extends _$SessionInstanceListNotifier {
         FileStorageObjectType.sessioninstancelist);
   }
 
+  Future<bool> loadFromFile(String filepath) async {
+    final previousState = await future;
+
+    var sessionInstances = await PersistantLocalStorage.readSessionInstanceList(
+        filepath: filepath);
+
+    if (sessionInstances.isEmpty) {
+      return false;
+    }
+
+    /// Empty out all photo verification path as associated images
+    /// will be deleted
+    sessionInstances = sessionInstances.map((sessionInstance) {
+      final taskInstances = sessionInstance.taskInstances.map((taskInstance) {
+        return taskInstance.copyWith(photoVerificationPath: null);
+      }).toList();
+      return sessionInstance.copyWith(taskInstances: taskInstances);
+    }).toList();
+
+    final newState = [...previousState, ...sessionInstances];
+    final ids = <String>{};
+    newState.retainWhere((x) => ids.add(x.id));
+
+    state = AsyncData(newState);
+
+    final sessionList = SessionInstanceList(sessions: newState);
+    await PersistantLocalStorage.writeContent(jsonEncode(sessionList.toJson()),
+        FileStorageObjectType.sessioninstancelist);
+    return true;
+  }
+
   Future<void> remove(SessionInstance sessionInstance) async {
     final previousState = await future;
 
@@ -214,7 +259,10 @@ class SessionInstanceListNotifier extends _$SessionInstanceListNotifier {
     /// Delete all the images related to task instances
     for (var taskInstance in sessionInstance.taskInstances) {
       if (taskInstance.photoVerificationPath != null) {
-        await File(taskInstance.photoVerificationPath!).delete();
+        final file = File(taskInstance.photoVerificationPath!);
+        if (await file.exists()) {
+          await file.delete();
+        }
       }
     }
   }

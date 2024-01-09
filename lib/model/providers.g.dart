@@ -478,7 +478,7 @@ class _GetInProgressCounterTaskListProviderElement
 }
 
 String _$sessionTemplateListNotifierHash() =>
-    r'9722ba36a0c47e2700af994ffe026739a92feb7b';
+    r'71fe125a310d97dffa6e8f7f6f09520b060deb3a';
 
 /// See also [SessionTemplateListNotifier].
 @ProviderFor(SessionTemplateListNotifier)
@@ -495,7 +495,7 @@ final sessionTemplateListNotifierProvider = AutoDisposeAsyncNotifierProvider<
 
 typedef _$SessionTemplateListNotifier = AutoDisposeAsyncNotifier<List<Session>>;
 String _$sessionInstanceListNotifierHash() =>
-    r'4be39c5c9b154a0ebf502ebeb1c22c714bd84310';
+    r'36aa764371edc26df5c7a4ad6e60c90fa9c08405';
 
 /// See also [SessionInstanceListNotifier].
 @ProviderFor(SessionInstanceListNotifier)
