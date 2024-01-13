@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:myprocess/model/model.dart';
 import 'package:myprocess/util.dart';
 import 'package:share_plus/share_plus.dart';
@@ -60,6 +61,20 @@ class _CompletedSessionCardState extends ConsumerState<CompletedSessionCard> {
     } else {
       Share.share(StringUtil.format(widget.sessionInstance), subject: subject);
     }
+  }
+
+  void onPdfShare() async {
+    final sessionName = widget.sessionInstance.session.name;
+    final DateFormat formatter = DateFormat('MMMM_d_yyyy');
+    final endTime = formatter.format(widget.sessionInstance.end!);
+    var subject = "${sessionName}_$endTime";
+
+    final file = await PdfUtil.createPdfForInstance(widget.sessionInstance);
+
+    await Share.shareXFiles([XFile(file.path)],
+        text: StringUtil.format(widget.sessionInstance), subject: subject);
+
+    await file.delete();
   }
 
   @override
@@ -124,6 +139,12 @@ class _CompletedSessionCardState extends ConsumerState<CompletedSessionCard> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
+                          IconButton(
+                              onPressed: onPdfShare,
+                              icon: const Icon(
+                                Icons.picture_as_pdf,
+                                color: Colors.blue,
+                              )),
                           IconButton(
                               onPressed: onSharePress,
                               icon: const Icon(
