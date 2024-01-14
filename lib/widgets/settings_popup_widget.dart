@@ -39,6 +39,8 @@ class _SettingsPopupWidgetState extends ConsumerState<SettingsPopupWidget> {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("Loaded File ${file.path}")));
       }
+      // Delete temporary file gotten from google drive
+      await file.delete();
     }
   }
 
