@@ -27,6 +27,42 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
   bool editing = false;
   bool? _photoVerifyTask;
 
+  void _showBackDialog() {
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Save changes to Task?'),
+          content: const Text(
+            'Would you save changes to your Task?',
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Discard'),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Save'),
+              onPressed: () {
+                Navigator.pop(context);
+                onAddTaskPress();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   /// Build radio tiles for task type
   ListTile buildRadioTile(TaskType taskType, String text) {
     return ListTile(
@@ -133,49 +169,59 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
       editing = true;
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add Task for Session'),
-        actions: [
-          IconButton(onPressed: onAddTaskPress, icon: const Icon(Icons.save))
-        ],
-      ),
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 10.0),
-          child: Center(
-              child: Column(
-            children: [
-              if (!editing) ...[
-                WidgetUtils.buildSectionTitle("Task Type"),
-                Column(
-                  children: [
-                    buildRadioTile(TaskType.todo, "Todo"),
-                    buildRadioTile(TaskType.counter, "Counter"),
-                  ],
-                )
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        if (didPop) {
+          return;
+        }
+        _showBackDialog();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Add Task for Session'),
+          actions: [
+            IconButton(onPressed: onAddTaskPress, icon: const Icon(Icons.save))
+          ],
+        ),
+        body: Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: Center(
+                child: Column(
+              children: [
+                if (!editing) ...[
+                  WidgetUtils.buildSectionTitle("Task Type"),
+                  Column(
+                    children: [
+                      buildRadioTile(TaskType.todo, "Todo"),
+                      buildRadioTile(TaskType.counter, "Counter"),
+                    ],
+                  )
+                ],
+                WidgetUtils.buildSectionTitle("Properties"),
+                buildTextField(
+                    "Title", _titleTextController, nullCheckValidator),
+                buildTextField(
+                    "Description", _descriptionTextController, noOpValidator),
+                if (_taskType.value == TaskType.todo) ...[
+                  SwitchListTile(
+                      secondary: const Icon(Icons.check),
+                      value: _photoVerifyTask ?? false,
+                      title: const Text("Photo Verify Task"),
+                      onChanged: ((value) {
+                        setState(() {
+                          _photoVerifyTask = value;
+                        });
+                      }))
+                ],
+                if (_taskType.value == TaskType.counter) ...[
+                  buildCounterIncrementField()
+                ],
               ],
-              WidgetUtils.buildSectionTitle("Properties"),
-              buildTextField("Title", _titleTextController, nullCheckValidator),
-              buildTextField(
-                  "Description", _descriptionTextController, noOpValidator),
-              if (_taskType.value == TaskType.todo) ...[
-                SwitchListTile(
-                    secondary: const Icon(Icons.check),
-                    value: _photoVerifyTask ?? false,
-                    title: const Text("Photo Verify Task"),
-                    onChanged: ((value) {
-                      setState(() {
-                        _photoVerifyTask = value;
-                      });
-                    }))
-              ],
-              if (_taskType.value == TaskType.counter) ...[
-                buildCounterIncrementField()
-              ],
-            ],
-          )),
+            )),
+          ),
         ),
       ),
     );

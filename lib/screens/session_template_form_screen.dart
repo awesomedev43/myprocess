@@ -44,9 +44,9 @@ class _SessionTemplateFormState
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Are you sure?'),
+          title: const Text('Save changes to Session?'),
           content: const Text(
-            'Are you sure you want to leave this page?',
+            'Would you like to save changes to your Session?',
           ),
           actions: <Widget>[
             TextButton(
