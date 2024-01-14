@@ -93,12 +93,13 @@ class _InProgressSessionCardState extends ConsumerState<InProgressSessionCard> {
     }
   }
 
-  void displayIncompleteTasksAlert(BuildContext context) {
+  void displayEndSessionAlertDialog(
+      BuildContext context, String notificationText) {
     showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text("Not all tasks are completed"),
+            title: Text(notificationText),
             actions: [
               TextButton(
                   onPressed: () => {Navigator.of(context).pop()},
@@ -118,6 +119,12 @@ class _InProgressSessionCardState extends ConsumerState<InProgressSessionCard> {
   Widget build(BuildContext context) {
     final taskInstances = widget.ref
             .watch(getInProgressTaskListProvider(widget.sessionInstance.id))
+            .value ??
+        [];
+
+    final counterTaskInstances = widget.ref
+            .watch(
+                getInProgressCounterTaskListProvider(widget.sessionInstance.id))
             .value ??
         [];
 
@@ -149,8 +156,12 @@ class _InProgressSessionCardState extends ConsumerState<InProgressSessionCard> {
                     if (taskInstances
                         .any((element) => element.completed != true)) {
                       if (context.mounted) {
-                        displayIncompleteTasksAlert(context);
+                        displayEndSessionAlertDialog(
+                            context, "Not all tasks are completed");
                       }
+                    } else if (counterTaskInstances.isNotEmpty) {
+                      displayEndSessionAlertDialog(
+                          context, "Are all counter values correctly updated?");
                     } else {
                       completeSession();
                     }
