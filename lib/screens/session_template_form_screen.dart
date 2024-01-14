@@ -28,6 +28,53 @@ class _SessionTemplateFormState
     super.dispose();
   }
 
+  void onSaveSession(ValueNotifier<List<Task>> tasks,
+      ValueNotifier<List<CounterTask>> counterTasks) {
+    final session = Session(
+        id: editingProcess?.id ?? const Uuid().v1(),
+        name: nameController.text,
+        tasks: tasks.value,
+        counters: counterTasks.value);
+    Navigator.pop(context, session);
+  }
+
+  void _showBackDialog(ValueNotifier<List<Task>> tasks,
+      ValueNotifier<List<CounterTask>> counterTasks) {
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Are you sure?'),
+          content: const Text(
+            'Are you sure you want to leave this page?',
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Discard'),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Save'),
+              onPressed: () {
+                Navigator.pop(context);
+                onSaveSession(tasks, counterTasks);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     editingProcess = ModalRoute.of(context)!.settings.arguments as Session?;
@@ -91,71 +138,73 @@ class _SessionTemplateFormState
       });
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Add New Session Template"),
-        actions: [
-          IconButton(
-              onPressed: () {
-                final session = Session(
-                    id: editingProcess?.id ?? const Uuid().v1(),
-                    name: nameController.text,
-                    tasks: tasks.value,
-                    counters: counterTasks.value);
-                Navigator.pop(context, session);
-              },
-              icon: const Icon(Icons.save))
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            WidgetUtils.buildSectionTitle("Properties"),
-            Align(
-                alignment: Alignment.centerLeft,
-                child: SizedBox(
-                    width: 500,
-                    child: TextField(
-                      maxLength: 40,
-                      decoration: const InputDecoration(hintText: "Name"),
-                      controller: nameController,
-                    ))),
-            if (tasks.value.isNotEmpty) ...[
-              WidgetUtils.buildSectionTitle("Tasks"),
-              const Padding(padding: EdgeInsets.only(bottom: 10.0)),
-              TodoTaskListWidget(
-                tasks: tasks.value,
-                deleteTask: todoDeleteFunction,
-                editTask: todoEditFunction,
-              )
-            ],
-            if (counterTasks.value.isNotEmpty) ...[
-              WidgetUtils.buildSectionTitle("Counters"),
-              const Padding(padding: EdgeInsets.only(bottom: 10.0)),
-              CounterTaskListWidget(
-                tasks: counterTasks.value,
-                deleteTask: counterDeleteFunction,
-                editTask: counterEditFunction,
-              )
-            ],
-            const Padding(padding: EdgeInsets.only(bottom: 60))
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        if (didPop) {
+          return;
+        }
+        _showBackDialog(tasks, counterTasks);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Add New Session Template"),
+          actions: [
+            IconButton(
+                onPressed: () => onSaveSession(tasks, counterTasks),
+                icon: const Icon(Icons.save))
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async {
-          final task = await Navigator.pushNamed(context, "/addtask");
-          if (task is Task) {
-            tasks.value = [...tasks.value, task];
-          }
-          if (task is CounterTask) {
-            counterTasks.value = [...counterTasks.value, task];
-          }
-        },
-        tooltip: "Add Task",
-        icon: const Icon(Icons.add),
-        label: const Text("Add Task"),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              WidgetUtils.buildSectionTitle("Properties"),
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: SizedBox(
+                      width: 500,
+                      child: TextField(
+                        maxLength: 40,
+                        decoration: const InputDecoration(hintText: "Name"),
+                        controller: nameController,
+                      ))),
+              if (tasks.value.isNotEmpty) ...[
+                WidgetUtils.buildSectionTitle("Tasks"),
+                const Padding(padding: EdgeInsets.only(bottom: 10.0)),
+                TodoTaskListWidget(
+                  tasks: tasks.value,
+                  deleteTask: todoDeleteFunction,
+                  editTask: todoEditFunction,
+                )
+              ],
+              if (counterTasks.value.isNotEmpty) ...[
+                WidgetUtils.buildSectionTitle("Counters"),
+                const Padding(padding: EdgeInsets.only(bottom: 10.0)),
+                CounterTaskListWidget(
+                  tasks: counterTasks.value,
+                  deleteTask: counterDeleteFunction,
+                  editTask: counterEditFunction,
+                )
+              ],
+              const Padding(padding: EdgeInsets.only(bottom: 60))
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () async {
+            final task = await Navigator.pushNamed(context, "/addtask");
+            if (task is Task) {
+              tasks.value = [...tasks.value, task];
+            }
+            if (task is CounterTask) {
+              counterTasks.value = [...counterTasks.value, task];
+            }
+          },
+          tooltip: "Add Task",
+          icon: const Icon(Icons.add),
+          label: const Text("Add Task"),
+        ),
       ),
     );
   }
