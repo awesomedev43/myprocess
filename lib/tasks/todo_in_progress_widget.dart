@@ -6,19 +6,17 @@ import 'package:myprocess/model/model.dart';
 import 'package:myprocess/model/providers.dart';
 import 'package:myprocess/screens/task_verification_photo_screen.dart';
 
-class InProgressTaskChecklistWidget extends ConsumerStatefulWidget {
-  const InProgressTaskChecklistWidget(
-      {super.key, required this.sessionInstance});
+class TodoInProgressWidget extends ConsumerStatefulWidget {
+  const TodoInProgressWidget({super.key, required this.sessionInstance});
 
   final SessionInstance sessionInstance;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _InProgressTaskChecklistWidgetState();
+      _TodoInProgressWidgetState();
 }
 
-class _InProgressTaskChecklistWidgetState
-    extends ConsumerState<InProgressTaskChecklistWidget> {
+class _TodoInProgressWidgetState extends ConsumerState<TodoInProgressWidget> {
   Future<void> takeVerificationPhotos(
       BuildContext context, TaskInstance t) async {
     if (!Platform.isAndroid || !t.task.photoVerify) {

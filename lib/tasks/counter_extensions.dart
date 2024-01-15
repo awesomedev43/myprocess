@@ -9,7 +9,7 @@ extension CompletenessExtensions on List<CounterTaskInstance> {
   }
 }
 
-extension WidgetExtensions on List<CounterTaskInstance> {
+extension InstanceWidgetExtensions on List<CounterTaskInstance> {
   Future<bool> showDialogIfIncomplete(BuildContext context) async {
     if (completed()) {
       return true;
@@ -43,5 +43,16 @@ extension WidgetExtensions on List<CounterTaskInstance> {
         },
       )
     ];
+  }
+}
+
+extension WidgetExtensions on List<CounterTask> {
+  List<ListTile> getInfoTiles() {
+    return map((e) {
+      return ListTile(
+          dense: true,
+          title: Text("${e.title} (Increment: ${e.increment})"),
+          leading: const Icon(Icons.plus_one));
+    }).toList();
   }
 }

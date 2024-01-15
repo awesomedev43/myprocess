@@ -11,7 +11,7 @@ extension CompletenessExtensions on List<TaskInstance> {
   }
 }
 
-extension WidgetExtensions on List<TaskInstance> {
+extension InstanceWidgetExtensions on List<TaskInstance> {
   Future<bool> showDialogIfIncomplete(BuildContext context) async {
     if (completed()) {
       return true;
@@ -35,7 +35,6 @@ extension WidgetExtensions on List<TaskInstance> {
           final finishedColor = instance.completed ? Colors.green : Colors.red;
           return Card(
             child: ListTile(
-              // leading: Icon(finishedIcon, color: finishedColor),
               title: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,5 +71,17 @@ extension WidgetExtensions on List<TaskInstance> {
         },
       ),
     ];
+  }
+}
+
+extension WidgetExtensions on List<Task> {
+  List<ListTile> getInfoTiles() {
+    return map((e) {
+      return ListTile(
+        dense: true,
+        title: Text(e.title),
+        leading: const Icon(Icons.check_box_outline_blank),
+      );
+    }).toList();
   }
 }

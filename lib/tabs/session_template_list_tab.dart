@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myprocess/tasks/counter_extensions.dart';
+import 'package:myprocess/tasks/todo_extensions.dart';
 
 import 'tabs.dart';
 import '../model/model.dart';
@@ -154,25 +156,11 @@ class SessionTemplateInfoDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final taskWidget = session.tasks.map((e) {
-      return ListTile(
-        dense: true,
-        title: Text(e.title),
-        leading: const Icon(Icons.check_box_outline_blank),
-      );
-    }).toList();
-
-    taskWidget.addAll(session.counters.map((e) {
-      return ListTile(
-          dense: true,
-          title: Text("${e.title} (Increment: ${e.increment})"),
-          leading: const Icon(Icons.plus_one));
-    }));
-
     return SimpleDialog(
       title: Text(session.name),
       children: [
-        ...taskWidget,
+        ...session.tasks.getInfoTiles(),
+        ...session.counters.getInfoTiles(),
         Row(mainAxisAlignment: MainAxisAlignment.end, children: [
           Padding(
             padding: const EdgeInsets.only(right: 10),

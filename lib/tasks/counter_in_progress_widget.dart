@@ -4,18 +4,18 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/model.dart';
 import 'package:myprocess/model/providers.dart';
 
-class InProgressCounterWidget extends ConsumerStatefulWidget {
-  const InProgressCounterWidget({super.key, required this.sessionInstance});
+class CounterInProgressWidget extends ConsumerStatefulWidget {
+  const CounterInProgressWidget({super.key, required this.sessionInstance});
 
   final SessionInstance sessionInstance;
 
   @override
-  ConsumerState<InProgressCounterWidget> createState() =>
+  ConsumerState<CounterInProgressWidget> createState() =>
       _InProgressCounterWidgetState();
 }
 
 class _InProgressCounterWidgetState
-    extends ConsumerState<InProgressCounterWidget> {
+    extends ConsumerState<CounterInProgressWidget> {
   void onTextFieldUpdate(String value, String id) {
     ref
         .read(sessionInstanceListNotifierProvider.notifier)
