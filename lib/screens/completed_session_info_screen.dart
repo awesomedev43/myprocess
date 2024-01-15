@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myprocess/model/model.dart';
+import 'package:myprocess/tasks/counter_extensions.dart';
+import 'package:myprocess/tasks/todo_extensions.dart';
 import 'package:myprocess/widgets/util.dart';
 
 import '../util.dart';
@@ -55,74 +57,8 @@ class CompletedSessionInfoScreen extends ConsumerWidget {
               title: Text(TimeUtil.formatTime(duration ?? 0)),
             ),
             const Padding(padding: EdgeInsets.all(10)),
-            if (processInstance.taskInstances.isNotEmpty) ...[
-              WidgetUtils.buildSectionTitle("Tasks"),
-              const Padding(padding: EdgeInsets.all(1)),
-              ...processInstance.taskInstances.map(
-                (instance) {
-                  final finishedIcon =
-                      instance.completed ? Icons.check_circle : Icons.cancel;
-                  final finishedColor =
-                      instance.completed ? Colors.green : Colors.red;
-                  return Card(
-                    child: ListTile(
-                      // leading: Icon(finishedIcon, color: finishedColor),
-                      title: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(finishedIcon, color: finishedColor),
-                              const Padding(padding: EdgeInsets.all(10.0)),
-                              Text(instance.title),
-                            ],
-                          ),
-                          if (instance.photoVerificationPath != null) ...[
-                            const Padding(padding: EdgeInsets.all(5.0)),
-                            Align(
-                              alignment: Alignment.center,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    shape: BoxShape.rectangle,
-                                    border: Border.all(
-                                        color: Colors.black, // Set border color
-                                        width: 1.0)),
-                                child: SizedBox(
-                                    width: 200.0,
-                                    child: Image.file(
-                                        File(instance.photoVerificationPath!))),
-                              ),
-                            ),
-                          ]
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ],
-            if (processInstance.counterInstances.isNotEmpty) ...[
-              WidgetUtils.buildSectionTitle("Counters"),
-              ...processInstance.counterInstances.map(
-                (instance) {
-                  return Card(
-                    child: ListTile(
-                      leading: const Icon(Icons.plus_one),
-                      title: Text(
-                        instance.title,
-                        style: const TextStyle(
-                            fontSize: 15.0, fontWeight: FontWeight.bold),
-                      ),
-                      trailing: Text("${instance.count}",
-                          style: const TextStyle(
-                              fontSize: 15.0, fontWeight: FontWeight.normal)),
-                    ),
-                  );
-                },
-              )
-            ]
+            ...processInstance.taskInstances.completedScreenWidgets(),
+            ...processInstance.counterInstances.completedScreenWidgets(),
           ],
         ),
       ),

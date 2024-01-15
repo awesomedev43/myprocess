@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/model.dart';
 import 'package:myprocess/screens/task_verification_photo_screen.dart';
+import 'package:myprocess/tasks/counter_extensions.dart';
+import 'package:myprocess/tasks/todo_extensions.dart';
 import 'package:myprocess/widgets/animating_timer_widget.dart';
 import 'package:myprocess/widgets/in_progress_counter_widget.dart';
 
@@ -153,16 +155,10 @@ class _InProgressSessionCardState extends ConsumerState<InProgressSessionCard> {
                 IconButton(
                   tooltip: "Complete Session",
                   onPressed: () async {
-                    if (taskInstances
-                        .any((element) => element.completed != true)) {
-                      if (context.mounted) {
-                        displayEndSessionAlertDialog(
-                            context, "Not all tasks are completed");
-                      }
-                    } else if (counterTaskInstances.isNotEmpty) {
-                      displayEndSessionAlertDialog(
-                          context, "Are all counter values correctly updated?");
-                    } else {
+                    if (await taskInstances.showDialogIfIncomplete(context) &&
+                        mounted &&
+                        await counterTaskInstances
+                            .showDialogIfIncomplete(context)) {
                       completeSession();
                     }
                   },
