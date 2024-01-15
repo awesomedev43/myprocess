@@ -5,13 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "myprocess",
+            "name": "myprocess (free debug)",
             "request": "launch",
             "type": "dart",
             "args": ["--flavor", "free" ],
         },
         {
-            "name": "myprocess (profile mode)",
+            "name": "myprocess (free profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile",
@@ -19,7 +19,7 @@
 
         },
         {
-            "name": "myprocess (release mode)",
+            "name": "myprocess (free release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release",
