@@ -7,19 +7,40 @@
         {
             "name": "myprocess",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "args": ["--flavor", "free" ],
         },
         {
             "name": "myprocess (profile mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
+            "args": ["--flavor", "free" ]
+
         },
         {
             "name": "myprocess (release mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "args": ["--flavor", "free" ]
+
+        },
+        {
+            "name": "myprocess (debug paid)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
+            "args": ["--flavor", "paid" ]
+
+        },
+        {
+            "name": "myprocess (release paid)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "args": ["--flavor", "paid" ]
+
         }
     ]
 }

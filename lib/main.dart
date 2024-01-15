@@ -1,8 +1,10 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myprocess/app_flavor.dart';
 import 'package:myprocess/model/model.dart';
 import 'package:myprocess/screens/completed_session_info_screen.dart';
 import 'package:myprocess/screens/session_stats_screen.dart';
@@ -20,6 +22,8 @@ import 'tabs/tabs.dart';
 void main() async {
   // Only initialize state at the start
   WidgetsFlutterBinding.ensureInitialized();
+  await AppFlavor().initialize();
+
   final container = await initializeState();
   CameraDescription? firstCamera;
 

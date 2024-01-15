@@ -60,6 +60,21 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    
+    flavorDimensions "default"
+
+    productFlavors {
+        free {
+            dimension "default"
+            resValue "string", "app_name", "Process Your Life"
+            applicationIdSuffix ".free"
+        }
+        paid {
+            dimension "default"
+            resValue "string", "app_name", "Process Your Life"
+            applicationIdSuffix ".paid"
+        }
+    }
 }
 
 flutter {
