@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:myprocess/model/model.dart';
 import 'package:myprocess/tasks/task_util.dart';
+import 'package:myprocess/tasks/todo_template_form_task_list_widget.dart';
 import 'package:myprocess/widgets/util.dart';
 
 extension CompletenessExtensions on List<TaskInstance> {
@@ -83,5 +84,22 @@ extension WidgetExtensions on List<Task> {
         leading: const Icon(Icons.check_box_outline_blank),
       );
     }).toList();
+  }
+
+  List<Widget> getTemplateFormWidget(
+      {required Function editTask, required Function deleteTask}) {
+    if (isEmpty) {
+      return [];
+    }
+
+    return [
+      WidgetUtils.buildSectionTitle("Tasks"),
+      const Padding(padding: EdgeInsets.only(bottom: 10.0)),
+      TodoTemplateFormTaskListWidget(
+        tasks: this,
+        deleteTask: deleteTask,
+        editTask: editTask,
+      )
+    ];
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myprocess/model/model.dart';
+import 'package:myprocess/tasks/counter_template_form_task_list_widget.dart';
 import 'package:myprocess/tasks/task_util.dart';
 import 'package:myprocess/widgets/util.dart';
 
@@ -54,5 +55,22 @@ extension WidgetExtensions on List<CounterTask> {
           title: Text("${e.title} (Increment: ${e.increment})"),
           leading: const Icon(Icons.plus_one));
     }).toList();
+  }
+
+  List<Widget> getTemplateFormWidget(
+      {required Function editTask, required Function deleteTask}) {
+    if (isEmpty) {
+      return [];
+    }
+
+    return [
+      WidgetUtils.buildSectionTitle("Counters"),
+      const Padding(padding: EdgeInsets.only(bottom: 10.0)),
+      CounterTemplateFormTaskListWidget(
+        tasks: this,
+        deleteTask: deleteTask,
+        editTask: editTask,
+      )
+    ];
   }
 }

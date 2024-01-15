@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:myprocess/model/model.dart';
+import 'package:myprocess/tasks/counter_extensions.dart';
+import 'package:myprocess/tasks/todo_extensions.dart';
 import 'package:myprocess/widgets/util.dart';
 import 'package:uuid/uuid.dart';
 
@@ -169,24 +171,11 @@ class _SessionTemplateFormState
                         decoration: const InputDecoration(hintText: "Name"),
                         controller: nameController,
                       ))),
-              if (tasks.value.isNotEmpty) ...[
-                WidgetUtils.buildSectionTitle("Tasks"),
-                const Padding(padding: EdgeInsets.only(bottom: 10.0)),
-                TodoTaskListWidget(
-                  tasks: tasks.value,
-                  deleteTask: todoDeleteFunction,
-                  editTask: todoEditFunction,
-                )
-              ],
-              if (counterTasks.value.isNotEmpty) ...[
-                WidgetUtils.buildSectionTitle("Counters"),
-                const Padding(padding: EdgeInsets.only(bottom: 10.0)),
-                CounterTaskListWidget(
-                  tasks: counterTasks.value,
-                  deleteTask: counterDeleteFunction,
+              ...tasks.value.getTemplateFormWidget(
+                  editTask: todoEditFunction, deleteTask: todoDeleteFunction),
+              ...counterTasks.value.getTemplateFormWidget(
                   editTask: counterEditFunction,
-                )
-              ],
+                  deleteTask: counterDeleteFunction),
               const Padding(padding: EdgeInsets.only(bottom: 60))
             ],
           ),
@@ -205,102 +194,6 @@ class _SessionTemplateFormState
           icon: const Icon(Icons.add),
           label: const Text("Add Task"),
         ),
-      ),
-    );
-  }
-}
-
-class TodoTaskListWidget extends StatelessWidget {
-  const TodoTaskListWidget(
-      {super.key,
-      required this.tasks,
-      required this.deleteTask,
-      required this.editTask});
-
-  final List<Task> tasks;
-  final Function deleteTask;
-  final Function editTask;
-
-  @override
-  Widget build(BuildContext context) {
-    List<Card> cards = tasks
-        .map((e) => Card(
-                child: ListTile(
-              leading: Visibility(
-                visible: e.photoVerify ?? false,
-                replacement: const Icon(Icons.add_task),
-                child: const Icon(Icons.camera_alt),
-              ),
-              title: Text(e.title),
-              subtitle: (e.description.isEmpty) ? null : Text(e.description),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    color: Colors.black,
-                    icon: const Icon(Icons.edit),
-                    onPressed: () => editTask(e),
-                  ),
-                  IconButton(
-                    color: Colors.red,
-                    icon: const Icon(Icons.delete),
-                    onPressed: () => deleteTask(e),
-                  ),
-                ],
-              ),
-            )))
-        .toList();
-
-    return Expanded(
-      child: ListView(
-        children: [...cards],
-      ),
-    );
-  }
-}
-
-class CounterTaskListWidget extends StatelessWidget {
-  const CounterTaskListWidget(
-      {super.key,
-      required this.tasks,
-      required this.deleteTask,
-      required this.editTask});
-
-  final List<CounterTask> tasks;
-  final Function deleteTask;
-  final Function editTask;
-
-  @override
-  Widget build(BuildContext context) {
-    List<Card> cards = tasks
-        .map((e) => Card(
-                child: ListTile(
-              leading: const Icon(Icons.plus_one),
-              title: Text("${e.title} (Increment: ${e.increment})"),
-              subtitle: (e.description.isEmpty) ? null : Text(e.description),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    color: Colors.black,
-                    icon: const Icon(Icons.edit),
-                    onPressed: () => editTask(e),
-                  ),
-                  IconButton(
-                    color: Colors.red,
-                    icon: const Icon(Icons.delete),
-                    onPressed: () => deleteTask(e),
-                  ),
-                ],
-              ),
-            )))
-        .toList();
-
-    return Expanded(
-      child: ListView(
-        children: [
-          ...cards,
-        ],
       ),
     );
   }
