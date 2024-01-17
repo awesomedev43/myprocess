@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/model/model.dart';
 import 'package:myprocess/widgets/util.dart';
 import 'package:uuid/uuid.dart';
 
-enum TaskType { todo, counter }
+enum TaskType {
+  todo(name: "Todo"),
+  counter(name: "Counter");
+
+  const TaskType({required this.name});
+
+  final String name;
+}
 
 class SessionTaskInputForm extends StatefulHookConsumerWidget {
   const SessionTaskInputForm({super.key});
@@ -19,155 +25,82 @@ class SessionTaskInputForm extends StatefulHookConsumerWidget {
 class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
   late dynamic _taskType;
   final _formKey = GlobalKey<FormState>();
+  late ValueNotifier<bool?> _photoVerifyTask;
+  late String taskId;
   final _titleTextController = TextEditingController();
   final _descriptionTextController = TextEditingController();
   final _incrementController = TextEditingController();
-  Task? editingTodoTask;
-  CounterTask? editingCounterTask;
-  bool editing = false;
-  bool? _photoVerifyTask;
-
-  void _showBackDialog() {
-    showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Save changes to Task?'),
-          content: const Text(
-            'Would you save changes to your Task?',
-          ),
-          actions: <Widget>[
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('Discard'),
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.pop(context);
-              },
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('Save'),
-              onPressed: () {
-                Navigator.pop(context);
-                onAddTaskPress();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  /// Build radio tiles for task type
-  ListTile buildRadioTile(TaskType taskType, String text) {
-    return ListTile(
-        title: Text(text),
-        leading: Radio<TaskType>(
-          value: taskType,
-          groupValue: _taskType.value,
-          onChanged: (TaskType? value) {
-            _taskType.value = value;
-          },
-        ));
-  }
-
-  /// Build text field for title and description
-  Widget buildTextField(String text, TextEditingController titleTextController,
-      String? Function(String?)? validator) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 18.0, right: 30.0),
-      child: TextFormField(
-        validator: validator,
-        controller: titleTextController,
-        decoration: InputDecoration(
-          border: const UnderlineInputBorder(),
-          labelText: text,
-        ),
-      ),
-    );
-  }
-
-  /// Build numeric increment field for counter type
-  Widget buildCounterIncrementField() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 18.0, right: 30.0),
-      child: TextFormField(
-        validator: nullCheckValidator,
-        controller: _incrementController,
-        keyboardType: TextInputType.number,
-        inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.digitsOnly
-        ],
-        decoration: const InputDecoration(
-          border: UnderlineInputBorder(),
-          labelText: "Increment",
-        ),
-      ),
-    );
-  }
-
-  String? nullCheckValidator(value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter a valid value';
-    }
-    return null;
-  }
-
-  String? noOpValidator(value) {
-    return null;
-  }
 
   void onAddTaskPress() {
-    if (_formKey.currentState!.validate()) {
-      if (_taskType.value == TaskType.todo) {
-        Navigator.pop(
-            context,
-            Task(
-                id: editingTodoTask?.id ?? const Uuid().v1(),
-                title: _titleTextController.text.trim(),
-                description: _descriptionTextController.text.trim(),
-                photoVerify: _photoVerifyTask));
-      }
-      if (_taskType.value == TaskType.counter) {
-        Navigator.pop(
-            context,
-            CounterTask(
-                increment: int.parse(_incrementController.text.trim()),
-                id: editingCounterTask?.id ?? const Uuid().v1(),
-                title: _titleTextController.text.trim(),
-                description: _descriptionTextController.text.trim()));
-      }
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+    if (_taskType.value == TaskType.todo) {
+      Navigator.pop(
+          context,
+          Task(
+              id: taskId,
+              title: _titleTextController.text.trim(),
+              description: _descriptionTextController.text.trim(),
+              photoVerify: _photoVerifyTask.value ?? false));
+    }
+    if (_taskType.value == TaskType.counter) {
+      Navigator.pop(
+          context,
+          CounterTask(
+              increment: int.parse(_incrementController.text.trim()),
+              id: taskId,
+              title: _titleTextController.text.trim(),
+              description: _descriptionTextController.text.trim()));
+    }
+  }
+
+  List<Widget> buildForTaskType() {
+    if (_taskType.value == TaskType.todo) {
+      return [
+        SwitchListTile(
+            secondary: const Icon(Icons.check),
+            value: _photoVerifyTask.value ?? false,
+            title: const Text("Photo Verify Task"),
+            onChanged: ((value) {
+              _photoVerifyTask.value = value;
+            }))
+      ];
+    } else if (_taskType.value == TaskType.counter) {
+      return [
+        WidgetUtils.buildCounterIncrementField(
+            label: "Increment", controller: _incrementController)
+      ];
+    }
+    return [];
+  }
+
+  void setupControllers(Object? incoming) {
+    if (incoming is Task) {
+      taskId = incoming.id;
+      _titleTextController.text = incoming.title;
+      _descriptionTextController.text = incoming.description;
+      _photoVerifyTask.value ??= incoming.photoVerify ?? false;
+    }
+    if (incoming is CounterTask) {
+      taskId = incoming.id;
+      _taskType.value = TaskType.counter;
+      _titleTextController.text = incoming.title;
+      _descriptionTextController.text = incoming.description;
+      _incrementController.text = "${incoming.increment}";
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final incoming = ModalRoute.of(context)!.settings.arguments;
-    _taskType = useState<TaskType?>(TaskType.todo);
+    bool editing = incoming != null;
+    taskId = const Uuid().v1();
 
-    if (incoming is Task) {
-      editingTodoTask = incoming;
-      _taskType = useState<TaskType?>(TaskType.todo);
-      _titleTextController.text = editingTodoTask!.title;
-      _descriptionTextController.text = editingTodoTask!.description;
-      editing = true;
-      setState(() {
-        _photoVerifyTask ??= incoming.photoVerify ?? false;
-      });
-    }
-    if (incoming is CounterTask) {
-      editingCounterTask = incoming;
-      _taskType = useState<TaskType?>(TaskType.counter);
-      _titleTextController.text = editingCounterTask!.title;
-      _descriptionTextController.text = editingCounterTask!.description;
-      _incrementController.text = "${editingCounterTask!.increment}";
-      editing = true;
-    }
+    _taskType = useState<TaskType?>(TaskType.todo);
+    _photoVerifyTask = useState<bool?>(null);
+
+    setupControllers(incoming);
 
     return PopScope(
       canPop: false,
@@ -175,7 +108,11 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
         if (didPop) {
           return;
         }
-        _showBackDialog();
+        WidgetUtils.showSaveAlertDialog(
+            context: context,
+            onSave: onAddTaskPress,
+            title: "Save changes to Task?",
+            content: "Would you save changes to your Task?");
       },
       child: Scaffold(
         appBar: AppBar(
@@ -190,35 +127,34 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
             padding: const EdgeInsets.only(left: 10.0),
             child: Center(
                 child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 if (!editing) ...[
                   WidgetUtils.buildSectionTitle("Task Type"),
-                  Column(
-                    children: [
-                      buildRadioTile(TaskType.todo, "Todo"),
-                      buildRadioTile(TaskType.counter, "Counter"),
-                    ],
-                  )
+                  const Padding(padding: EdgeInsets.only(bottom: 15)),
+                  DropdownMenu<TaskType>(
+                    initialSelection: TaskType.todo,
+                    onSelected: (TaskType? value) {
+                      _taskType.value = value;
+                    },
+                    dropdownMenuEntries: TaskType.values
+                        .map<DropdownMenuEntry<TaskType>>((TaskType value) {
+                      return DropdownMenuEntry<TaskType>(
+                          value: value, label: value.name);
+                    }).toList(),
+                  ),
+                  const Padding(padding: EdgeInsets.only(bottom: 10)),
                 ],
                 WidgetUtils.buildSectionTitle("Properties"),
-                buildTextField(
-                    "Title", _titleTextController, nullCheckValidator),
-                buildTextField(
-                    "Description", _descriptionTextController, noOpValidator),
-                if (_taskType.value == TaskType.todo) ...[
-                  SwitchListTile(
-                      secondary: const Icon(Icons.check),
-                      value: _photoVerifyTask ?? false,
-                      title: const Text("Photo Verify Task"),
-                      onChanged: ((value) {
-                        setState(() {
-                          _photoVerifyTask = value;
-                        });
-                      }))
-                ],
-                if (_taskType.value == TaskType.counter) ...[
-                  buildCounterIncrementField()
-                ],
+                WidgetUtils.buildTextField(
+                    text: "Title",
+                    controller: _titleTextController,
+                    validator: WidgetUtils.nullCheckValidator),
+                WidgetUtils.buildTextField(
+                    text: "Description",
+                    controller: _descriptionTextController,
+                    validator: WidgetUtils.noOpValidator),
+                ...buildForTaskType(),
               ],
             )),
           ),
