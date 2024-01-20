@@ -2,9 +2,10 @@ import 'dart:io';
 
 import 'package:intl/intl.dart';
 import 'package:myprocess/model/model.dart';
+import 'package:myprocess/tasks/counter_extensions.dart';
+import 'package:myprocess/tasks/todo_extensions.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 class TimeUtil {
@@ -70,79 +71,11 @@ class PdfUtil {
     final endTime = formatter.format(instance.end!);
     var pdfFile = "${sessionName}_$endTime";
 
-    pdf.addPage(pw.Page(
-        pageFormat: PdfPageFormat.letter,
-        build: (pw.Context context) {
-          return pw.Column(
-            mainAxisAlignment: pw.MainAxisAlignment.start,
-            children: [
-              pw.Header(
-                  child: pw.Text("Session: ${instance.session.name}",
-                      style: pw.TextStyle(fontWeight: pw.FontWeight.bold))),
-              if (instance.taskInstances.isNotEmpty) ...[
-                pw.Header(
-                    child: pw.Text("Todo",
-                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold)))
-              ],
-              ...instance.taskInstances.map((t) {
-                return pw.Align(
-                    alignment: pw.Alignment.topRight,
-                    child: pw.Row(
-                        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                        children: [
-                          pw.Text(t.title,
-                              style:
-                                  pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                          if (t.photoVerificationPath != null) ...[
-                            pw.Text(
-                              "completed: ${t.completed}, photo: ${t.photoVerificationPath!.split('/').last}",
-                            )
-                          ],
-                          if (t.photoVerificationPath == null) ...[
-                            pw.Text("completed: ${t.completed}"),
-                          ],
-                        ]));
-              }),
-              if (instance.counterInstances.isNotEmpty) ...[
-                pw.Header(
-                    child: pw.Text("Counter",
-                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold)))
-              ],
-              ...instance.counterInstances.map((c) {
-                return pw.Row(
-                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                    children: [
-                      pw.Text(c.title,
-                          style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                      pw.Text("counter: ${c.count}")
-                    ]);
-              })
-            ],
-          ); // Center
-        }));
-
-    for (var t in instance.taskInstances) {
-      if (t.photoVerificationPath == null) {
-        continue;
-      }
-      final image = pw.MemoryImage(
-        File(t.photoVerificationPath!).readAsBytesSync(),
-      );
-      pdf.addPage(pw.Page(
-        pageFormat: PdfPageFormat.letter,
-        build: (context) {
-          return pw.Column(children: [
-            pw.Header(
-                child: pw.Text(
-                    "Task: ${t.task.title} (${t.photoVerificationPath!.split('/').last})")),
-            pw.Container(
-                alignment: pw.Alignment.topRight,
-                width: 300,
-                child: pw.Image(image)),
-          ]);
-        },
-      ));
-    }
+    await instance.taskInstances
+        .addTaskStatusPdfPages(pdf, instance.session.name);
+    await instance.counterInstances
+        .addTaskStatusPdfPages(pdf, instance.session.name);
+    instance.taskInstances.addVerificationPhotoPages(pdf);
 
     final output = await getTemporaryDirectory();
     final file = File("${output.path}/$pdfFile.pdf");
