@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myprocess/app_flavor.dart';
 import 'package:myprocess/model/model.dart';
+import 'package:myprocess/on_boarding_page.dart';
 import 'package:myprocess/screens/completed_session_info_screen.dart';
 import 'package:myprocess/screens/session_stats_screen.dart';
 import 'package:myprocess/screens/session_task_input_form.dart';
@@ -36,10 +37,11 @@ void main() async {
       container: container,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Sessions',
+        title: 'Process Your Life',
         initialRoute: '/',
         routes: {
           '/': (context) => const MainApp(),
+          '/onboarding': (context) => const OnBoardingPage(),
           '/addsession': (context) => const SessionTemplateFormScreen(),
           '/addtask': (context) => const SessionTaskInputForm(),
           '/completedsessioninfo': (context) => CompletedSessionInfoScreen(),

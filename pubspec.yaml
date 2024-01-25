@@ -52,6 +52,7 @@ dependencies:
   file_picker: ^6.1.1
   pdf: ^3.10.7
   printing: ^5.11.1
+  introduction_screen: ^3.1.12
 
 dev_dependencies:
   flutter_test:
