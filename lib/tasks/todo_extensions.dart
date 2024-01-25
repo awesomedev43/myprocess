@@ -15,6 +15,31 @@ extension CompletenessExtensions on List<TaskInstance> {
   }
 }
 
+extension StringExtension on List<TaskInstance> {
+  String getStringRepresentation() {
+    if (isEmpty) {
+      return "";
+    }
+    var result = "";
+
+    result += "Todo\n";
+    for (final taskInstance in this) {
+      result += " " * 4;
+      if (taskInstance.photoVerificationPath != null) {
+        final file =
+            taskInstance.photoVerificationPath?.split('/').toList().last;
+        result +=
+            "- ${taskInstance.task.title} (completed: ${taskInstance.completed}, file: $file)";
+      } else {
+        result +=
+            "- ${taskInstance.task.title} (completed: ${taskInstance.completed})";
+      }
+      result += "\n";
+    }
+    return result;
+  }
+}
+
 extension PdfExtension on List<TaskInstance> {
   Future<void> addTaskStatusPdfPages(
       pw.Document pdf, String sessionName) async {

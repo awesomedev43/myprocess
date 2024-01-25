@@ -12,6 +12,26 @@ extension CompletenessExtensions on List<CounterTaskInstance> {
   }
 }
 
+extension StringExtension on List<CounterTaskInstance> {
+  String getStringRepresentation() {
+    if (isEmpty) {
+      return "";
+    }
+    var result = "";
+
+    result += "\n";
+    result += "Counters\n";
+    for (final counterInstance in this) {
+      result += " " * 4;
+      result +=
+          "- ${counterInstance.counterTask.title} (count: ${counterInstance.count})";
+      result += "\n";
+    }
+
+    return result;
+  }
+}
+
 extension PdfExtension on List<CounterTaskInstance> {
   Future<void> addTaskStatusPdfPages(
       pw.Document pdf, String sessionName) async {

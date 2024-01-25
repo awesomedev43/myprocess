@@ -31,33 +31,8 @@ class StringUtil {
     result += "End: ${formatter.format(instance.end!)}\n";
     result += "Duration: ${duration ?? 0} seconds\n\n";
 
-    if (instance.taskInstances.isNotEmpty) {
-      result += "Todo\n";
-      for (final taskInstance in instance.taskInstances) {
-        result += " " * 4;
-        if (taskInstance.photoVerificationPath != null) {
-          final file =
-              taskInstance.photoVerificationPath?.split('/').toList().last;
-          result +=
-              "- ${taskInstance.task.title} (completed: ${taskInstance.completed}, file: $file)";
-        } else {
-          result +=
-              "- ${taskInstance.task.title} (completed: ${taskInstance.completed})";
-        }
-        result += "\n";
-      }
-    }
-
-    if (instance.counterInstances.isNotEmpty) {
-      result += "\n";
-      result += "Counters\n";
-      for (final counterInstance in instance.counterInstances) {
-        result += " " * 4;
-        result +=
-            "- ${counterInstance.counterTask.title} (count: ${counterInstance.count})";
-        result += "\n";
-      }
-    }
+    result += instance.taskInstances.getStringRepresentation();
+    result += instance.counterInstances.getStringRepresentation();
 
     return result;
   }
