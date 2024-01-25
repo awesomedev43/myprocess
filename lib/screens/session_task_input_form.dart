@@ -116,7 +116,7 @@ class _SessionTaskInputFormState extends ConsumerState<SessionTaskInputForm> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Add Task for Session'),
+          title: const Text('Add Task for Process'),
           actions: [
             IconButton(onPressed: onAddTaskPress, icon: const Icon(Icons.save))
           ],

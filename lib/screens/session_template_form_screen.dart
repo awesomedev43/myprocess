@@ -94,7 +94,7 @@ class _SessionTemplateFormState
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Add New Session Template"),
+          title: const Text("Add New Template"),
           actions: [
             IconButton(
                 onPressed: () => onSaveSession(tasks, counterTasks),

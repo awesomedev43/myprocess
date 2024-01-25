@@ -123,7 +123,7 @@ class _MainAppState extends ConsumerState<MainApp>
                   .add(newSession as Session);
             }
           },
-          tooltip: "Add New Session Template",
+          tooltip: "Add New Template",
           isExtended: true,
           icon: const Icon(Icons.add),
         ),

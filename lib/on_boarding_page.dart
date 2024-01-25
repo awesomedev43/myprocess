@@ -17,15 +17,17 @@ class OnBoardingPageState extends State<OnBoardingPage> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool("showOnboarding", false);
 
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const MainApp()),
-    );
+    Navigator.of(context).pushNamedAndRemoveUntil('/', (r) => false);
   }
 
   // ignore: unused_element
   Widget? _buildImage(String assetName, [double width = 350]) {
     // return Image.asset('assets/$assetName', width: width);
     return null;
+  }
+
+  Widget _buildImage1(String assetName, [double width = 350]) {
+    return Image.asset('assets/$assetName', width: width);
   }
 
   @override
@@ -56,55 +58,106 @@ class OnBoardingPageState extends State<OnBoardingPage> {
       pages: [
         PageViewModel(
           title: "Process Your Life:\nA Task App",
-          body: "Create processes to simplify your life.",
-          image: _buildImage('img1.jpg'),
+          bodyWidget: Column(
+            children: [
+              const Text(
+                "Create processes to simplify your life.",
+                style: bodyStyle,
+              ),
+              const Padding(padding: EdgeInsets.all(10.0)),
+              _buildImage1('img1.png')
+            ],
+          ),
           decoration: pageDecoration,
         ),
         PageViewModel(
           title: "What is a process?",
-          body:
-              "Process is a collection of tasks needed to accomplish an objective. Tasks can include a simple todo or a counter values that need to be recorded",
-          image: _buildImage('img2.jpg'),
+          bodyWidget: const Column(
+            children: [
+              Text(
+                "Process is a collection of tasks needed to accomplish an objective. Tasks can include a simple todo or a counter values that need to be recorded",
+                style: bodyStyle,
+              ),
+              Padding(padding: EdgeInsets.all(10.0)),
+              Icon(
+                Icons.checklist,
+                size: 200,
+              )
+            ],
+          ),
           decoration: pageDecoration,
         ),
         PageViewModel(
           title: "What makes this app different?",
-          body:
-              "The focus of this app is to help you create reusable processes that can be tracked over time. For example this app can be used to track a process like baking bread. Using the app will allow you to keep track of what tasks are needed to bake the bread and record how long each bake took so you can tweak your process next time.",
-          image: _buildImage('img2.jpg'),
+          bodyWidget: const Column(
+            children: [
+              Text(
+                "The focus of this app is to help you create reusable processes that can be tracked over time. For example this app can be used to track a process like baking bread. Using the app will allow you to keep track of what tasks are needed to bake the bread and record how long each bake took so you can tweak your process next time.",
+                style: bodyStyle,
+              ),
+              Padding(padding: EdgeInsets.all(10.0)),
+              Icon(
+                Icons.bakery_dining,
+                size: 200,
+              )
+            ],
+          ),
           decoration: pageDecoration,
         ),
         PageViewModel(
           title: "Create a Process Template",
-          body:
-              "Click on 'New Template' to create a new process. Click save icon when done.",
-          image: _buildImage('img3.jpg'),
+          bodyWidget: Column(
+            children: [
+              const Text(
+                "Click on 'New Template' to create a new process. Click save icon when done.",
+                style: bodyStyle,
+              ),
+              const Padding(padding: EdgeInsets.all(10.0)),
+              _buildImage1('img3.png', 225)
+            ],
+          ),
           decoration: pageDecoration,
         ),
         PageViewModel(
             title: "Add Tasks to your Process",
-            body:
-                "Add either a Todo or Counter type by add 'Add New Task'. Click save icon when done.",
+            bodyWidget: Column(
+              children: [
+                const Text(
+                  "Add either a Todo or Counter type by add 'Add New Task'. Click save icon when done.",
+                  style: bodyStyle,
+                ),
+                const Padding(padding: EdgeInsets.all(10.0)),
+                _buildImage1('img4.png')
+              ],
+            ),
             decoration: pageDecoration),
         PageViewModel(
-            title: "Start the Process",
-            body:
-                "Press the green play putton to start an instance of a process.",
-            image: _buildImage('img2.jpg'),
-            decoration: pageDecoration),
-        PageViewModel(
-          title: "Complete the Tasks and Process",
-          body:
-              "Record progress of each task. Counter tasks value can be updated by either pressing '+' or '-'. Todo can be marked done. After all tasks have been completed, then click on check mark button to finish the process.",
+          title: "Start the Process",
+          bodyWidget: Column(
+            children: [
+              const Text(
+                "Start process and record progress of each task. Counter tasks value can be updated by either pressing '+' or '-'. Todo can be marked done. After all tasks have been completed, then click on check mark button to finish the process.",
+                style: bodyStyle,
+              ),
+              const Padding(padding: EdgeInsets.all(10.0)),
+              _buildImage1('img5.png')
+            ],
+          ),
           decoration: pageDecoration,
-          image: _buildImage('img1.jpg'),
         ),
         PageViewModel(
-          title: "View Historical Tasks and Generate PDF Reports",
-          body:
-              "View completed instances of your process in the 'Completed' tab and share PDF report",
+          title: "View Completed Processes and Generate PDF Reports",
+          bodyWidget: Column(
+            children: [
+              const Text(
+                "View completed instances of your process in the 'Completed' tab and share PDF report",
+                style: bodyStyle,
+              ),
+              const Padding(padding: EdgeInsets.all(10.0)),
+              _buildImage1('img6.png')
+            ],
+          ),
           decoration: pageDecoration,
-          image: _buildImage('img1.jpg'),
         ),
       ],
       onDone: () => _onIntroEnd(context),
