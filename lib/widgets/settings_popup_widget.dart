@@ -102,11 +102,11 @@ class _SettingsPopupWidgetState extends ConsumerState<SettingsPopupWidget> {
           ),
           const PopupMenuItem<SettingsMenuItem>(
             value: SettingsMenuItem.saveSessionRecords,
-            child: Text('Save Session Records'),
+            child: Text('Save Process Records'),
           ),
           const PopupMenuItem<SettingsMenuItem>(
             value: SettingsMenuItem.loadSessionRecords,
-            child: Text('Load Session Records'),
+            child: Text('Load Process Records'),
           ),
         ];
       },
