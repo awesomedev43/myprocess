@@ -13,6 +13,7 @@ import 'package:myprocess/screens/session_template_form_screen.dart';
 import 'package:myprocess/screens/task_verification_photo_screen.dart';
 import 'package:myprocess/tabs/session_template_list_tab.dart';
 import 'package:myprocess/widgets/settings_popup_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'tabs/completed_session_list_tab.dart';
 import 'tabs/in_progress_session_list_tab.dart';
@@ -32,13 +33,16 @@ void main() async {
     firstCamera = cameras.first;
   }
 
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final showOnboarding = prefs.getBool("showOnboarding") ?? true;
+
   runApp(
     UncontrolledProviderScope(
       container: container,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Process Your Life',
-        initialRoute: '/',
+        initialRoute: showOnboarding ? '/onboarding' : '/',
         routes: {
           '/': (context) => const MainApp(),
           '/onboarding': (context) => const OnBoardingPage(),
@@ -98,7 +102,7 @@ class _MainAppState extends ConsumerState<MainApp>
     return Scaffold(
       appBar: AppBar(
         bottom: TabBar(controller: _tabController, tabs: sSessionTabs),
-        title: const Text("Sessions"),
+        title: const Text("Process Your Life"),
         actions: const [SettingsPopupWidget()],
       ),
       body: TabBarView(controller: _tabController, children: [

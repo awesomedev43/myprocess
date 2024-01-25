@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:myprocess/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnBoardingPage extends StatefulWidget {
   const OnBoardingPage({Key? key}) : super(key: key);
@@ -12,7 +13,10 @@ class OnBoardingPage extends StatefulWidget {
 class OnBoardingPageState extends State<OnBoardingPage> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
-  void _onIntroEnd(context) {
+  void _onIntroEnd(context) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("showOnboarding", false);
+
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (_) => const MainApp()),
     );
