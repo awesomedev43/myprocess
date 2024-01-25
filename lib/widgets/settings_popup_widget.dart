@@ -10,7 +10,8 @@ enum SettingsMenuItem {
   saveTemplates,
   loadTemplates,
   saveSessionRecords,
-  loadSessionRecords
+  loadSessionRecords,
+  showOnboarding,
 }
 
 class SettingsPopupWidget extends StatefulHookConsumerWidget {
@@ -87,6 +88,9 @@ class _SettingsPopupWidgetState extends ConsumerState<SettingsPopupWidget> {
           case SettingsMenuItem.loadSessionRecords:
             await onLoadSessionRecords();
             break;
+          case SettingsMenuItem.showOnboarding:
+            Navigator.of(context).pushNamed("/onboarding");
+            break;
           default:
         }
       },
@@ -94,19 +98,53 @@ class _SettingsPopupWidgetState extends ConsumerState<SettingsPopupWidget> {
         return <PopupMenuEntry<SettingsMenuItem>>[
           const PopupMenuItem<SettingsMenuItem>(
             value: SettingsMenuItem.saveTemplates,
-            child: Text('Save Templates'),
+            child: Row(
+              children: [
+                Icon(Icons.download),
+                Padding(padding: EdgeInsets.all(5)),
+                Text('Save Templates'),
+              ],
+            ),
           ),
           const PopupMenuItem<SettingsMenuItem>(
             value: SettingsMenuItem.loadTemplates,
-            child: Text('Load Templates'),
+            child: Row(
+              children: [
+                Icon(Icons.upload),
+                Padding(padding: EdgeInsets.all(5)),
+                Text('Load Templates'),
+              ],
+            ),
           ),
           const PopupMenuItem<SettingsMenuItem>(
             value: SettingsMenuItem.saveSessionRecords,
-            child: Text('Save Process Records'),
+            child: Row(
+              children: [
+                Icon(Icons.download_outlined),
+                Padding(padding: EdgeInsets.all(5)),
+                Text('Save Process Records'),
+              ],
+            ),
           ),
           const PopupMenuItem<SettingsMenuItem>(
             value: SettingsMenuItem.loadSessionRecords,
-            child: Text('Load Process Records'),
+            child: Row(
+              children: [
+                Icon(Icons.upload_outlined),
+                Padding(padding: EdgeInsets.all(5)),
+                Text('Load Process Records'),
+              ],
+            ),
+          ),
+          const PopupMenuItem<SettingsMenuItem>(
+            value: SettingsMenuItem.showOnboarding,
+            child: Row(
+              children: [
+                Icon(Icons.info),
+                Padding(padding: EdgeInsets.all(5)),
+                Text('Show Onboarding'),
+              ],
+            ),
           ),
         ];
       },
