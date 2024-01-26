@@ -57,49 +57,15 @@ class OnBoardingPageState extends State<OnBoardingPage> {
       ),
       pages: [
         PageViewModel(
-          title: "Process Your Life:\nA Task App",
+          title: "Process Your Life",
           bodyWidget: Column(
             children: [
               const Text(
-                "Create processes to simplify your life.",
+                "Welcome!\n\nThank you for choosing the Process Your Life. The aim of this app is to allow users to create reuseable processes that you encounter in your daily life. Example include workout list, grocery list, recipe, chores and much more. There are many possibilities of what processes can be added to improve your daily life.",
                 style: bodyStyle,
               ),
               const Padding(padding: EdgeInsets.all(10.0)),
-              _buildImage1('img1.png')
-            ],
-          ),
-          decoration: pageDecoration,
-        ),
-        PageViewModel(
-          title: "What is a process?",
-          bodyWidget: const Column(
-            children: [
-              Text(
-                "Process is a collection of tasks needed to accomplish an objective. Tasks can include a simple todo or a counter values that need to be recorded",
-                style: bodyStyle,
-              ),
-              Padding(padding: EdgeInsets.all(10.0)),
-              Icon(
-                Icons.checklist,
-                size: 200,
-              )
-            ],
-          ),
-          decoration: pageDecoration,
-        ),
-        PageViewModel(
-          title: "What makes this app different?",
-          bodyWidget: const Column(
-            children: [
-              Text(
-                "The focus of this app is to help you create reusable processes that can be tracked over time. For example this app can be used to track a process like baking bread. Using the app will allow you to keep track of what tasks are needed to bake the bread and record how long each bake took so you can tweak your process next time.",
-                style: bodyStyle,
-              ),
-              Padding(padding: EdgeInsets.all(10.0)),
-              Icon(
-                Icons.bakery_dining,
-                size: 200,
-              )
+              _buildImage1('img1.png', 250)
             ],
           ),
           decoration: pageDecoration,
