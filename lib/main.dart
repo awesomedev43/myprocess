@@ -23,7 +23,7 @@ import 'tabs/tabs.dart';
 void main() async {
   // Only initialize state at the start
   WidgetsFlutterBinding.ensureInitialized();
-  await AppFlavor().initialize();
+  // await AppFlavor().initialize();
 
   final container = await initializeState();
   CameraDescription? firstCamera;

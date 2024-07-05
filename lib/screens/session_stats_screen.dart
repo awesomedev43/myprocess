@@ -6,7 +6,7 @@ import 'package:myprocess/model/model.dart';
 import 'package:myprocess/model/providers.dart';
 
 class SessionStatsScreen extends ConsumerStatefulWidget {
-  const SessionStatsScreen({Key? key}) : super(key: key);
+  const SessionStatsScreen({super.key});
 
   @override
   ConsumerState<SessionStatsScreen> createState() => _SessionStatsScreenState();

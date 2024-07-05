@@ -24,7 +24,7 @@ class _CompletedSessionListWidgetState
     return ListView(children: [
       ...completedSession
           .map((instance) => CompletedSessionCard(sessionInstance: instance))
-          .toList(),
+          ,
       const Padding(padding: EdgeInsets.only(bottom: 80))
     ]);
   }

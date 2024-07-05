@@ -15,7 +15,7 @@ enum SettingsMenuItem {
 }
 
 class SettingsPopupWidget extends StatefulHookConsumerWidget {
-  const SettingsPopupWidget({Key? key}) : super(key: key);
+  const SettingsPopupWidget({super.key});
 
   @override
   ConsumerState<SettingsPopupWidget> createState() =>

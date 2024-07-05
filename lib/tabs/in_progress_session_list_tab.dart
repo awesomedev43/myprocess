@@ -155,7 +155,7 @@ class _InProgressSessionCardState extends ConsumerState<InProgressSessionCard> {
                   tooltip: "Complete Session",
                   onPressed: () async {
                     if (await taskInstances.showDialogIfIncomplete(context) &&
-                        mounted &&
+                        context.mounted &&
                         await counterTaskInstances
                             .showDialogIfIncomplete(context)) {
                       completeSession();
